@@ -158,6 +158,25 @@ PUBLIC_GAME_HOST 已在远端.env模板中写为134.175.153.218。它是后端�
 
 ## 八、检查范围与未完成项
 
+### Ubuntu 20.04 服务文件修正
+
+若依赖安装和TypeScript编译成功，但出现 Unit bound-shoot.service has a bad unit file setting，本轮模板的WorkingDirectory、EnvironmentFile曾给路径加了双引号，与旧版systemd路径解析不兼容。现已去掉这两处引号；安装脚本也增加unit校验。ExecStart的程序路径引号合法，保留。
+
+已上传旧模板的服务器无需重装Node或依赖，可同时修正已生成unit和上传的模板，避免重装时恢复旧值：
+
+~~~bash
+sed -i \
+  -e 's/^WorkingDirectory="\(.*\)"$/WorkingDirectory=\1/' \
+  -e 's/^EnvironmentFile="\(.*\)"$/EnvironmentFile=\1/' \
+  "$HOME/.config/systemd/user/bound-shoot.service" \
+  /home/ubuntu/Bound_Shoot/deployment/bound-shoot.service
+systemctl --user daemon-reload
+systemctl --user restart bound-shoot.service
+systemctl --user status bound-shoot.service --no-pager -l
+~~~
+
+随后运行 bash deployment/check.sh 确认API状态。本修正不涉及.env或数据库。
+
 本轮仅做C#编辑器编译/EditMode、后端编译/集成测试、配置检查和Bash语法检查，不启动Windows客户端，不生成构建包。
 快照缓冲有独立测试覆盖乱序、重复、插值、有限外推和重连清空；现有规则测试保留。
 以前版本的四客户端两局记录仅是历史证据。本轮改了输入协议和连接处理，仍需你在部署后完成真实跨电脑测试。

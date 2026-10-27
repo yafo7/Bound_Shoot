@@ -49,9 +49,13 @@ fi
 node --input-type=module - "$project_dir" "$node_path" "$unit" <<'NODE'
 import fs from 'node:fs';
 const [root,node,target]=process.argv.slice(2);
+if(/[\s%"\\]/u.test(root)||/[\s%"\\]/u.test(node))throw new Error('Use a project/node path without spaces, percent signs, quotes or backslashes for this systemd template.');
 const source=fs.readFileSync(root+'/deployment/bound-shoot.service','utf8');
 fs.writeFileSync(target,source.replaceAll('@PROJECT_ROOT@',root).replaceAll('@NODE@',node));
 NODE
+if command -v systemd-analyze >/dev/null; then
+  systemd-analyze --user verify "$unit"
+fi
 systemctl --user daemon-reload
 systemctl --user enable bound-shoot.service
 systemctl --user restart bound-shoot.service

@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory="@PROJECT_ROOT@/backend"
+WorkingDirectory=@PROJECT_ROOT@/backend
 Environment=NODE_ENV=production
-EnvironmentFile="@PROJECT_ROOT@/backend/.env"
+EnvironmentFile=@PROJECT_ROOT@/backend/.env
 ExecStart="@NODE@" dist/index.js
 Restart=on-failure
 RestartSec=3
