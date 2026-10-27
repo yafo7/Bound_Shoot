@@ -59,11 +59,16 @@ namespace BoundShoot {
    label.text=DisplayName.Value.ToString()+(Connected.Value?"":" [离线]")+"\n"+(Alive?Health.Value+"/"+MaxHealth.Value:Revive.Value>0?("复活 "+Mathf.CeilToInt(GameConfig.Current.reviveSeconds-Revive.Value)+"s"):"倒地");
    label.transform.rotation=Quaternion.identity;
    if(!IsOwner||!IsClient||!Connected.Value)return;
-   if(Input.GetKeyDown(KeyCode.E))Use=true;
+   if(Application.isFocused&&Input.GetKeyDown(KeyCode.E))Use=true;
    if(Time.unscaledTime<nextInput)return;nextInput=Time.unscaledTime+1f/GameConfig.Current.physicsHz;
    var mouse=Camera.main.ScreenToWorldPoint(Input.mousePosition);var aim=(Vector2)(mouse-transform.position);
    bool over=EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject();
-   Vector2 movement=new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"));bool fire=Input.GetMouseButton(0)&&!over;
+   Vector2 movement=Application.isFocused?new Vector2(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical")):Vector2.zero;
+   bool fire=Application.isFocused&&Input.GetMouseButton(0)&&!over;
+   if(!Application.isFocused)Use=false;
+#if BOUND_SHOOT_QA
+   if(QaClientDriver.Active!=null)QaClientDriver.Active.Input(this,out movement,out aim,out fire);
+#endif
    InputServerRpc(movement,aim.normalized,fire,Use,++sequence,InputEpoch.Value);Use=false;
   }
   [ServerRpc]

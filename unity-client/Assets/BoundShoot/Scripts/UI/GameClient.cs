@@ -11,25 +11,23 @@ namespace BoundShoot {
   public static GameClient Instance;public HttpApi Api;public RoomData Room;public UserProfile User;
   public string Screen="Auth";public string ActiveMatch="";
   UiKit ui;LobbyRealtime realtime;Text notice,hud;InputField username,password,confirm,code;
-  string lastRoomJson="",attemptedMatch="",message="";bool busy,register,remember=true,connecting,resultLoading;
+  string lastRoomJson="",attemptedMatch="",message="";bool busy,register,connecting,resultLoading;
   MatchData match;ResultData result;float nextProfile,nextRealtimeRetry;bool disposed;
-  IEnumerator Start(){
+  void Start(){
    Instance=this;Api=gameObject.AddComponent<HttpApi>();
    Api.BaseUrl=NetworkSettings.Current.BackendUrl;Api.SessionExpired+=Expired;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD || BOUND_SHOOT_QA
    string overrideUrl=GetArg("-backend");if(!string.IsNullOrEmpty(overrideUrl))Api.BaseUrl=overrideUrl;
+#endif
    realtime=gameObject.AddComponent<LobbyRealtime>();realtime.OnEvent=e=>{if(e.room!=null&&Room!=null&&e.room.id==Room.id)ReceiveRoom(e.room);};
    var go=new GameObject("UI",typeof(RectTransform));ui=go.AddComponent<UiKit>();ui.Initialize();
    Bootstrap.Network.OnClientConnectedCallback+=Connected;Bootstrap.Network.OnClientDisconnectCallback+=Disconnected;
    Redraw();StartCoroutine(Poll());
-   string saved=PlayerPrefs.GetString(Api.CredentialKey,"");
-   if(!string.IsNullOrEmpty(saved)){
-    Api.Remember=true;Api.RefreshToken=saved;
-    yield return Api.Request<AuthData>("POST","/api/auth/refresh",new RefreshBody{refreshToken=saved},SignedIn,e=>{Api.Forget();Error(e);},false);
-   }
+   // Every process owns its session. Four windows must never inherit one shared account.
   }
   public static string GetArg(string flag){var args=Environment.GetCommandLineArgs();int i=Array.IndexOf(args,flag);return i>=0&&i+1<args.Length?args[i+1]:null;}
   void SignedIn(AuthData auth){
-   Api.SetTokens(auth);User=auth.user;Screen="Lobby";message="";Redraw();
+   Api.SetTokens(auth);User=auth.user;register=false;Screen="Lobby";message="";Redraw();
    realtime.Connect(Api.BaseUrl,Api.AccessToken);StartCoroutine(Resume());
   }
   IEnumerator Resume(){
@@ -68,7 +66,6 @@ namespace BoundShoot {
    IEnumerator Request(){yield return Api.Request<T>(method,path,body,v=>{busy=false;done(v);},Error);busy=false;}
   }
   void Authenticate(){
-   Api.Remember=remember;
    if(register&&password.text!=confirm.text){Error("两次密码不一致");return;}
    Run<AuthData>("POST",register?"/api/auth/register":"/api/auth/login",new Credentials{username=username.text,password=password.text},SignedIn);
   }
@@ -139,11 +136,8 @@ namespace BoundShoot {
    username=ui.Field("用户名",500,300,600);
    password=ui.Field("密码",500,373,600,true);
    confirm=register?ui.Field("确认密码",500,446,600,true):null;
-   ui.Button(remember?"☑ 记住登录":"□ 记住登录",500,register?519:459,280,44,()=>{
-    string name=username.text,pass=password.text,confirmation=confirm?.text;remember=!remember;Redraw();username.text=name;password.text=pass;if(confirm!=null)confirm.text=confirmation;
-   },UiKit.Soft);
-   ui.Button(register?"注册":"登录",500,register?592:536,600,64,Authenticate);
-   ui.Button(register?"返回登录":"注册账号",500,register?671:621,600,52,()=>{register=!register;message="";Redraw();},UiKit.Soft);
+   ui.Button(register?"注册":"登录",500,register?536:459,600,64,Authenticate);
+   ui.Button(register?"返回登录":"注册账号",500,register?621:544,600,52,()=>{register=!register;message="";Redraw();},UiKit.Soft);
   }
   void LobbyScreen(){
    if(User==null)return;

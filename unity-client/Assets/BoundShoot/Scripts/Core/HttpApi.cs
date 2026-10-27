@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 namespace BoundShoot {
  public class HttpApi:MonoBehaviour {
-  public string BaseUrl="http://127.0.0.1:3000",AccessToken="",RefreshToken="";
+  public string BaseUrl=NetworkSettings.PublicBackendUrl,AccessToken="",RefreshToken="";
   public string Secret="";
   bool refreshing;int credentialVersion;
   public event Action SessionExpired;
@@ -38,14 +38,10 @@ namespace BoundShoot {
     else failure?.Invoke(envelope?.error?.message??"连接失败，请重试");
    }
   }
-  public bool Remember;
-  public string CredentialKey=>"BoundRefresh:"+BaseUrl.TrimEnd('/');
   public void SetTokens(AuthData data){
    credentialVersion++;
    AccessToken=data.accessToken;RefreshToken=data.refreshToken;
-   if(Remember)PlayerPrefs.SetString(CredentialKey,RefreshToken);else PlayerPrefs.DeleteKey(CredentialKey);
-   PlayerPrefs.Save();
   }
-  public void Forget(){credentialVersion++;AccessToken="";RefreshToken="";PlayerPrefs.DeleteKey(CredentialKey);PlayerPrefs.Save();}
+  public void Forget(){credentialVersion++;AccessToken="";RefreshToken="";}
  }
 }

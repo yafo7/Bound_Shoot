@@ -1,0 +1,171 @@
+{
+  "date": "2026-10-27",
+  "passed": true,
+  "scope": "Local WSL/Linux dedicated server + four Windows NGO/UDP clients; cloud not exercised",
+  "registeredAndLoggedInThroughUi": true,
+  "clients": [
+    {
+      "stage": "passed",
+      "username": "qa_90cb10e6_0",
+      "matchId": "7ca916d4-70a2-4db8-844b-786fa393ca8e",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 0,
+      "duration": 180.00001525878906,
+      "passed": true
+    },
+    {
+      "stage": "passed",
+      "username": "qa_90cb10e6_1",
+      "matchId": "7ca916d4-70a2-4db8-844b-786fa393ca8e",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 0,
+      "duration": 180.00001525878906,
+      "passed": true
+    },
+    {
+      "stage": "passed",
+      "username": "qa_90cb10e6_2",
+      "matchId": "7ca916d4-70a2-4db8-844b-786fa393ca8e",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 0,
+      "duration": 180.00001525878906,
+      "passed": true
+    },
+    {
+      "stage": "passed",
+      "username": "qa_90cb10e6_3",
+      "matchId": "7ca916d4-70a2-4db8-844b-786fa393ca8e",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 0,
+      "duration": 180.00001525878906,
+      "passed": true
+    }
+  ],
+  "users": [
+    {
+      "username": "qa_90cb10e6_0",
+      "games": 2,
+      "wins": 0,
+      "kills": 1,
+      "deaths": 1
+    },
+    {
+      "username": "qa_90cb10e6_1",
+      "games": 2,
+      "wins": 0,
+      "kills": 1,
+      "deaths": 1
+    },
+    {
+      "username": "qa_90cb10e6_2",
+      "games": 2,
+      "wins": 0,
+      "kills": 1,
+      "deaths": 1
+    },
+    {
+      "username": "qa_90cb10e6_3",
+      "games": 2,
+      "wins": 0,
+      "kills": 1,
+      "deaths": 1
+    }
+  ],
+  "matches": [
+    {
+      "id": "2fd05480-844c-4964-b004-1ce7ab321e30",
+      "status": "Finished",
+      "winner": -1,
+      "duration": 3.2666666507720947,
+      "result": {
+        "winner": -1,
+        "duration": 3.2666666507720947,
+        "players": [
+          {
+            "userId": "56e37ce3-3b3e-484a-b909-8597d812200c",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "686c1d61-84b8-4a86-a1a8-66aa9aeadbb4",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          },
+          {
+            "userId": "55a12bd1-b503-4481-b3e8-1370d6e0153c",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "b5ab37d4-4cb8-46bb-83e1-f46b2f87bdfa",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": "7ca916d4-70a2-4db8-844b-786fa393ca8e",
+      "status": "Finished",
+      "winner": -1,
+      "duration": 180.00001525878906,
+      "result": {
+        "winner": -1,
+        "duration": 180.00001525878906,
+        "players": [
+          {
+            "userId": "56e37ce3-3b3e-484a-b909-8597d812200c",
+            "kills": 0,
+            "deaths": 0,
+            "damage": 0
+          },
+          {
+            "userId": "686c1d61-84b8-4a86-a1a8-66aa9aeadbb4",
+            "kills": 0,
+            "deaths": 0,
+            "damage": 0
+          },
+          {
+            "userId": "55a12bd1-b503-4481-b3e8-1370d6e0153c",
+            "kills": 0,
+            "deaths": 0,
+            "damage": 0
+          },
+          {
+            "userId": "b5ab37d4-4cb8-46bb-83e1-f46b2f87bdfa",
+            "kills": 0,
+            "deaths": 0,
+            "damage": 0
+          }
+        ]
+      }
+    }
+  ],
+  "cloudHealthVerified": true,
+  "cloudMatchVerified": false,
+  "reportDirectory": "C:\\Users\\yafo777\\Desktop\\2026Autumn\\IMDT\\game_develop\\Bound_Shoot\\logs\\four-clients-1793099374263"
+}
