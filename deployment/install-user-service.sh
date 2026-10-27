@@ -19,7 +19,7 @@ mkdir -p "$project_dir/state" "$project_dir/runtime" "$project_dir/server" "$HOM
 if [ ! -f "$project_dir/backend/.env" ]; then
   secret="$(node -e 'process.stdout.write(require("node:crypto").randomBytes(48).toString("hex"))')"
   cat > "$project_dir/backend/.env" <<EOF
-HOST=127.0.0.1
+HOST=0.0.0.0
 PORT=3000
 NODE_ENV=production
 ACCESS_SECRET=$secret

@@ -6,7 +6,7 @@ Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威�
 
 ## 先阅读
 
-**[本轮工作与 Bitvise 手动部署步骤](docs/WORKLOG.md)**：本轮改动、远端目录、上传内容、C2S 转发、Unity 配置和待用户执行的步骤。
+**[本轮工作与公网部署步骤](docs/WORKLOG.md)**：最新公网方案、远端目录、上传内容、端口开放、Unity 配置和待用户执行的步骤。
 
 - [设计同学交接](docs/DESIGNER_HANDOFF.md)
 - [接口说明](docs/API.md)
@@ -23,7 +23,7 @@ Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威�
 
 打开 Assets/BoundShoot/Scenes/Boot.unity，点击 Play。需要准备资源时使用菜单 Bound Shoot → Prepare Project。
 
-菜单 Bound Shoot → Network Settings 可选择服务器配置；默认 Backend URL 为 http://127.0.0.1:13000，对应文档中的 Bitvise C2S 隧道。登录界面不显示技术配置。
+菜单 Bound Shoot → Network Settings 可选择服务器配置；默认 Backend URL 为 http://134.175.153.218:3000，用于公网联调。玩家直接连接云端，不需要Bitvise或SSH；正式账号入口配置HTTPS后修改此处。登录界面不显示技术配置。
 
 ## 源码检查
 

@@ -5,3 +5,4 @@
 - 完整项目工作约定位于仓库根目录 AGENTS.md；当前电脑仓库在 C:/Users/yafo777/Desktop/2026Autumn/IMDT/game_develop/Bound_Shoot，Unity 工程通过 unity-client 目录联接被跟踪。
 - 联网沿用 NGO + Unity 权威战斗服务器；课程 unity_skynet_adv 只参考同步和连接管理逻辑，不改为Skynet。网络调试文字不显示在玩家界面中。
 - 远端134.175.153.218由用户通过Bitvise手动操作。仅准备配置、源码和操作文档，未经明确要求不登录远端、不执行部署。
+- 玩家客户端默认使用公网入口，不依赖Bitvise/C2S隧道。当前公网联调地址为 http://134.175.153.218:3000；正式发布切换到配置好的HTTPS入口。暂不自动生成exe或安装包。

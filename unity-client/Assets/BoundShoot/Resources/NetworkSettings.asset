@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c45223339d54f5399b765d18c17c53e, type: 3}
   m_Name: NetworkSettings
   m_EditorClassIdentifier:
-  backendUrl: http://127.0.0.1:13000
+  backendUrl: http://134.175.153.218:3000
   connectTimeoutSeconds: 20
   transportDisconnectMs: 5000
   interpolationMs: 100
