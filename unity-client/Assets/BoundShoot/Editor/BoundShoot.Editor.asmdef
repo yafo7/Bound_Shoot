@@ -1,0 +1,1 @@
+{"name":"BoundShoot.Editor","references":["BoundShoot","Unity.Netcode.Runtime"],"includePlatforms":["Editor"]}

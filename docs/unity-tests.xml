@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Passed" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.2169635">
+  <test-suite type="TestSuite" id="1015" name="派对射击 - Bound Shoot" fullname="派对射击 - Bound Shoot" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.216964" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1025" name="BoundShoot.Tests.dll" fullname="C:/Users/yafo777/Desktop/2026Autumn/IMDT/game_develop/Bound_Shoot/unity-client/Library/ScriptAssemblies/BoundShoot.Tests.dll" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.172137" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="37768" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1026" name="BoundShoot" fullname="BoundShoot" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.170062" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1027" name="Tests" fullname="BoundShoot.Tests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.166916" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1016" name="BattleRulesTests" fullname="BoundShoot.Tests.BattleRulesTests" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.162123" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1023" name="OfficialWeaponNumbersArePreserved" fullname="BoundShoot.Tests.BattleRulesTests.OfficialWeaponNumbersArePreserved" methodname="OfficialWeaponNumbersArePreserved" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="23325159" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.043514" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1020" name="ReviveRequiresContinuousFiveSeconds" fullname="BoundShoot.Tests.BattleRulesTests.ReviveRequiresContinuousFiveSeconds" methodname="ReviveRequiresContinuousFiveSeconds" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="399888625" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.001287" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1022" name="RopeBendsAroundCoverAndUnwrapsInClearSpace" fullname="BoundShoot.Tests.BattleRulesTests.RopeBendsAroundCoverAndUnwrapsInClearSpace" methodname="RopeBendsAroundCoverAndUnwrapsInClearSpace" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1128801674" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.015054" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1021" name="RopeModifiersRestoreBaseAndDoNotAccumulate" fullname="BoundShoot.Tests.BattleRulesTests.RopeModifiersRestoreBaseAndDoNotAccumulate" methodname="RopeModifiersRestoreBaseAndDoNotAccumulate" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="378340902" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.001418" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1017" name="ShieldAbsorbsBeforeIntegerHealth" fullname="BoundShoot.Tests.BattleRulesTests.ShieldAbsorbsBeforeIntegerHealth" methodname="ShieldAbsorbsBeforeIntegerHealth" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="235728018" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.000456" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1024" name="TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" fullname="BoundShoot.Tests.BattleRulesTests.TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" methodname="TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1543926447" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.005125" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1018" name="WeaponLockOnlyResetsWithDeath" fullname="BoundShoot.Tests.BattleRulesTests.WeaponLockOnlyResetsWithDeath" methodname="WeaponLockOnlyResetsWithDeath" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1601115967" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.001712" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1019" name="WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" fullname="BoundShoot.Tests.BattleRulesTests.WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" methodname="WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1474424311" result="Passed" start-time="2026-10-27 07:40:59Z" end-time="2026-10-27 07:40:59Z" duration="0.000951" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

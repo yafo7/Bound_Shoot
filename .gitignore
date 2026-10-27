@@ -1,0 +1,26 @@
+# Unity generated
+unity-client/[Ll]ibrary/
+unity-client/[Tt]emp/
+unity-client/[Oo]bj/
+unity-client/[Ll]ogs/
+unity-client/[Uu]ser[Ss]ettings/
+unity-client/[Bb]uilds/
+unity-client/*.csproj
+unity-client/*.sln
+unity-client/MemoryCaptures/
+# Local state and secrets
+**/node_modules/
+backend/dist/
+backend/data/
+backend/runtime/
+.env
+.env.*
+!.env.example
+builds/
+logs/
+*.log
+*.sqlite*
+*.db
+.vs/
+.DS_Store
+example/

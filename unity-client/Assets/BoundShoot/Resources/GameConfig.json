@@ -1,0 +1,289 @@
+{
+  "baseHealth": 3,
+  "roundSeconds": 180,
+  "countdownSeconds": 3,
+  "physicsHz": 30,
+  "snapshotHz": 15,
+  "moveSpeed": 5,
+  "acceleration": 14,
+  "ropeLength": 5,
+  "ropeSpring": 45,
+  "ropeDamping": 6,
+  "ropeMaxForce": 100,
+  "shortenScale": 0.65,
+  "extendScale": 1.5,
+  "elasticScale": 3,
+  "buffSeconds": 10,
+  "shieldCap": 1,
+  "reviveSeconds": 5,
+  "protectionSeconds": 2,
+  "bombFuse": 3,
+  "bombDamage": 2,
+  "bombRadius": 2.5,
+  "dashSpeed": 14,
+  "dashSeconds": 0.18,
+  "pickupRadius": 0.75,
+  "pickupRespawn": 10,
+  "inputTimeout": 0.3,
+  "disconnectGrace": 20,
+  "weapons": [
+    {
+      "kind": 1,
+      "name": "狙击枪",
+      "maxHealth": 1,
+      "damage": 4,
+      "range": 100,
+      "cooldown": 1.4,
+      "bulletSpeed": 40
+    },
+    {
+      "kind": 2,
+      "name": "手枪",
+      "maxHealth": 3,
+      "damage": 1,
+      "range": 7,
+      "cooldown": 0.45,
+      "bulletSpeed": 20
+    },
+    {
+      "kind": 3,
+      "name": "AK",
+      "maxHealth": 3,
+      "damage": 2,
+      "range": 15,
+      "cooldown": 0.22,
+      "bulletSpeed": 24
+    },
+    {
+      "kind": 4,
+      "name": "匕首",
+      "maxHealth": 5,
+      "damage": 3,
+      "range": 1.4,
+      "cooldown": 0.6,
+      "bulletSpeed": 0
+    }
+  ],
+  "items": [
+    {
+      "kind": 1,
+      "name": "绳索收缩",
+      "enabled": true,
+      "weight": 1,
+      "duration": 10
+    },
+    {
+      "kind": 2,
+      "name": "绳索延长",
+      "enabled": true,
+      "weight": 1,
+      "duration": 10
+    },
+    {
+      "kind": 3,
+      "name": "护盾",
+      "enabled": true,
+      "weight": 1,
+      "duration": 0
+    },
+    {
+      "kind": 4,
+      "name": "冲刺装置",
+      "enabled": true,
+      "weight": 1,
+      "duration": 0
+    },
+    {
+      "kind": 5,
+      "name": "炸弹",
+      "enabled": true,
+      "weight": 1,
+      "duration": 0
+    },
+    {
+      "kind": 6,
+      "name": "弹性强化",
+      "enabled": true,
+      "weight": 1,
+      "duration": 10
+    },
+    {
+      "kind": 7,
+      "name": "血包",
+      "enabled": true,
+      "weight": 1,
+      "duration": 0
+    }
+  ],
+  "maps": [
+    {
+      "id": "Arena_01",
+      "name": "经典竞技场",
+      "available": true,
+      "halfWidth": 16,
+      "halfHeight": 12,
+      "blueSpawns": [
+        {
+          "x": -13,
+          "y": -2.5
+        },
+        {
+          "x": -13,
+          "y": 0
+        },
+        {
+          "x": -13,
+          "y": 2.5
+        },
+        {
+          "x": -13,
+          "y": 5
+        }
+      ],
+      "redSpawns": [
+        {
+          "x": 13,
+          "y": -2.5
+        },
+        {
+          "x": 13,
+          "y": 0
+        },
+        {
+          "x": 13,
+          "y": 2.5
+        },
+        {
+          "x": 13,
+          "y": 5
+        }
+      ],
+      "supplies": [
+        {
+          "x": -9,
+          "y": -3
+        },
+        {
+          "x": -9,
+          "y": 0
+        },
+        {
+          "x": -9,
+          "y": 3
+        },
+        {
+          "x": -7,
+          "y": -1.5
+        },
+        {
+          "x": -7,
+          "y": 1.5
+        },
+        {
+          "x": 9,
+          "y": -3
+        },
+        {
+          "x": 9,
+          "y": 0
+        },
+        {
+          "x": 9,
+          "y": 3
+        },
+        {
+          "x": 7,
+          "y": -1.5
+        },
+        {
+          "x": 7,
+          "y": 1.5
+        },
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": -4
+        },
+        {
+          "x": 0,
+          "y": 4
+        }
+      ],
+      "revivals": [
+        {
+          "x": 0,
+          "y": 9
+        },
+        {
+          "x": 0,
+          "y": -9
+        }
+      ],
+      "blocks": [
+        {
+          "center": {
+            "x": -3.8,
+            "y": -2.8
+          },
+          "size": {
+            "x": 1.5,
+            "y": 1.5
+          }
+        },
+        {
+          "center": {
+            "x": 3.8,
+            "y": 2.8
+          },
+          "size": {
+            "x": 1.5,
+            "y": 1.5
+          }
+        },
+        {
+          "center": {
+            "x": -3.8,
+            "y": 2.8
+          },
+          "size": {
+            "x": 1.5,
+            "y": 1.5
+          }
+        },
+        {
+          "center": {
+            "x": 3.8,
+            "y": -2.8
+          },
+          "size": {
+            "x": 1.5,
+            "y": 1.5
+          }
+        },
+        {
+          "center": {
+            "x": 0,
+            "y": 6
+          },
+          "size": {
+            "x": 4,
+            "y": 1
+          }
+        },
+        {
+          "center": {
+            "x": 0,
+            "y": -6
+          },
+          "size": {
+            "x": 4,
+            "y": 1
+          }
+        }
+      ]
+    }
+  ]
+}

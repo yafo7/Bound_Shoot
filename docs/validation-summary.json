@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "environment": "Windows / Unity 2022.3.62f3c1 / Node 24.15.0",
+  "unityTests": {
+    "passed": 8,
+    "failed": 0
+  },
+  "backendSuites": {
+    "passed": 2,
+    "failed": 0
+  },
+  "windowsBuild": true,
+  "contentValidation": true,
+  "fourClientsSynchronized": true,
+  "twoCompleteRounds": true,
+  "rounds": [
+    {
+      "matchId": "d61f81cf-5b09-420c-a415-cd2afe81d91f",
+      "status": "Finished",
+      "mapId": "Arena_01",
+      "result": {
+        "winner": -1,
+        "duration": 3.2333335876464844,
+        "players": [
+          {
+            "userId": "76ab0bc5-8ef9-4376-9f04-5a43e7ff52f4",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "154f038a-db8e-49fd-a313-406016d79094",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          },
+          {
+            "userId": "d7b8c1cd-3c6b-4ecf-9ae1-30ce2f979c54",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "0b0d21ce-bea6-4d43-ab27-c27a8e65c5b1",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          }
+        ]
+      }
+    },
+    {
+      "matchId": "0845ef68-a085-4c2d-b3ba-748c0180e2d5",
+      "status": "Finished",
+      "mapId": "Arena_01",
+      "result": {
+        "winner": -1,
+        "duration": 3.700000047683716,
+        "players": [
+          {
+            "userId": "76ab0bc5-8ef9-4376-9f04-5a43e7ff52f4",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "154f038a-db8e-49fd-a313-406016d79094",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          },
+          {
+            "userId": "d7b8c1cd-3c6b-4ecf-9ae1-30ce2f979c54",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 1
+          },
+          {
+            "userId": "0b0d21ce-bea6-4d43-ab27-c27a8e65c5b1",
+            "kills": 1,
+            "deaths": 1,
+            "damage": 3
+          }
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "Same computer, four independent client processes and separate Unity server processes",
+    "Linux build and cross-computer acceptance not executed"
+  ]
+}
