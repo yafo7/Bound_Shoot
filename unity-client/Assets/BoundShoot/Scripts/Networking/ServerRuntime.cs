@@ -12,7 +12,8 @@ namespace BoundShoot {
   public HttpApi Api;LaunchConfig launch;BattleWorld world;
   readonly Dictionary<ulong,RoomMember> approved=new Dictionary<ulong,RoomMember>();
   readonly HashSet<string> pendingUsers=new HashSet<string>();
-  bool ending;
+  readonly HashSet<ulong> closedClients=new HashSet<ulong>();
+  bool ending,finishing;
   string Path(string suffix)=>"/internal/matches/"+launch.matchId+"/"+suffix;
   IEnumerator Start(){
    Instance=this;string[] args=Environment.GetCommandLineArgs();int at=Array.IndexOf(args,"-matchFile");
@@ -33,6 +34,7 @@ namespace BoundShoot {
    StartCoroutine(Heartbeat());
   }
   void Approve(NetworkManager.ConnectionApprovalRequest request,NetworkManager.ConnectionApprovalResponse response){
+   closedClients.Remove(request.ClientNetworkId);
    response.Pending=true;response.CreatePlayerObject=false;
    if(ending||request.Payload==null||request.Payload.Length>512){response.Approved=false;response.Pending=false;return;}
    string ticket=Encoding.UTF8.GetString(request.Payload);
@@ -41,7 +43,7 @@ namespace BoundShoot {
   IEnumerator Validate(ulong cid,string ticket,NetworkManager.ConnectionApprovalResponse response){
    RoomMember member=null;
    yield return Api.Request<RoomMember>("POST",Path("consume-ticket"),new TicketBody{ticket=ticket},v=>member=v,e=>{},false);
-   if(member==null||world==null||ending){response.Approved=false;response.Reason="连接票据无效或对战已结束";response.Pending=false;yield break;}
+   if(member==null||world==null||ending||finishing||closedClients.Contains(cid)){response.Approved=false;response.Reason="无法加入对局";response.Pending=false;yield break;}
    var player=world.Find(member.userId);
    if(player==null||player.Connected.Value||pendingUsers.Contains(member.userId)){
     response.Approved=false;response.Reason="该账号已经连接战斗";response.Pending=false;yield break;
@@ -54,19 +56,23 @@ namespace BoundShoot {
    }
   }
   void Disconnected(ulong cid){
-   if(approved.TryGetValue(cid,out var m)){pendingUsers.Remove(m.userId);approved.Remove(cid);}
-   world?.Detach(cid);
+   closedClients.Add(cid);
+   if(approved.TryGetValue(cid,out var m)){pendingUsers.Remove(m.userId);approved.Remove(cid);world?.Detach(cid,m.userId);}
   }
   IEnumerator Heartbeat(){
-   while(!ending){
+   float lastSuccess=Time.realtimeSinceStartup;
+   while(!ending&&!finishing){
     bool success=false;
     yield return Api.Request<Empty>("POST",Path("heartbeat"),new HeartbeatBody{playing=world.Phase.Value==2},v=>success=true,e=>{},false);
-    if(!success){Abort("后端心跳失败");yield break;}
-    yield return new WaitForSecondsRealtime(5);
+    if(finishing||ending)yield break;
+    if(success)lastSuccess=Time.realtimeSinceStartup;
+    else if(Time.realtimeSinceStartup-lastSuccess>=20){Abort("后端心跳超时");yield break;}
+    yield return new WaitForSecondsRealtime(success?5:1);
    }
   }
   IEnumerator Submit(BattleResult result){
    if(ending)yield break;
+   finishing=true;
    // Freeze gameplay immediately, but retry the idempotent authoritative write.
    bool saved=false;
    for(int attempt=0;attempt<5&&!saved;attempt++){

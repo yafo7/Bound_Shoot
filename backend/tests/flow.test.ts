@@ -84,6 +84,11 @@ test('real HTTP account → room → single-use tickets → authoritative result
   ws.send(JSON.stringify({type:'auth',accessToken:users[0].accessToken}));
   assert.equal((await event).event,'authenticated');ws.close();
   for(let i=0;i<4;i++)await api(i,'PUT',roomUrl+'/ready',{ready:true});
+  s.cfg.serverMode='managed';s.cfg.serverPath=path.join(runtime,'missing-game-server');
+  const unavailable=await api(0,'POST',roomUrl+'/start');
+  assert.equal(unavailable.status,503);assert.equal(unavailable.error.code,'SERVER_UNCONFIGURED');
+  assert.equal(s.store.get('SELECT count(*) n FROM matches').n,1);
+  s.cfg.serverMode='manual';
   assert.equal((await api(0,'POST',roomUrl+'/start')).status,503); // manual process release cooldown
   s.store.run('UPDATE matches SET ended_at=0 WHERE id=?',mid);
   const next=(await api(0,'POST',roomUrl+'/start')).data;assert.notEqual(next.id,mid);

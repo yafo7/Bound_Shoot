@@ -89,5 +89,6 @@
   "limits": [
     "Same computer, four independent client processes and separate Unity server processes",
     "Linux build and cross-computer acceptance not executed"
-  ]
+  ],
+  "scope": "Historical e9d7810 validation before source-only UI/network revisions; not current remote acceptance."
 }

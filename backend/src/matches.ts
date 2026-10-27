@@ -1,4 +1,4 @@
-import {mkdirSync,writeFileSync,unlinkSync} from 'node:fs';
+import {mkdirSync,writeFileSync,unlinkSync,accessSync,constants} from 'node:fs';
 import {spawn,ChildProcess} from 'node:child_process';
 import path from 'node:path';
 import type {Config} from './config.js';
@@ -24,7 +24,10 @@ export class Matches {
   check(room.members.length===room.size*2&&room.members.every((m:any)=>m.ready),409,'NOT_READY','需要两队满员且全员准备');
   const count=this.store.get("SELECT count(*) n FROM matches WHERE status IN ('Starting','Ready','Playing')").n;
   check(count<this.cfg.maxMatches,503,'SERVER_BUSY','服务器繁忙');
-  if(this.cfg.serverMode==='managed')check(this.cfg.serverPath,503,'SERVER_UNCONFIGURED','尚未配置游戏服务器程序');
+  if(this.cfg.serverMode==='managed'){
+   let executable=false;try{accessSync(this.cfg.serverPath,constants.X_OK);executable=true;}catch{}
+   check(executable,503,'SERVER_UNCONFIGURED','对战服务尚未就绪');
+  }
   let port=-1;
   for(let candidate=this.cfg.portStart;candidate<this.cfg.portStart+this.cfg.maxMatches;candidate++){
    if(this.store.get("SELECT id FROM matches WHERE port=? AND status IN ('Starting','Ready','Playing')",candidate))continue;

@@ -15,6 +15,7 @@ namespace BoundShoot {
    Time.fixedDeltaTime=1f/GameConfig.Current.physicsHz;Physics2D.gravity=Vector2.zero;
    var net=new GameObject("Network");DontDestroyOnLoad(net);
    var transport=net.AddComponent<UnityTransport>();Network=net.AddComponent<NetworkManager>();
+   transport.DisconnectTimeoutMS=NetworkSettings.Current.TransportDisconnectMs;transport.HeartbeatTimeoutMS=1000;
    Network.NetworkConfig=new NetworkConfig{NetworkTransport=transport,EnableSceneManagement=false,ConnectionApproval=true,
     TickRate=(uint)GameConfig.Current.physicsHz,ClientConnectionBufferTimeout=20,ForceSamePrefabs=true};
    Network.AddNetworkPrefab(Resources.Load<GameObject>("NetPlayer"));

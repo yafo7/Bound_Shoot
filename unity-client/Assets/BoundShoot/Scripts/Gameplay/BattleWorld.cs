@@ -9,7 +9,7 @@ namespace BoundShoot {
  [Serializable] public class PickupState {public Vector2 position;public int weapon,item;public bool active;public float respawnAt;}
  [Serializable] public class ProjectileState {public Vector2 position,direction;public float remaining,speed;public int damage,ownerSeat,team;[NonSerialized]public NetPlayer owner;}
  [Serializable] public class BombState {public Vector2 position;public float explodeAt;public int team;[NonSerialized]public NetPlayer owner;}
- [Serializable] public class RopeState {public int team;public Vector2[] points;}
+ [Serializable] public class RopeState {public int team,seatA,seatB;public Vector2[] points;}
  [Serializable] public class WorldSnapshot {public PickupState[] pickups;public ProjectileState[] bullets;public BombState[] bombs;public RopeState[] ropes;}
  public class BattleWorld:NetworkBehaviour {
   public static BattleWorld Instance;
@@ -24,6 +24,7 @@ namespace BoundShoot {
   readonly List<BombState> bombs=new List<BombState>();
   readonly List<SpriteRenderer> pickupViews=new List<SpriteRenderer>(),bulletViews=new List<SpriteRenderer>(),bombViews=new List<SpriteRenderer>();
   readonly List<LineRenderer> ropeViews=new List<LineRenderer>();
+  RopeState[] renderedRopes;
   RopePath paths;MapDefinition map;float startAt,roundAt,nextSnapshot;
   float[] shortenUntil=new float[2],extendUntil=new float[2];float elasticUntil;
   bool resultSent;float[] disconnectedProtection;
@@ -57,8 +58,8 @@ namespace BoundShoot {
    var p=Find(member.userId);if(p==null)return;
    p.NetworkObject.ChangeOwnership(clientId);p.Connected.Value=true;p.DisconnectAt=-1;p.ResetInput();
   }
-  public void Detach(ulong clientId){
-   foreach(var p in Players)if(p.OwnerClientId==clientId){
+  public void Detach(ulong clientId,string userId=null){
+   foreach(var p in Players)if(userId!=null?p.UserId.Value.ToString()==userId:p.OwnerClientId==clientId){
     p.Connected.Value=false;p.DisconnectAt=Time.time;p.ResetInput();p.NetworkObject.RemoveOwnership();
    }
   }
@@ -192,12 +193,13 @@ namespace BoundShoot {
    OnResult?.Invoke(result);
   }
   void BroadcastSnapshot(){
-   var snapshot=new WorldSnapshot{pickups=pickups.ToArray(),bullets=bullets.ToArray(),bombs=bombs.ToArray(),ropes=ropes.Select(r=>new RopeState{team=r.a.Team.Value,points=r.path}).ToArray()};
+   var snapshot=new WorldSnapshot{pickups=pickups.ToArray(),bullets=bullets.ToArray(),bombs=bombs.ToArray(),ropes=ropes.Select(r=>new RopeState{team=r.a.Team.Value,seatA=r.a.Seat.Value,seatB=r.b.Seat.Value,points=r.path}).ToArray()};
    string json=JsonUtility.ToJson(snapshot);SnapshotClientRpc(json);
   }
   [ClientRpc]void SnapshotClientRpc(string json){
    if(IsServer)return;
    var state=JsonUtility.FromJson<WorldSnapshot>(json);
+   renderedRopes=state.ropes;
    SyncIcons(pickupViews,state.pickups.Length,"Supply",.65f,3);
    for(int i=0;i<state.pickups.Length;i++){
     var p=state.pickups[i];var view=pickupViews[i];view.enabled=p.active;view.transform.position=p.position;
@@ -221,6 +223,15 @@ namespace BoundShoot {
   void SyncIcons(List<SpriteRenderer> views,int count,string label,float size,int order){
    while(views.Count<count)views.Add(Draw2D.Shape(transform,label,Vector2.zero,Vector2.one*size,Color.white,true,order));
    for(int i=0;i<views.Count;i++)views[i].gameObject.SetActive(i<count);
+  }
+  void LateUpdate(){
+   if(IsServer||renderedRopes==null)return;
+   for(int i=0;i<renderedRopes.Length&&i<ropeViews.Count;i++){
+    var rope=renderedRopes[i];var line=ropeViews[i];if(line.positionCount<2)continue;
+    var a=NetPlayer.All.Find(p=>p.Team.Value==rope.team&&p.Seat.Value==rope.seatA);
+    var b=NetPlayer.All.Find(p=>p.Team.Value==rope.team&&p.Seat.Value==rope.seatB);
+    if(a!=null)line.SetPosition(0,a.transform.position);if(b!=null)line.SetPosition(line.positionCount-1,b.transform.position);
+   }
   }
  }
 }

@@ -4,21 +4,16 @@ After=network.target
 
 [Service]
 Type=simple
-User=boundshoot
-Group=boundshoot
-WorkingDirectory=/opt/bound-shoot/backend
+WorkingDirectory="@PROJECT_ROOT@/backend"
 Environment=NODE_ENV=production
-EnvironmentFile=/etc/bound-shoot.env
-ExecStart=/usr/bin/node dist/index.js
+EnvironmentFile="@PROJECT_ROOT@/backend/.env"
+ExecStart="@NODE@" dist/index.js
 Restart=on-failure
 RestartSec=3
 KillMode=control-group
 TimeoutStopSec=20
 UMask=0077
 NoNewPrivileges=true
-ProtectSystem=strict
-ReadWritePaths=/var/lib/bound-shoot
-PrivateTmp=true
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -13,7 +13,7 @@ namespace BoundShoot {
    gameObject.AddComponent<GraphicRaycaster>();Root=GetComponent<RectTransform>();
    if(FindObjectOfType<EventSystem>()==null)new GameObject("EventSystem",typeof(EventSystem),typeof(StandaloneInputModule));
   }
-  public void Clear(){foreach(Transform child in transform)Destroy(child.gameObject);}
+  public void Clear(){foreach(Transform child in transform){child.gameObject.SetActive(false);Destroy(child.gameObject);}}
   public void Backdrop(Color color){
    var go=new GameObject("Background",typeof(RectTransform),typeof(Image));var r=go.GetComponent<RectTransform>();r.SetParent(Root,false);
    r.anchorMin=Vector2.zero;r.anchorMax=Vector2.one;r.offsetMin=r.offsetMax=Vector2.zero;go.GetComponent<Image>().color=color;
