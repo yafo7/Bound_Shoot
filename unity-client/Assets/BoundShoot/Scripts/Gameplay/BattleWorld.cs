@@ -6,7 +6,7 @@ using Unity.Collections;
 using UnityEngine;
 
 namespace BoundShoot {
- [Serializable] public class PickupState {public Vector2 position;public int weapon,item;public bool active;public float respawnAt;}
+ [Serializable] public class PickupState {public Vector2 position;public int weapon,item;public bool active;public float respawnAt;public float respawnSeconds;public bool randomizeOnRespawn;}
  [Serializable] public class ProjectileState {public Vector2 position,direction;public float remaining,speed;public int damage,ownerSeat,team;[NonSerialized]public NetPlayer owner;}
  [Serializable] public class BombState {public Vector2 position;public float explodeAt;public int team;[NonSerialized]public NetPlayer owner;}
  [Serializable] public class RopeState {public int team,seatA,seatB;public Vector2[] points;}
@@ -48,11 +48,7 @@ namespace BoundShoot {
     var members=Players.Where(p=>p.Team.Value==team).OrderBy(p=>p.Seat.Value).ToArray();
     for(int i=1;i<members.Length;i++)ropes.Add(new RopeLink(members[i-1],members[i],transform));
    }
-   for(int i=0;i<map.supplies.Length;i++){
-    // Both approach lanes guarantee all four weapon choices before the first respawn.
-    int local=i<5?i:i<10?i-5:4;
-    pickups.Add(new PickupState{position=map.supplies[i],weapon=local<4?local+1:0,item=local<4?0:(int)ItemKind.Mystery,active=true});
-   }
+   foreach(var definition in MapContent.Pickups(map,GameConfig.Current.pickupRespawn))pickups.Add(MapContent.CreatePickup(definition));
    Clock.Value=GameConfig.Current.roundSeconds;startAt=Time.time;
   }
   public NetPlayer Find(string uid)=>Players.Find(p=>p.UserId.Value.ToString()==uid);
@@ -133,17 +129,12 @@ namespace BoundShoot {
   void TickPickups(){
    var c=GameConfig.Current;
    foreach(var drop in pickups){
-    if(!drop.active){
-     if(Time.time<drop.respawnAt)continue;
-     drop.active=true;
-     if(UnityEngine.Random.value<.55f){drop.weapon=UnityEngine.Random.Range(1,5);drop.item=0;}
-     else{drop.weapon=0;drop.item=(int)(UnityEngine.Random.value<.4f?ItemKind.Mystery:RandomItem());}
-    }
+    if(!drop.active&&!MapContent.TryRespawn(drop,Time.time,RandomItem))continue;
     foreach(var p in Players){
      if(!p.Alive||!p.Connected.Value||Vector2.Distance(p.Body.position,drop.position)>c.pickupRadius)continue;
      if(drop.weapon>0&&!p.Equip((WeaponKind)drop.weapon))continue;
      if(drop.item>0)ApplyItem(p,(ItemKind)drop.item);
-     drop.active=false;drop.respawnAt=Time.time+c.pickupRespawn;break;
+     MapContent.ScheduleRespawn(drop,Time.time);break;
     }
    }
   }
@@ -185,7 +176,7 @@ namespace BoundShoot {
    var r=Draw2D.Shape(transform,"Explosion",position,Vector2.one*radius*2,new Color(1,.5f,.2f,.5f),true,14);Destroy(r.gameObject,.2f);
   }
   void RevivePlayer(NetPlayer p,float dt){
-   bool inside=map.revivals.Any(v=>Mathf.Abs(p.Body.position.x-v.x)<2&&Mathf.Abs(p.Body.position.y-v.y)<1.5f);
+   bool inside=MapContent.InRevival(map,p.Body.position);
    p.Revive.Value=BattleRules.ReviveProgress(p.Revive.Value,inside,dt);
    if(p.Revive.Value>=GameConfig.Current.reviveSeconds)p.Resurrect();
   }

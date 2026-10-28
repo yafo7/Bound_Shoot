@@ -30,18 +30,19 @@ namespace BoundShoot {
     Wall(new Vector2(0,map.halfHeight+.5f),new Vector2(map.halfWidth*2+2,1));Wall(new Vector2(0,-map.halfHeight-.5f),new Vector2(map.halfWidth*2+2,1));
     Wall(new Vector2(-map.halfWidth-.5f,0),new Vector2(1,map.halfHeight*2));Wall(new Vector2(map.halfWidth+.5f,0),new Vector2(1,map.halfHeight*2));return;
    }
-   Draw2D.Shape(transform,"Floor",Vector2.zero,new Vector2(map.halfWidth*2,map.halfHeight*2),new Color(.13f,.19f,.23f),false,-10);
-   Draw2D.Shape(transform,"CombatRing",Vector2.zero,Vector2.one*18,new Color(.17f,.24f,.27f),true,-9);
+   Draw2D.Shape(transform,"Floor",Vector2.zero,new Vector2(map.halfWidth*2,map.halfHeight*2),MapContent.Ground(map),false,-10);
+   if(map.layoutVersion<1||map.floors==null)Draw2D.Shape(transform,"CombatRing",Vector2.zero,Vector2.one*18,new Color(.17f,.24f,.27f),true,-9);
+   else foreach(var floor in map.floors)Draw2D.Shape(transform,"Floor patch",floor.center,floor.size,floor.color,false,-9);
    for(int x=-(int)map.halfWidth;x<=map.halfWidth;x+=2)Draw2D.Shape(transform,"Grid",new Vector2(x,0),new Vector2(.025f,map.halfHeight*2),new Color(.19f,.26f,.29f),false,-8);
    for(int y=-(int)map.halfHeight;y<=map.halfHeight;y+=2)Draw2D.Shape(transform,"Grid",new Vector2(0,y),new Vector2(map.halfWidth*2,.025f),new Color(.19f,.26f,.29f),false,-8);
-   foreach(var p in map.revivals){
-    Draw2D.Shape(transform,"Revival zone",p,new Vector2(4,3),new Color(.14f,.5f,.39f),false,-7);
+   foreach(var zone in MapContent.Revivals(map)){
+    var p=zone.center;Draw2D.Shape(transform,"Revival zone",p,zone.size,new Color(.14f,.5f,.39f),false,-7);
     Draw2D.Shape(transform,"Cross",p,new Vector2(1.3f,.3f),new Color(.5f,1,.76f),false,-6);
     Draw2D.Shape(transform,"Cross",p,new Vector2(.3f,1.3f),new Color(.5f,1,.76f),false,-6);
    }
-   foreach(var p in map.supplies)Draw2D.Shape(transform,"Supply pad",p,Vector2.one*1.25f,new Color(.36f,.32f,.2f),true,-6);
-   Draw2D.Shape(transform,"Blue spawn",new Vector2(-13,0),new Vector2(3.5f,15),new Color(.13f,.25f,.37f),false,-7);
-   Draw2D.Shape(transform,"Red spawn",new Vector2(13,0),new Vector2(3.5f,15),new Color(.36f,.18f,.23f),false,-7);
+   foreach(var p in MapContent.Pickups(map))Draw2D.Shape(transform,"Supply pad",p.position,Vector2.one*1.25f,new Color(.36f,.32f,.2f),true,-6);
+   foreach(var p in map.blueSpawns)Draw2D.Shape(transform,"Blue spawn",p,Vector2.one*1.2f,new Color(.13f,.25f,.37f),true,-7);
+   foreach(var p in map.redSpawns)Draw2D.Shape(transform,"Red spawn",p,Vector2.one*1.2f,new Color(.36f,.18f,.23f),true,-7);
    foreach(var b in map.blocks)Wall(b.center,b.size);
    Wall(new Vector2(0,map.halfHeight+.5f),new Vector2(map.halfWidth*2+2,1));
    Wall(new Vector2(0,-map.halfHeight-.5f),new Vector2(map.halfWidth*2+2,1));

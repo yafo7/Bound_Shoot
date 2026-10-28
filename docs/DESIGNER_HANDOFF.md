@@ -4,6 +4,8 @@
 
 ## 日常改动入口
 
+关卡优先使用 **Bound Shoot → Level Editor 关卡编辑器**，详细操作见 [LEVEL_EDITOR.md](LEVEL_EDITOR.md)。支持直接摆放地面、障碍、四类武器、七种道具和问号盒、出生点及可调整尺寸的复活区；保存到游戏配置后由运行时读取。旧地图补给顺序规则仅适用于尚未转为明确点位配置的地图。
+
 Unity → Assets/BoundShoot/Resources/GameConfig.json。
 客户端和专用服务器共用这份配置；后端也读取同一份配置中的可用地图列表。修改后需重新构建客户端与游戏服务器，后端重启。
 同一场比赛的所有参与者应使用同一版本。发布时同时更新三端。
@@ -22,7 +24,7 @@ maps 每条：id、name、available、halfWidth、halfHeight、blueSpawns、redS
 坐标单位为 Unity 世界单位，俯视平面 XY，Z仅绘图排序。出生数组必须各有4个位置，分别对应队内座位0–3。
 blocks 用 center(x,y)、size(x,y) 定义轴对齐矩形。绳索可见性图、角色与子弹碰撞都由这些数据生成；不要仅修改美术位置而不修改碰撞数据。
 补给位置初始左右各4类武器和问号盒；刷新后随机武器/道具。复活点以中心±(2,1.5)矩形判定。
-只将可玩的地图设 available=true。房间地图按钮会轮换已注册地图；未开放地图不会出现。
+只将可玩的地图设 available=true。房间地图按钮会轮换已注册地图；未开放地图不会出现。编辑器新增地图会导出layoutVersion=1、pickups、floors和revivalZones，具体道具种类及刷新周期无需再依靠supplies的数组顺序推断。
 
 当前地图是参考图的结构占位版，使用基本几何体，不是最终视觉。角色、拾取物、障碍、绳子绘制入口：
 Scripts/Gameplay/ArenaView.cs（Draw2D/ArenaView）

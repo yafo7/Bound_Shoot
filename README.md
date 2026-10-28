@@ -10,6 +10,8 @@ Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威�
 
 美术讨论已保存并暂停：[美术风格讨论](docs/ART_STYLE_OPTIONS.md)。
 
+关卡设计入口：**Unity → Bound Shoot → Level Editor 关卡编辑器**，操作见 [关卡编辑器说明](docs/LEVEL_EDITOR.md)。可视化摆放地面、障碍、武器、道具、出生点和复活区，直接保存游戏地图配置。
+
 - [设计同学交接](docs/DESIGNER_HANDOFF.md)
 - [接口说明](docs/API.md)
 - [验证状态与限制](docs/STATUS.md)

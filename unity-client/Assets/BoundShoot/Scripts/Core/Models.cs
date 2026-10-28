@@ -38,9 +38,18 @@ namespace BoundShoot {
   public string name;public ItemKind kind;public bool enabled=true;public float weight=1,duration=10;
  }
  [Serializable] public class BlockDefinition {public Vector2 center,size;}
+ [Serializable] public class FloorDefinition {public Vector2 center,size;public Color color=Color.gray;}
+ [Serializable] public class RevivalDefinition {public Vector2 center,size;}
+ [Serializable] public class PickupDefinition {
+  public Vector2 position;public WeaponKind weapon;public ItemKind item;
+  public float respawnSeconds=10;public bool randomizeOnRespawn;
+ }
  [Serializable] public class MapDefinition {
   public string id,name;public bool available;public float halfWidth,halfHeight;
   public Vector2[] blueSpawns,redSpawns,supplies,revivals;public BlockDefinition[] blocks;
+  public int layoutVersion;public Color groundColor;public FloorDefinition[] floors;
+  // Version 0 uses legacy positional arrays; version 1 uses explicit typed arrays.
+  public PickupDefinition[] pickups;public RevivalDefinition[] revivalZones;
  }
  [Serializable] public class GameConfig {
   public int baseHealth=3,roundSeconds=180,shieldCap=1,bombDamage=2;
