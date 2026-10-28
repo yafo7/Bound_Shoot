@@ -23,12 +23,16 @@ if($Target -eq "LinuxServer"){
  $server=Join-Path $upload "server"
  $content=Join-Path $upload "content"
  $deployment=Join-Path $upload "deployment"
- New-Item -ItemType Directory -Path $server,$content,$deployment -Force | Out-Null
+ $backend=Join-Path $upload "backend"
+ New-Item -ItemType Directory -Path $server,$content,$deployment,$backend -Force | Out-Null
  Get-ChildItem -LiteralPath (Join-Path $output "LinuxServer") | Where-Object {$_.Name -notlike "*_DoNotShip"} | ForEach-Object {
   Copy-Item -LiteralPath $_.FullName -Destination $server -Recurse -Force
  }
  Copy-Item -LiteralPath (Join-Path $project "Assets\BoundShoot\Resources\GameConfig.json") -Destination $content -Force
  Copy-Item -LiteralPath (Join-Path $repo "deployment\activate-game-server.sh") -Destination $deployment -Force
+ foreach($name in @("src","migrations","package.json","package-lock.json","tsconfig.json")){
+  Copy-Item -LiteralPath (Join-Path (Join-Path $repo "backend") $name) -Destination $backend -Recurse -Force
+ }
  Write-Host "Copy the contents of $upload into /home/ubuntu/Bound_Shoot/."
 }
 Write-Host "Built $Target into $output. No archive was created."

@@ -5,6 +5,7 @@ export interface Config {
  host:string; port:number; dbPath:string; accessSecret:string; gameHost:string; portStart:number;
  maxMatches:number; serverMode:string; serverPath:string; runtimeDir:string;
  accessSeconds:number; refreshSeconds:number; reconnectSeconds:number; startupSeconds:number;gameConfigPath:string;
+ quickPlay:boolean;
 }
 export function config(overrides:Partial<Config> = {}):Config {
  const secret=process.env.ACCESS_SECRET || randomBytes(48).toString('hex');
@@ -16,5 +17,5 @@ export function config(overrides:Partial<Config> = {}):Config {
  maxMatches:Number(process.env.MAX_MATCHES || 2),serverMode:process.env.SERVER_MODE || 'manual',
  serverPath:process.env.GAME_SERVER_PATH || '',runtimeDir:path.resolve(process.env.RUNTIME_DIR || 'runtime'),
  accessSeconds:900,refreshSeconds:30*86400,reconnectSeconds:20,startupSeconds:90,
- gameConfigPath:path.resolve(process.env.GAME_CONFIG_PATH || '../unity-client/Assets/BoundShoot/Resources/GameConfig.json'),...overrides};
+ gameConfigPath:path.resolve(process.env.GAME_CONFIG_PATH || '../unity-client/Assets/BoundShoot/Resources/GameConfig.json'),quickPlay:true,...overrides};
 }

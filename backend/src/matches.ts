@@ -3,7 +3,7 @@ import {spawn,ChildProcess} from 'node:child_process';
 import path from 'node:path';
 import type {Config} from './config.js';
 import {Store} from './database.js';
-import {Rooms} from './rooms.js';
+import {Rooms,QUICK_ROOM_ID} from './rooms.js';
 import {check,digest,id,now,opaque} from './security.js';
 export class Matches {
  processes=new Map<string,ChildProcess>();
@@ -19,7 +19,7 @@ export class Matches {
  }
  start(uid:string,rid:string) {
   const room=this.rooms.require(uid,rid);
-  check(room.hostId===uid,403,'HOST_ONLY','仅房主可以开始');
+  check(rid===QUICK_ROOM_ID||room.hostId===uid,403,'HOST_ONLY','仅房主可以开始');
   if(room.status!=='Waiting')return this.view(room.matchId,uid);
   check(room.members.length===room.size*2&&room.members.every((m:any)=>m.ready),409,'NOT_READY','需要两队满员且全员准备');
   const count=this.store.get("SELECT count(*) n FROM matches WHERE status IN ('Starting','Ready','Playing')").n;
@@ -40,7 +40,7 @@ export class Matches {
   const mid=id(),secret=opaque();
   this.store.transaction(()=>{
    this.store.run("INSERT INTO matches(id,room_id,map_id,port,secret_hash,status,created_at,heartbeat) VALUES(?,?,?,?,?,'Starting',?,?)",mid,rid,room.mapId,port,digest(secret),now(),now());
-   for(const m of room.members)this.store.run('INSERT INTO match_players(match_id,user_id,username,skin,team,seat) VALUES(?,?,?,?,?,?)',mid,m.userId,m.username,m.skin,m.team,m.seat);
+   for(const m of room.members)this.store.run('INSERT INTO match_players(match_id,user_id,username,skin,team,seat,is_bot) VALUES(?,?,?,?,?,?,?)',mid,m.userId,m.username,m.skin,m.team,m.seat,m.isBot??0);
    this.store.run("UPDATE rooms SET status='Starting',match_id=? WHERE id=?",mid,rid);
   });
   try {
@@ -62,7 +62,7 @@ export class Matches {
   return m;
  }
  roster(mid:string) {
-  return this.store.all('SELECT user_id as userId,username,skin,team,seat FROM match_players WHERE match_id=? ORDER BY team,seat',mid);
+  return this.store.all('SELECT user_id as userId,username,skin,team,seat,is_bot as isBot FROM match_players WHERE match_id=? ORDER BY team,seat',mid);
  }
  view(mid:string,uid:string) {
   const m=this.store.get('SELECT * FROM matches WHERE id=?',mid);
@@ -79,7 +79,7 @@ export class Matches {
   });this.publish(m.room_id,'match.ready');return {accepted:true};
  }
  ticket(mid:string,uid:string) {
-  const m=this.view(mid,uid);check(['Ready','Playing'].includes(m.status),409,'SERVER_NOT_READY','服务器尚未就绪');
+  const m=this.view(mid,uid);check(!m.players.find(p=>p.userId===uid)?.isBot,403,'BOT_TICKET','AI不使用连接票据');check(['Ready','Playing'].includes(m.status),409,'SERVER_NOT_READY','服务器尚未就绪');
   const token=opaque();
   this.store.transaction(()=>{
    this.store.run('DELETE FROM match_tickets WHERE match_id=? AND user_id=? AND used=0',mid,uid);
@@ -93,7 +93,7 @@ export class Matches {
    const t=this.store.get('SELECT * FROM match_tickets WHERE hash=? AND match_id=? AND used=0 AND expires_at>?',digest(token),mid,now());
    check(t,403,'TICKET_INVALID','连接票据无效或已使用');
    this.store.run('UPDATE match_tickets SET used=1 WHERE hash=?',digest(token));
-   return this.store.get('SELECT user_id as userId,username,skin,team,seat FROM match_players WHERE match_id=? AND user_id=?',mid,t.user_id);
+   return this.store.get('SELECT user_id as userId,username,skin,team,seat,is_bot as isBot FROM match_players WHERE match_id=? AND user_id=?',mid,t.user_id);
   });
  }
  finish(mid:string,result:any) {

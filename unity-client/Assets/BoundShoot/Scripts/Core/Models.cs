@@ -6,7 +6,8 @@ namespace BoundShoot {
  [Serializable] public class Envelope<T> {public bool ok; public T data; public ApiError error;}
  [Serializable] public class Empty {}
  [Serializable] public class UserProfile {public string id,username,displayName,roomId;public int skin,games,wins,kills,deaths;}
- [Serializable] public class AuthData {public string accessToken,refreshToken;public UserProfile user;}
+ [Serializable] public class AuthData {public string accessToken,refreshToken;public UserProfile user;public RoomData room;}
+ [Serializable] public class NameBody {public string name;}
  [Serializable] public class Credentials {public string username,password;}
  [Serializable] public class RefreshBody {public string refreshToken;}
  [Serializable] public class SkinBody {public int skin;}
@@ -14,7 +15,7 @@ namespace BoundShoot {
  [Serializable] public class SeatBody {public int team,seat;}
  [Serializable] public class ReadyBody {public bool ready;}
  [Serializable] public class RoomConfigBody {public int size;public string mapId;}
- [Serializable] public class RoomMember {public string userId,username;public int skin,team,seat,ready;}
+ [Serializable] public class RoomMember {public string userId,username;public int skin,team,seat,ready,isBot;}
  [Serializable] public class RoomData {public string id,code,hostId,mapId,status,matchId;public int size;public RoomMember[] members;}
  [Serializable] public class MatchData {public string id,roomId,mapId,status,host;public int port;public RoomMember[] players;}
  [Serializable] public class TicketData {public string matchId,ticket,host;public int port;}

@@ -2,11 +2,13 @@
 
 Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威战斗服务器，Node.js 负责账号、房间和战绩。
 
-本轮按最新要求准备 Windows exe 与 Linux 战斗程序，以四个独立客户端开局并结算验收，不制作压缩包。游戏内只保留必要操作与状态，工作说明统一放在 Markdown 文档中。
+当前调试版：输入名字（例如 yafo777）直接进入唯一2v2房间，自动入座，AI补齐空位，点击开始游戏即可开战和结算。无需注册、密码、房号或准备。准备Windows exe与Linux战斗程序，不制作压缩包。
 
 ## 先阅读
 
-**[四个 exe 验收与上传步骤](docs/WORKLOG.md)**：运行 builds/Windows/BoundShoot.exe 即进入注册/登录；将 builds/UploadToServer 内的内容复制到云端项目目录，再执行激活脚本。
+**[名字直进与AI调试版说明](docs/QUICK_PLAY.md)**：运行 builds/Windows/BoundShoot.exe，输入名字进入。将 builds/UploadToServer 内的 backend、server、content、deployment 一起更新到云端，再执行激活脚本。
+
+美术讨论已保存并暂停：[美术风格讨论](docs/ART_STYLE_OPTIONS.md)。
 
 - [设计同学交接](docs/DESIGNER_HANDOFF.md)
 - [接口说明](docs/API.md)

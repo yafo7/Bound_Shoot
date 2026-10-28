@@ -7,6 +7,9 @@ test -f "$project_dir/backend/.env" || { echo 'Install the backend first.' >&2; 
 for file in "$server" "$project_dir/server/UnityPlayer.so" "$project_dir/server/BoundShootServer_Data/boot.config" "$project_dir/content/GameConfig.json"; do
   test -f "$file" || { echo "Missing: $file. Copy the complete LinuxServer folder contents into server/." >&2; exit 1; }
 done
+for file in "$project_dir/backend/src/quickplay.ts" "$project_dir/backend/migrations/002_quick_play.sql"; do
+  test -f "$file" || { echo "Missing updated backend file: $file. Copy the complete UploadToServer contents first." >&2; exit 1; }
+done
 if [ "$(systemctl --user show bound-shoot.service --property=WorkingDirectory --value)" != "$project_dir/backend" ]; then
   echo 'The service does not belong to this project. Nothing was changed.' >&2; exit 1
 fi
@@ -18,6 +21,9 @@ if command -v ldd >/dev/null; then
     echo 'Install the listed missing Linux libraries before activating.' >&2; exit 1
   fi
 fi
+cd "$project_dir/backend"
+npm ci --ignore-scripts
+npm run build
 node --input-type=module - "$project_dir" <<'NODE'
 import fs from 'node:fs';
 const root=process.argv[2],file=root+'/backend/.env';
@@ -31,4 +37,4 @@ fs.writeFileSync(file,source,{mode:0o600});
 NODE
 systemctl --user restart bound-shoot.service
 curl --fail --silent --show-error --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:3000/health
-printf '\nReady. The room host starts the match; the backend launches the game server automatically.\n'
+printf '\nReady. Enter a name, then start the shared 2v2 match. Empty seats use server AI.\n'

@@ -16,6 +16,7 @@ namespace BoundShoot {
   public NetworkVariable<double> SnapshotTime=new NetworkVariable<double>();
   public NetworkVariable<uint> InputEpoch=new NetworkVariable<uint>();
   public NetworkVariable<bool> Connected=new NetworkVariable<bool>();
+  public NetworkVariable<bool> IsBot=new NetworkVariable<bool>();
   public Rigidbody2D Body {get;private set;}
   public Vector2 Move,Aim=Vector2.right;public bool Fire,Use;
   public float LastInput,NextShot,ProtectionUntil,DashUntil,DisconnectAt=-1;
@@ -40,6 +41,7 @@ namespace BoundShoot {
   public override void OnNetworkDespawn(){All.Remove(this);snapshots.Clear();}
   public void Initialize(RoomMember m,Vector2 spawn) {
    UserId.Value=m.userId;DisplayName.Value=m.username;Team.Value=m.team;Seat.Value=m.seat;Skin.Value=m.skin;
+   IsBot.Value=m.isBot==1;Connected.Value=IsBot.Value;
    Health.Value=MaxHealth.Value=GameConfig.Current.baseHealth;Position.Value=spawn;Body.position=spawn;transform.position=spawn;
   }
   void Update(){
@@ -56,7 +58,7 @@ namespace BoundShoot {
    body.color=Alive?team:new Color(.33f,.37f,.4f);hat.color=new[]{new Color(1,.8f,.32f),new Color(.75f,.5f,1),new Color(.4f,1,.75f),new Color(1,.55f,.8f)}[Mathf.Clamp(Skin.Value,0,3)];
    nose.transform.localRotation=Quaternion.Euler(0,0,renderAngle);nose.transform.localPosition=new Vector2(Mathf.Cos(renderAngle*Mathf.Deg2Rad),Mathf.Sin(renderAngle*Mathf.Deg2Rad))*.45f;
    shieldRing.enabled=Shield.Value>0;hat.enabled=Alive;
-   label.text=DisplayName.Value.ToString()+(Connected.Value?"":" [离线]")+"\n"+(Alive?Health.Value+"/"+MaxHealth.Value:Revive.Value>0?("复活 "+Mathf.CeilToInt(GameConfig.Current.reviveSeconds-Revive.Value)+"s"):"倒地");
+   label.text=DisplayName.Value.ToString()+(IsBot.Value?" [AI]":Connected.Value?"":" [离线]")+"\n"+(Alive?Health.Value+"/"+MaxHealth.Value:Revive.Value>0?("复活 "+Mathf.CeilToInt(GameConfig.Current.reviveSeconds-Revive.Value)+"s"):"倒地");
    label.transform.rotation=Quaternion.identity;
    if(!IsOwner||!IsClient||!Connected.Value)return;
    if(Application.isFocused&&Input.GetKeyDown(KeyCode.E))Use=true;

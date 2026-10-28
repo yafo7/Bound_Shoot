@@ -10,6 +10,7 @@ import {Store} from './database.js';
 import {Auth,Fault,check,now} from './security.js';
 import {Rooms} from './rooms.js';
 import {Matches} from './matches.js';
+import {QuickPlay} from './quickplay.js';
 
 const credentials=z.object({username:z.string().trim().min(3).max(24).regex(/^[a-zA-Z0-9_\u4e00-\u9fff]+$/),password:z.string().min(8).max(72).refine(s=>Buffer.byteLength(s,'utf8')<=72,'密码最多 72 字节')});
 const resultSchema=z.object({winner:z.number().int().min(-1).max(1),duration:z.number().min(0).max(3600),
@@ -26,16 +27,24 @@ export function createService(overrides:Partial<Config>={}) {
  const catalog=JSON.parse(readFileSync(cfg.gameConfigPath,'utf8'));
  const availableMaps=catalog.maps.filter((m:any)=>m.available).map((m:any)=>({id:m.id,name:m.name,available:true}));
  const rooms=new Rooms(store,publish,availableMaps.map((m:any)=>m.id)),matches=new Matches(store,cfg,rooms,publish);
+ const quick=new QuickPlay(store,rooms,auth);
  app.disable('x-powered-by');app.use(helmet());app.use(express.json({limit:'16kb'}));
  app.use('/api/auth',rateLimit({windowMs:60000,limit:30,standardHeaders:'draft-8',legacyHeaders:false,
  handler:(_req,res)=>res.status(429).json({ok:false,error:{code:'RATE_LIMIT',message:'尝试过于频繁，请稍后重试'}})}));
  const ok=(res:Response,data:any)=>res.json({ok:true,data});
  const route=(fn:(req:Request,res:Response)=>any)=>(req:Request,res:Response,next:NextFunction)=>Promise.resolve().then(()=>fn(req,res)).catch(next);
- app.get('/health',(_req,res)=>ok(res,{service:'Bound Shoot',version:'0.1.0'}));
+ app.get('/health',(_req,res)=>ok(res,{service:'Bound Shoot',version:'0.2.0',entry:cfg.quickPlay?'name-only':'account',mode:cfg.quickPlay?'2v2':'rooms'}));
+ app.post('/api/auth/quick',route((req,res)=>{
+  check(cfg.quickPlay,404,'NOT_FOUND','入口未开放');
+  const {name}=z.object({name:z.string().trim().min(1).max(24).regex(/^[a-zA-Z0-9_\u4e00-\u9fff]+$/)}).parse(req.body);
+  ok(res,quick.login(name));
+ }));
  app.post('/api/auth/register',route(async(req,res)=>{
+  check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','请输入名字进入');
   const c=credentials.parse(req.body);ok(res,await auth.register(c.username,c.password));
  }));
  app.post('/api/auth/login',route(async(req,res)=>{
+  check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','请输入名字进入');
   const c=credentials.parse(req.body);ok(res,await auth.login(c.username,c.password));
  }));
  app.post('/api/auth/refresh',route((req,res)=>ok(res,auth.refresh(z.object({refreshToken:z.string().min(16).max(256)}).parse(req.body).refreshToken))));
@@ -60,9 +69,9 @@ export function createService(overrides:Partial<Config>={}) {
   if(member){store.run('UPDATE room_members SET ready=0 WHERE user_id=?',uid(res));publish(member.room_id,'cosmetic.changed');}
   ok(res,auth.profile(uid(res)));
  }));
- app.get('/api/catalog',(_req,res)=>ok(res,{maps:availableMaps,modes:[2,3,4]}));
- app.post('/api/rooms',route((_req,res)=>ok(res,rooms.create(uid(res)))));
- app.post('/api/rooms/join',route((req,res)=>ok(res,rooms.join(uid(res),z.object({code:z.string().regex(/^\d{6}$/)}).parse(req.body).code))));
+ app.get('/api/catalog',(_req,res)=>ok(res,{maps:availableMaps,modes:cfg.quickPlay?[2]:[2,3,4]}));
+ app.post('/api/rooms',route((_req,res)=>{check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','当前只有一个公共房间');ok(res,rooms.create(uid(res)));}));
+ app.post('/api/rooms/join',route((req,res)=>{check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','请输入名字进入公共房间');ok(res,rooms.join(uid(res),z.object({code:z.string().regex(/^\d{6}$/)}).parse(req.body).code));}));
  app.get('/api/rooms/:id',route((req,res)=>ok(res,rooms.require(uid(res),rid(req)))));
  app.post('/api/rooms/:id/leave',route((req,res)=>{rooms.leave(uid(res),rid(req));ok(res,{});}));
  app.put('/api/rooms/:id/seat',route((req,res)=>{

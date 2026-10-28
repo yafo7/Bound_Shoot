@@ -10,6 +10,8 @@ export class Store {
   this.db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;');
   const migration=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../migrations/001_initial.sql');
   this.db.exec(readFileSync(migration,'utf8'));
+  if(!this.get('SELECT version FROM schema_migrations WHERE version=2'))
+   this.transaction(()=>this.db.exec(readFileSync(path.join(path.dirname(migration),'002_quick_play.sql'),'utf8')));
  }
  get(sql:string,...args:any[]):any {return this.db.prepare(sql).get(...args);}
  all(sql:string,...args:any[]):any[] {return this.db.prepare(sql).all(...args);}

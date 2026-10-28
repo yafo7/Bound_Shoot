@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS quick_identities(
+ user_id TEXT PRIMARY KEY REFERENCES users(id), name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+ is_bot INTEGER NOT NULL DEFAULT 0 CHECK(is_bot IN (0,1)));
+ALTER TABLE match_players ADD COLUMN is_bot INTEGER NOT NULL DEFAULT 0;
+INSERT INTO schema_migrations(version) VALUES(2);

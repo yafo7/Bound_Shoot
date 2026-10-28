@@ -1,0 +1,423 @@
+{
+  "date": "2026-10-28",
+  "entry": "name-only",
+  "mode": "2v2",
+  "passed": true,
+  "scope": "Real Windows UI clients connected by NGO/UDP to release Linux Dedicated Server in local WSL; no cloud deployment performed",
+  "scenarios": [
+    {
+      "humans": 1,
+      "bots": 3,
+      "passed": true,
+      "reports": [
+        {
+          "stage": "passed",
+          "username": "qa_f93dc205_0",
+          "matchId": "cc1327bf-d9ce-4bed-8bdc-e8e749c89f63",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 3,
+          "botDamage": 22,
+          "games": 2,
+          "rounds": 2,
+          "kills": 3,
+          "deaths": 3,
+          "duration": 2.9000000953674316,
+          "passed": true
+        }
+      ],
+      "users": [
+        {
+          "name": "qa_f93dc205_0",
+          "games": 2,
+          "wins": 1,
+          "kills": 0,
+          "deaths": 2
+        }
+      ],
+      "matches": [
+        {
+          "id": "5c257095-4a69-419d-8dbb-17b109839a3f",
+          "status": "Finished",
+          "winner": 1,
+          "duration": 4.100000381469727,
+          "result": {
+            "winner": 1,
+            "duration": 4.100000381469727,
+            "players": [
+              {
+                "userId": "45f73282-0b0b-4c7b-9268-4b777be526c9",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "3d94758a-f343-460f-83e8-a9a93f7ef08e",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 5
+              },
+              {
+                "userId": "c65f8c42-81dd-4469-b9a5-8b0bd6f7597f",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "ff967850-674a-4ac4-9a69-f974c1cbae66",
+                "kills": 2,
+                "deaths": 0,
+                "damage": 6
+              }
+            ]
+          }
+        },
+        {
+          "id": "cc1327bf-d9ce-4bed-8bdc-e8e749c89f63",
+          "status": "Finished",
+          "winner": 0,
+          "duration": 2.9000000953674316,
+          "result": {
+            "winner": 0,
+            "duration": 2.9000000953674316,
+            "players": [
+              {
+                "userId": "45f73282-0b0b-4c7b-9268-4b777be526c9",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "3d94758a-f343-460f-83e8-a9a93f7ef08e",
+                "kills": 2,
+                "deaths": 0,
+                "damage": 6
+              },
+              {
+                "userId": "c65f8c42-81dd-4469-b9a5-8b0bd6f7597f",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "ff967850-674a-4ac4-9a69-f974c1cbae66",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 5
+              }
+            ]
+          }
+        }
+      ],
+      "reportDirectory": "four-clients-1793185902440"
+    },
+    {
+      "humans": 2,
+      "bots": 2,
+      "passed": true,
+      "reports": [
+        {
+          "stage": "passed",
+          "username": "qa_a0cea51e_0",
+          "matchId": "fded790d-0735-4531-9ff8-dcd07286369a",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 2,
+          "botDamage": 25,
+          "games": 2,
+          "rounds": 2,
+          "kills": 4,
+          "deaths": 4,
+          "duration": 4.800000190734863,
+          "passed": true
+        },
+        {
+          "stage": "passed",
+          "username": "qa_a0cea51e_1",
+          "matchId": "fded790d-0735-4531-9ff8-dcd07286369a",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 2,
+          "botDamage": 25,
+          "games": 2,
+          "rounds": 2,
+          "kills": 4,
+          "deaths": 4,
+          "duration": 4.800000190734863,
+          "passed": true
+        }
+      ],
+      "users": [
+        {
+          "name": "qa_a0cea51e_0",
+          "games": 2,
+          "wins": 0,
+          "kills": 0,
+          "deaths": 2
+        },
+        {
+          "name": "qa_a0cea51e_1",
+          "games": 2,
+          "wins": 0,
+          "kills": 0,
+          "deaths": 2
+        }
+      ],
+      "matches": [
+        {
+          "id": "3f680d59-18b5-4ae4-94a8-1b92f7b72489",
+          "status": "Finished",
+          "winner": -1,
+          "duration": 3.1000001430511475,
+          "result": {
+            "winner": -1,
+            "duration": 3.1000001430511475,
+            "players": [
+              {
+                "userId": "1d25130a-fa4c-4605-8dde-83e1361e8d0b",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "f73688ef-0fe9-4a02-a808-8bd3b34a2fc8",
+                "kills": 2,
+                "deaths": 1,
+                "damage": 6
+              },
+              {
+                "userId": "5499872b-bffc-4f4c-8c37-b71bad0c596c",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "d0450d75-a2c7-49cd-a43a-b71bb05e5fff",
+                "kills": 2,
+                "deaths": 1,
+                "damage": 7
+              }
+            ]
+          }
+        },
+        {
+          "id": "fded790d-0735-4531-9ff8-dcd07286369a",
+          "status": "Finished",
+          "winner": -1,
+          "duration": 4.800000190734863,
+          "result": {
+            "winner": -1,
+            "duration": 4.800000190734863,
+            "players": [
+              {
+                "userId": "1d25130a-fa4c-4605-8dde-83e1361e8d0b",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "f73688ef-0fe9-4a02-a808-8bd3b34a2fc8",
+                "kills": 2,
+                "deaths": 1,
+                "damage": 6
+              },
+              {
+                "userId": "5499872b-bffc-4f4c-8c37-b71bad0c596c",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "d0450d75-a2c7-49cd-a43a-b71bb05e5fff",
+                "kills": 2,
+                "deaths": 1,
+                "damage": 6
+              }
+            ]
+          }
+        }
+      ],
+      "reportDirectory": "four-clients-1793186094070"
+    },
+    {
+      "humans": 4,
+      "bots": 0,
+      "passed": true,
+      "reports": [
+        {
+          "stage": "passed",
+          "username": "qa_0e907ccf_0",
+          "matchId": "43ad29b0-43d9-4fc7-96b3-e0dd0dbfc750",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 0,
+          "botDamage": 0,
+          "games": 2,
+          "rounds": 2,
+          "kills": 2,
+          "deaths": 2,
+          "duration": 180.00001525878906,
+          "passed": true
+        },
+        {
+          "stage": "passed",
+          "username": "qa_0e907ccf_1",
+          "matchId": "43ad29b0-43d9-4fc7-96b3-e0dd0dbfc750",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 0,
+          "botDamage": 0,
+          "games": 2,
+          "rounds": 2,
+          "kills": 2,
+          "deaths": 2,
+          "duration": 180.00001525878906,
+          "passed": true
+        },
+        {
+          "stage": "passed",
+          "username": "qa_0e907ccf_2",
+          "matchId": "43ad29b0-43d9-4fc7-96b3-e0dd0dbfc750",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 0,
+          "botDamage": 0,
+          "games": 2,
+          "rounds": 2,
+          "kills": 2,
+          "deaths": 2,
+          "duration": 180.00001525878906,
+          "passed": true
+        },
+        {
+          "stage": "passed",
+          "username": "qa_0e907ccf_3",
+          "matchId": "43ad29b0-43d9-4fc7-96b3-e0dd0dbfc750",
+          "error": "",
+          "players": 4,
+          "owned": 1,
+          "bots": 0,
+          "botDamage": 0,
+          "games": 2,
+          "rounds": 2,
+          "kills": 2,
+          "deaths": 2,
+          "duration": 180.00001525878906,
+          "passed": true
+        }
+      ],
+      "users": [
+        {
+          "name": "qa_0e907ccf_0",
+          "games": 2,
+          "wins": 1,
+          "kills": 2,
+          "deaths": 2
+        },
+        {
+          "name": "qa_0e907ccf_1",
+          "games": 2,
+          "wins": 0,
+          "kills": 2,
+          "deaths": 2
+        },
+        {
+          "name": "qa_0e907ccf_2",
+          "games": 2,
+          "wins": 1,
+          "kills": 1,
+          "deaths": 0
+        },
+        {
+          "name": "qa_0e907ccf_3",
+          "games": 2,
+          "wins": 0,
+          "kills": 0,
+          "deaths": 1
+        }
+      ],
+      "matches": [
+        {
+          "id": "e3292eb3-e838-43fb-b73a-b30b5772b0f9",
+          "status": "Finished",
+          "winner": 0,
+          "duration": 12.366666793823242,
+          "result": {
+            "winner": 0,
+            "duration": 12.366666793823242,
+            "players": [
+              {
+                "userId": "924c3461-4486-4d66-882a-1f85ae548b59",
+                "kills": 1,
+                "deaths": 0,
+                "damage": 3
+              },
+              {
+                "userId": "d3fcff68-379e-4ee4-94f1-8f8beb261f11",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 3
+              },
+              {
+                "userId": "1f18fa02-455d-41d1-9654-1e52dca31321",
+                "kills": 0,
+                "deaths": 1,
+                "damage": 0
+              },
+              {
+                "userId": "24bd022c-0ee2-4664-8c59-769fdb2e7450",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 3
+              }
+            ]
+          }
+        },
+        {
+          "id": "43ad29b0-43d9-4fc7-96b3-e0dd0dbfc750",
+          "status": "Finished",
+          "winner": -1,
+          "duration": 180.00001525878906,
+          "result": {
+            "winner": -1,
+            "duration": 180.00001525878906,
+            "players": [
+              {
+                "userId": "924c3461-4486-4d66-882a-1f85ae548b59",
+                "kills": 0,
+                "deaths": 0,
+                "damage": 0
+              },
+              {
+                "userId": "d3fcff68-379e-4ee4-94f1-8f8beb261f11",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 3
+              },
+              {
+                "userId": "1f18fa02-455d-41d1-9654-1e52dca31321",
+                "kills": 0,
+                "deaths": 0,
+                "damage": 0
+              },
+              {
+                "userId": "24bd022c-0ee2-4664-8c59-769fdb2e7450",
+                "kills": 1,
+                "deaths": 1,
+                "damage": 3
+              }
+            ]
+          }
+        }
+      ],
+      "reportDirectory": "four-clients-1793185974473"
+    }
+  ],
+  "cloudMatchVerified": false
+}

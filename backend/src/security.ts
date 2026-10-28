@@ -60,7 +60,7 @@ export class Auth {
   });
  }
  profile(uid:string) {
-  const u=this.store.get('SELECT u.id,u.username,u.display_name as displayName,c.skin,u.games,u.wins,u.kills,u.deaths FROM users u JOIN user_cosmetics c ON c.user_id=u.id WHERE u.id=?',uid);
+  const u=this.store.get('SELECT u.id,u.display_name as username,u.display_name as displayName,c.skin,u.games,u.wins,u.kills,u.deaths FROM users u JOIN user_cosmetics c ON c.user_id=u.id WHERE u.id=?',uid);
   check(u,404,'USER_MISSING','账号不存在'); return u;
  }
 }

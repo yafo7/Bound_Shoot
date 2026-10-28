@@ -22,6 +22,7 @@ namespace BoundShoot {
   readonly List<PickupState> pickups=new List<PickupState>();
   readonly List<ProjectileState> bullets=new List<ProjectileState>();
   readonly List<BombState> bombs=new List<BombState>();
+  readonly Dictionary<NetPlayer,BotController> bots=new Dictionary<NetPlayer,BotController>();
   readonly List<SpriteRenderer> pickupViews=new List<SpriteRenderer>(),bulletViews=new List<SpriteRenderer>(),bombViews=new List<SpriteRenderer>();
   readonly List<LineRenderer> ropeViews=new List<LineRenderer>();
   RopeState[] renderedRopes;
@@ -41,6 +42,7 @@ namespace BoundShoot {
     var p=Instantiate(Resources.Load<GameObject>("NetPlayer")).GetComponent<NetPlayer>();
     p.NetworkObject.Spawn();p.NetworkObject.DontDestroyWithOwner=true;
     Players.Add(p);p.Initialize(m,(m.team==0?map.blueSpawns:map.redSpawns)[m.seat]);p.DisconnectAt=-1;
+    if(p.IsBot.Value)bots[p]=new BotController(p,map,Players,pickups);
    }
    for(int team=0;team<2;team++){
     var members=Players.Where(p=>p.Team.Value==team).OrderBy(p=>p.Seat.Value).ToArray();
@@ -74,6 +76,7 @@ namespace BoundShoot {
    bool playing=Phase.Value==2;
    if(playing)Clock.Value=Mathf.Max(0,c.roundSeconds-(Time.time-roundAt));
    foreach(var p in Players){
+    if(bots.TryGetValue(p,out var bot))bot.Tick(playing);
     if(p.DisconnectAt>=0&&Time.time-p.DisconnectAt>c.disconnectGrace&&p.Alive){p.ProtectionUntil=0;p.Hurt(999,null);}
     p.Tick(dt,playing);
     if(!playing)continue;

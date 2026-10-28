@@ -45,7 +45,7 @@ namespace BoundShoot {
    yield return Api.Request<RoomMember>("POST",Path("consume-ticket"),new TicketBody{ticket=ticket},v=>member=v,e=>{},false);
    if(member==null||world==null||ending||finishing||closedClients.Contains(cid)){response.Approved=false;response.Reason="无法加入对局";response.Pending=false;yield break;}
    var player=world.Find(member.userId);
-   if(player==null||player.Connected.Value||pendingUsers.Contains(member.userId)){
+   if(player==null||player.IsBot.Value||player.Connected.Value||pendingUsers.Contains(member.userId)){
     response.Approved=false;response.Reason="该账号已经连接战斗";response.Pending=false;yield break;
    }
    pendingUsers.Add(member.userId);approved[cid]=member;response.Approved=true;response.Pending=false;
