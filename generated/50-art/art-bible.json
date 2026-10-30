@@ -1,0 +1,60 @@
+{
+  "$schema": "script-game-art-bible/v1",
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "style": {
+    "medium": "clean cyberpunk pixel art",
+    "purpose": "concept boards only",
+    "anchor": "../../art-proposals/2026-10-28/cyberpunk-set/00-gameplay-reference.png"
+  },
+  "palette": {
+    "background": "muted slate navy",
+    "teams": [
+      "cyan",
+      "magenta"
+    ],
+    "feedback": [
+      "orange impact",
+      "lime elastic and healing"
+    ]
+  },
+  "characterRules": {
+    "silhouette": "round head, single visor, thin stick limbs",
+    "weapons": "separate oversized weapons",
+    "identity": "01-characters.png"
+  },
+  "environmentRules": {
+    "view": "near-overhead orthographic",
+    "layers": "floor, cover, props, revival separate"
+  },
+  "compositionRules": {
+    "hierarchy": "weapons and characters, ropes, quiet floor"
+  },
+  "lightingRules": {
+    "emission": "restrained"
+  },
+  "uiRules": {
+    "text": "necessary labels only; English on concepts; localize at implementation"
+  },
+  "motionRules": {
+    "readiness": "concept sequences; not cut or loop-tested"
+  },
+  "accessibilityRules": {
+    "rule": "use icons and shapes alongside team color"
+  },
+  "prohibitedDrift": [
+    "bulky armor",
+    "dense neon clutter",
+    "painterly or photoreal rendering"
+  ],
+  "decisions": [
+    "User approved clean cyberpunk pixel stick figures and oversized weapons",
+    "No Unity import or implementation in this round"
+  ],
+  "unresolved": [
+    "exact logical pixel grid",
+    "sprite dimensions and pivots",
+    "animation timing and loops",
+    "UI localization"
+  ]
+}

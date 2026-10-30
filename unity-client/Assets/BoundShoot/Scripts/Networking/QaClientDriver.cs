@@ -23,7 +23,8 @@ namespace BoundShoot {
    client=GameClient.Instance;
    if(client.Screen!="Auth"||FindObjectsOfType<InputField>().Length!=1)throw new Exception("Startup did not show name-only entry");
    yield return Capture("name-entry");
-   Field("名字").text=plan.username;Click("进入房间");
+   Field("名字").text=plan.username;Click("进入");
+   yield return Until(()=>client.Screen=="Menu",10,"mode-selection");Click("2v2 对战");
    yield return Until(()=>client.Screen=="Room",25,"auto-seated");
    if(client.User.username!=plan.username)throw new Exception("A window inherited another account");
    yield return Until(()=>client.Room.members.Count(m=>m.isBot==0)==plan.humans,40,"shared-room");

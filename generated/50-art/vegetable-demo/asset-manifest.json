@@ -1,0 +1,338 @@
+{
+  "$schema": "script-game-asset-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "status": "demo-integrated",
+  "date": "2026-10-29",
+  "reference": {
+    "path": "../../../example/images.jpg",
+    "sha256": "C28129859180DF039AA7A16CB4F6CA2F7628F0CAC8170E12911B5ECAF1E3A362",
+    "provenance": "user-provided",
+    "author": "not established"
+  },
+  "assets": [
+    {
+      "id": "vegetable-demo-identities",
+      "kind": "identity-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/identities.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "user-vegetable-reference"
+      ],
+      "promptOrBrief": "Precise identity-preserving extraction from attached user image. Create a TRUE TRANSPARENT PNG SPRITE ATLAS containing EXACTLY the same EIGHT vegetable characters as the image, not redesigns. Remove slate background, grasses, bamboo and dark ground shadows; keep dark purple pixel outline and tiny feet intact. Faithfully preserve shape, face, palette and leaf crowns. Arrange ONLY eight isolated standing front-facing characters as 4 EQUAL COLUMNS x 2 EQUAL ROWS, centered in each cell at matching foot baseline, all entire leaves visible, generous padding. Order: top row: red brown root with green leafy crown; round red tomato with long bent green stem; green broccoli with wide dark green crown and light green trunk face; tall purple eggplant with bent green cap. Bottom row: red strawberry with dark seeds and open happy mouth plus green crown; pale yellow onion with tall green leaf bundle; orange pointy carrot with two green leaves; little blue mushroom-cap character with dark blue round top and light blue lower body. Same chunky pixel style and visible pixel clusters as source, no anti-aliasing, no gradients, no extra hands or weapons, no text or labels, no shadows, no grid. It must be recognizable as these exact original eight individuals. Canvas landscape, 4:2 atlas, true alpha background.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-2972e668-ad54-441e-8d3b-1debe693288d.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg0",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg0.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the top row FIRST brown-red root, bright spiky green crown and smiling face from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG01.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-6c376f6a-39ea-4e39-a21a-0b481af52a09.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg1",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg1.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the top row SECOND tomato with long curved green stalk and tiny face from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG02.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-0c3e4386-a0f0-429a-be3c-451066b8d77e.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg2",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg2.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the top row THIRD light green broccoli with broad dark green crown from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG03.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-950d2545-3dd4-4016-9280-2a31acd5d334.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg3",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg3.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the top row FOURTH tall purple eggplant with bent green cap from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG04.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-4ca0cb3b-1114-4309-9b95-6d11939d8f32.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg4",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg4.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the bottom row FIRST red strawberry with seed speckles and open happy mouth from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG05.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-347d3c11-9290-4ecb-bcfc-4754656a9932.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg5",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg5.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the bottom row SECOND pale yellow onion with tall light green leaves and cream line grooves from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG06.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-dcd637da-d40d-4105-91e8-cb1dfa18879e.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg6",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg6.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the bottom row THIRD orange tapered carrot with two broad green leaves from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG07.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-027c6b6d-7ca5-4d63-848f-b99df474a07c.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-veg7",
+      "kind": "character-motion-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/veg7.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Create a production animation sprite sheet of ONLY the bottom row FOURTH dark blue mushroom cap and light blue stem character from reference, exactly this individual, preserve face/color/silhouette/leaf shapes and dark purple thick pixel outline. Do not include any other vegetable. TRUE TRANSPARENT PNG, no shadows, labels, text, grids or backdrop. Exactly SIX EQUAL COLUMNS and SIX EQUAL ROWS (36 cells), each with one entire character centered horizontally, feet at same cell baseline, same scale, generous padding. Chunky low resolution pixel clusters as source, no antialiasing, no smooth shading. Frame layout: Row1 six FRONT WALK frames: left foot contact, down, passing, right foot contact, down, passing. Row2 six RIGHT SIDE WALK frames with same ordered alternating feet, face visible on right, same head/crown identity. Row3 six BACK WALK frames with no face, same crown/shape. Row4 first2 FRONT IDLE breathing, middle2 RIGHT SIDE IDLE, last2 BACK IDLE. Row5 first2 HURT squint/compression (not gore), last4 DOWNED fall progressively to lying on side. Row6 first4 REVIVE lying to standing, last2 FRONT happy IDLE. Exactly36 separated figures of SAME character; visible alternating legs across walk frames, never six duplicates. Keep same natural short root feet, do not turn into humanoid with arms or armor. No weapon; held guns will be separate. Maintain source 2–4 tone palette, no redesign. Atlas for VEG08.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-09300492-5a6c-4aa8-a25c-e46f67471535.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-equipment",
+      "kind": "game-art-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/equipment.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Production game sprite atlas matching attached vegetable pixel style exactly: chunky square pixels, dark purple-gray 1–2pixel outline, 2–4 flat tone steps, top-left highlight, playful rural warm colors. No neon cyberpunk, no 3D or vector smoothing. TRUE TRANSPARENT PNG, absolutely no text labels or gridlines. Each object isolated centered entirely within equal grid cell with generous padding, no shadows outside object. Exactly 4 COLUMNS x 3 ROWS of 12 objects. ROW1: long scoped wood-stock SNIPER rifle pointing right; short chunky PISTOL pointing right with brown grip; AK rifle pointing right with curved dark magazine and wooden stock; physical garden DAGGER pointing right with cream steel blade/brown handle. ROW2: shortening rope spool with INWARD double arrows; extending rope spool with OUTWARD double arrows; small pale blue leaf-shaped SHIELD badge; brown BOOT with short cream gust. ROW3: round charcoal BOMB with orange fuse; yellow-green coil SPRING; cream cloth MEDICAL BAG with red heart; wooden vegetable CRATE with one large ? on lid. Strong distinct silhouettes, guns prominent and detailed relative to items, all fit one cell, must maintain exact12-object layout.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-365995ac-f24e-4331-98fe-5f7f90221219.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-terrain",
+      "kind": "game-art-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/terrain.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Production game sprite atlas matching attached vegetable pixel style exactly: chunky square pixels, dark purple-gray 1–2pixel outline, 2–4 flat tone steps, top-left highlight, playful rural warm colors. No neon cyberpunk, no 3D or vector smoothing. TRUE TRANSPARENT PNG, absolutely no text labels or gridlines. Each object isolated centered entirely within equal grid cell with generous padding, no shadows outside object. Exactly 4 COLUMNS x 2 ROWS of 8 objects. ROW1: low chunky gray stone with flat top; round brown earthen mound/large dirt clod; short orange-brown wooden crate with cross braces; short wood fence section. ROW2: one lush round green TREE CANOPY without trunk; separate short tree TRUNK with a few roots and no leaves; a small cluster of three low grass tufts; a small circular warm stone REVIVAL PAD with green medical plus above center. Top-down slightly elevated, covers grounded front edge. Avoid excessive pixel noise, clean large color clusters. Tree canopy and trunk completely separate for layering.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-1113aeba-cc53-4224-92ff-331e24a140f8.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-ground",
+      "kind": "game-art-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/ground.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Production game sprite atlas matching attached vegetable pixel style exactly: chunky square pixels, dark purple-gray 1–2pixel outline, 2–4 flat tone steps, top-left highlight, playful rural warm colors. No neon cyberpunk, no 3D or vector smoothing. TRUE TRANSPARENT PNG, absolutely no text labels or gridlines. Each object isolated centered entirely within equal grid cell with generous padding, no shadows outside object. Exactly 2 COLUMNS x 2 ROWS of FOUR OPAQUE SQUARE seamless ground TILE samples surrounded by transparent padding within cells. TOP LEFT: muted sage medium-light grass low contrast minimal 4 tiny grass marks, no border. TOP RIGHT: warm tan soil tile with very few tiny darker specks, no border. BOTTOM LEFT: darker muted meadow grass with sparse small grass marks. BOTTOM RIGHT: pale beige trampled dirt with 2 small stones. All flat top-down surfaces, no perspective, clean quiet colors; characters will have brighter saturation. No sharp grids, no frame, no smooth gradients, no leaves/obstacles piled on floor. Each square fully fills 80% of its grid cell.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-37990323-91cd-4f94-ac99-c49337db4551.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    },
+    {
+      "id": "vegetable-demo-effects",
+      "kind": "game-art-atlas",
+      "ownerId": "BoundShoot",
+      "state": "integrated-demo",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Vegetables/effects.png",
+      "dimensions": "see PNG metadata",
+      "alpha": true,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "vegetable-demo-identities"
+      ],
+      "promptOrBrief": "Production game sprite atlas matching attached vegetable pixel style exactly: chunky square pixels, dark purple-gray 1–2pixel outline, 2–4 flat tone steps, top-left highlight, playful rural warm colors. No neon cyberpunk, no 3D or vector smoothing. TRUE TRANSPARENT PNG, absolutely no text labels or gridlines. Each object isolated centered entirely within equal grid cell with generous padding, no shadows outside object. Exactly 6 COLUMNS x 4 ROWS of24 VFX sprites. Row1 six progressively expanding then dissipating warm orange cream MUZZLE FLASH sprites pointing RIGHT. Row2 six HIT SPARKS: tiny spark, wider spark, dust flecks, green leaf splat, leaf scatter, faded dust. Row3 six successive BOMB EXPLOSION frames: orange ignition, compact cream orange burst, maximum burst, brown smoke ring, sparse smoke, final drifting specks. Row4 six sprites: dash cream wind streak pointing right; green healing plus with tiny heart; pale blue shield fracture; two tiny boot dust puffs; small yellow rope tension star; green leaf flutter. All isolated, no characters, no background mat, bounded compact effects with genuine transparent edges.",
+      "source": "C:\\Users\\yafo777\\.codex\\generated_images\\01a17c12-2da6-7411-8d01-bcd5a30201b0\\exec-b8e696ce-ad5f-4f3c-86ad-169f0b5f8c70.png",
+      "author": "AI generated for Bound Shoot from user supplied reference",
+      "license": "Source reference supplied by user; original author/license metadata not established; no third-party reuse license asserted",
+      "attribution": "See reference provenance",
+      "status": "imported-and-render-reviewed",
+      "qaEvidence": [
+        "Sprite import with Point sampling and no mipmaps",
+        "Resources referenced by runtime and preview scene",
+        "No claim of exact recovery of JPEG source pixels"
+      ]
+    }
+  ],
+  "decisions": [
+    "Eight playable cosmetics; original colors preserved",
+    "288 motion sprites include272core and16extra expressions",
+    "344 total named Sprite assets, real alpha checked",
+    "Old cyberpunk resources retained",
+    "Audio synthesized locally in GardenFx, no external sound assets"
+  ],
+  "unresolved": [
+    "Human playtest for animation fine tuning",
+    "Cross-computer LAN and target-hardware profiling",
+    "Source reference original author metadata before public asset distribution"
+  ]
+}

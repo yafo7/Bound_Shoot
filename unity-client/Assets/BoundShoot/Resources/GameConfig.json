@@ -284,6 +284,574 @@
           }
         }
       ]
+    },
+{
+  "id": "Field_01",
+  "name": "丰收野地",
+  "theme": "meadow",
+  "available": true,
+  "halfWidth": 40.0,
+  "halfHeight": 32.0,
+  "blueSpawns": [
+    {
+      "x": -31.0,
+      "y": -4.5
+    },
+    {
+      "x": -31.0,
+      "y": -1.5
+    },
+    {
+      "x": -31.0,
+      "y": 1.5
+    },
+    {
+      "x": -31.0,
+      "y": 4.5
+    }
+  ],
+  "redSpawns": [
+    {
+      "x": 31.0,
+      "y": -4.5
+    },
+    {
+      "x": 31.0,
+      "y": -1.5
+    },
+    {
+      "x": 31.0,
+      "y": 1.5
+    },
+    {
+      "x": 31.0,
+      "y": 4.5
+    }
+  ],
+  "supplies": [
+    {
+      "x": -28.0,
+      "y": -4.5
+    },
+    {
+      "x": -28.0,
+      "y": -1.5
+    },
+    {
+      "x": -28.0,
+      "y": 1.5
+    },
+    {
+      "x": -28.0,
+      "y": 4.5
+    },
+    {
+      "x": -16.0,
+      "y": 13.0
+    },
+    {
+      "x": -15.0,
+      "y": -14.0
+    },
+    {
+      "x": -7.0,
+      "y": 17.0
+    },
+    {
+      "x": -16.0,
+      "y": 17.0
+    },
+    {
+      "x": -7.0,
+      "y": -18.0
+    },
+    {
+      "x": -16.0,
+      "y": -18.0
+    },
+    {
+      "x": 28.0,
+      "y": -4.5
+    },
+    {
+      "x": 28.0,
+      "y": -1.5
+    },
+    {
+      "x": 28.0,
+      "y": 1.5
+    },
+    {
+      "x": 28.0,
+      "y": 4.5
+    },
+    {
+      "x": 16.0,
+      "y": 13.0
+    },
+    {
+      "x": 15.0,
+      "y": -14.0
+    },
+    {
+      "x": 7.0,
+      "y": 17.0
+    },
+    {
+      "x": 16.0,
+      "y": 17.0
+    },
+    {
+      "x": 7.0,
+      "y": -18.0
+    },
+    {
+      "x": 16.0,
+      "y": -18.0
+    }
+  ],
+  "revivals": [
+    {
+      "x": -17.0,
+      "y": 0.0
+    },
+    {
+      "x": 17.0,
+      "y": 0.0
+    }
+  ],
+  "blocks": [
+    {
+      "center": {
+        "x": -25.0,
+        "y": 5.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": -21.0,
+        "y": -6.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 4.0
+      },
+      "visual": 1
+    },
+    {
+      "center": {
+        "x": -12.0,
+        "y": 8.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 5.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": -10.0,
+        "y": -9.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 3.0
+      },
+      "visual": 1
+    },
+    {
+      "center": {
+        "x": -5.0,
+        "y": 2.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 2
+    },
+    {
+      "center": {
+        "x": -5.0,
+        "y": -4.0
+      },
+      "size": {
+        "x": 2.0,
+        "y": 3.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": -18.0,
+        "y": 20.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": -19.0,
+        "y": -20.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": 25.0,
+        "y": 5.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": 21.0,
+        "y": -6.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 4.0
+      },
+      "visual": 1
+    },
+    {
+      "center": {
+        "x": 12.0,
+        "y": 8.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 5.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": 10.0,
+        "y": -9.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 3.0
+      },
+      "visual": 1
+    },
+    {
+      "center": {
+        "x": 5.0,
+        "y": 2.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 2
+    },
+    {
+      "center": {
+        "x": 5.0,
+        "y": -4.0
+      },
+      "size": {
+        "x": 2.0,
+        "y": 3.0
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": 18.0,
+        "y": 20.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": 19.0,
+        "y": -20.0
+      },
+      "size": {
+        "x": 3.0,
+        "y": 3.0
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": 0.0,
+        "y": 13.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 2.0
+      },
+      "visual": 1
+    },
+    {
+      "center": {
+        "x": 0.0,
+        "y": -14.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 2.0
+      },
+      "visual": 2
+    }
+  ],
+  "layoutVersion": 1,
+  "groundColor": {
+    "r": 0.4300000071525574,
+    "g": 0.5699999928474426,
+    "b": 0.3100000023841858,
+    "a": 1.0
+  },
+  "floors": [],
+  "pickups": [
+    {
+      "position": {
+        "x": -28.0,
+        "y": -4.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -28.0,
+        "y": -1.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -28.0,
+        "y": 1.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -28.0,
+        "y": 4.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -16.0,
+        "y": 13.0
+      },
+      "weapon": 1,
+      "item": 0,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -15.0,
+        "y": -14.0
+      },
+      "weapon": 4,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -7.0,
+        "y": 17.0
+      },
+      "weapon": 0,
+      "item": 1,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -16.0,
+        "y": 17.0
+      },
+      "weapon": 0,
+      "item": 2,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -7.0,
+        "y": -18.0
+      },
+      "weapon": 0,
+      "item": 3,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -16.0,
+        "y": -18.0
+      },
+      "weapon": 0,
+      "item": 4,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 28.0,
+        "y": -4.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 28.0,
+        "y": -1.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 28.0,
+        "y": 1.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 28.0,
+        "y": 4.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 16.0,
+        "y": 13.0
+      },
+      "weapon": 1,
+      "item": 0,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 15.0,
+        "y": -14.0
+      },
+      "weapon": 4,
+      "item": 0,
+      "respawnSeconds": 10.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 7.0,
+        "y": 17.0
+      },
+      "weapon": 0,
+      "item": 5,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 16.0,
+        "y": 17.0
+      },
+      "weapon": 0,
+      "item": 6,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 7.0,
+        "y": -18.0
+      },
+      "weapon": 0,
+      "item": 7,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 16.0,
+        "y": -18.0
+      },
+      "weapon": 0,
+      "item": 8,
+      "respawnSeconds": 12.0,
+      "randomizeOnRespawn": false
+    }
+  ],
+  "revivalZones": [
+    {
+      "center": {
+        "x": -17.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 4.0
+      }
+    },
+    {
+      "center": {
+        "x": 17.0,
+        "y": 0.0
+      },
+      "size": {
+        "x": 4.0,
+        "y": 4.0
+      }
     }
   ]
+}
+]
 }

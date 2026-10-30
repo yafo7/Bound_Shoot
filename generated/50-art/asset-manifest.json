@@ -1,0 +1,193 @@
+{
+  "$schema": "script-game-asset-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "assets": [
+    {
+      "id": "bound-shoot-concept-characters",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/01-characters.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Create a landscape CHARACTER IDENTITY AND MOTION board. Upper section: the same basic minimal stick figure at front, back, right and left views, cyan visor and small cyan chest mark, same proportions in each, easy-to-read silhouette. Include one equivalent magenta team version and two tiny team duo examples, no costume changes. Bottom section: three aligned strips of the SAME cyan character facing right: 4 distinct walk poses with alternating forward foot/contact/passing/opposite-foot-contact/passing, 3 recoil poses holding a large toy-like sci-fi rifle, and 3 downed/get-up poses. Gun length approximately entire character height; hands at consistent grip and stock. Identical head/body/limb thickness across frames, feet baseline aligned, no numbered pixel grid. Four walking frames must have visibly different legs, not copies. Labels CHARACTER / TEAM COLORS / WALK / SHOOT / DOWNED. Do not include arena or UI panels.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim"
+      ]
+    },
+    {
+      "id": "bound-shoot-concept-weapons",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/02-weapons.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame",
+        "bound-shoot-concept-characters"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Landscape WEAPONS concept board with EXACTLY FOUR distinct main weapons in four equal spacious horizontal rows. Rows labeled SNIPER / PISTOL / AK / DAGGER only. Each row: one large isolated pixel weapon facing right, a smaller matching floor pickup icon, and a small reference-stickman holding it to demonstrate exaggerated scale. SNIPER long narrow barrel and clear scope, PISTOL short chunky wide muzzle, AK a recognizable curved magazine and angular rifle profile, DAGGER angular bright metal blade with tiny cyan energy edge (a physical knife, not a gun). Gun length 1 to 1.4 times stickman's entire height; pistol shorter but emphatic. Guns dark gunmetal with pale metallic highlights and modest cyan stripe, no logos. All four uniquely recognizable in silhouette, no extra weapons or ammo panels. Simple visible grip and muzzle. No decorative frames, no floor or arena.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim"
+      ]
+    },
+    {
+      "id": "bound-shoot-concept-items",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/03-items.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame",
+        "bound-shoot-concept-characters"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Landscape PICKUP ICONS concept board with EXACTLY EIGHT equal cells, arranged 4 columns by 2 rows. All icons large, centered, clean isolated silhouettes on dark backing, with one matching tiny floor pedestal version below each. Make items easy to distinguish by shape as well as accent color. In this exact order: top row SHORTEN (a rope link with two bold arrows pointing INWARD), EXTEND (a rope link with two arrows pointing OUTWARD), SHIELD (a cyan hexagonal shield badge), DASH (a small boot-shaped thruster pack with short electric-blue trail); bottom row BOMB (a round dark bomb with short orange fuse), ELASTIC (a bright lime coil spring with rope tips), HEAL (a white medical capsule with a red heart), MYSTERY (a compact violet box marked with a single ?). Labels just the eight names. No other items or weapons or characters. Convey shortening/extension as opposite symbols, not identical arrows. Cohesive chunky pixel geometry, limited palette, no glossy 3D icons.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim"
+      ]
+    },
+    {
+      "id": "bound-shoot-concept-environment",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/04-environment.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame",
+        "bound-shoot-concept-characters"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Landscape modular ENVIRONMENT concept board. Upper half: a clean near-overhead compact empty futuristic rooftop arena matching reference, quiet broad dark slate floor panels, open walking routes and a few low rectangular dark gunmetal covers with sparse cyan or magenta edge lights, perimeter rail, distant city strip outside boundary; no characters, no pickups, no HUD, no cinematic perspective. Lower half: individually spaced modular components on neutral dark backing: three reusable floor tiles (plain panel / quiet seam / sparing circuit accent), a square cover block, a long low barrier, a small metal crate, a sci-fi planter with a tiny angular bonsai tree, a dark angular rock with a narrow mineral seam, a straight fence section, a corner fence section, a cyan revival pad. Flat walkable surfaces clear from blocking objects, minimal decorative detail, tiny contact shadows. Label ARENA / FLOOR / COVER / PROPS / REVIVAL only. Preserve exact same camera projection as approved reference and crisp readable pixel forms.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim",
+        "Revival shield icon corrected to a medical plus in a second generation"
+      ]
+    },
+    {
+      "id": "bound-shoot-concept-ui",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/05-ui.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame",
+        "bound-shoot-concept-characters"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Landscape UI concept board containing four clean game interface mockups arranged in a roomy 2x2 grid, each panel a full tiny screen. Bound Shoot minimal dark navy cyberpunk pixel UI, thin cyan/magenta borders, readable squared corners, subdued rooftop background. Upper left NAME ENTRY: small BOUND SHOOT title, one name input showing YAFO777, a single ENTER button. Upper right MODE SELECT: player name YAFO777 and two large choices TRAINING and 2V2. Lower left IN GAME: miniature arena using the attached simple stickmen and large guns, top center 2 : 2 with 02:15, bottom left three cyan hearts and current large weapon icon, bottom right bomb icon and E. Lower right RESULT: cyan VICTORY title, two simple team columns with two avatar icons each, compact K/D numbers, one RETURN button. No password, account registration, technical instructions, paragraphs or dense menus. This is a visual proposal, labels in brief English for reliable rendering. UI drawn in pixel style, no smooth gradients, no extra decorative text. Cyan team has cyan round marker; magenta team square marker as secondary distinguishing cue.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim"
+      ]
+    },
+    {
+      "id": "bound-shoot-concept-effects",
+      "kind": "concept-board",
+      "ownerId": "BoundShoot",
+      "state": "preview",
+      "path": "../../art-proposals/2026-10-28/cyberpunk-set/06-effects.png",
+      "dimensions": {
+        "width": 1672,
+        "height": 941
+      },
+      "alpha": false,
+      "generationMethod": "built-in image_gen",
+      "referenceAssetIds": [
+        "approved-gameplay-frame",
+        "bound-shoot-concept-characters"
+      ],
+      "promptOrBrief": "Original Bound Shoot art direction. Match the attached approved gameplay image closely: CLEAN CYBERPUNK PIXEL ART, muted slate/navy flat colors, restrained cyan versus magenta accent colors, sharp square pixels, dark 1-pixel style outlines, no painterly softness, no noisy texture or overdone bloom. Near-overhead 2D shooter sprites with slight top-down elevation, not isometric. Extremely simple stickman character, small plain pale round head, ONE horizontal glowing visor, thin dark body and two narrow arms and legs, no detailed armor, no chunky helmets. Simple characters paired with exaggerated oversized independently-held guns. This is a PRESENTATION CONCEPT BOARD for approval, not production-ready assets. Plain dark blue-gray backing, crisp roomy layout, generous spacing, tasteful small pixel-font category labels only, no marketing copy, no watermark. Landscape VFX AND ROPE concept board with clearly separated horizontal strips on plain slate backing, use SAME reference stickman where needed. Top row WEAPON: 3 distinct short muzzle flash frames, 3 straight bullet streak variants, 4 small impact spark frames, isolated and clearly spaced. Second row EXPLOSION: 5 ordered distinct frames from small ignition to expanding orange square-pixel burst and breakup smoke, contain radius so effect does not flood whole screen. Third row STATUS: one simple character in a thin cyan shield ring, one dashed cyan dash afterimage, one green healing plus/heart pulse, each distinct, understated. Bottom row ROPES: two static reference stickmen connected by cyan rope shown in relaxed curve, a taut rope with a few tension ticks, a visibly shorter inward-arrow version, a longer outward-arrow version, and a lime elastic spring accent; magenta alternative shown as small swatch. Ropes only connect matching team, sparse outlines, no thick neon fog, no massive energy beams, keep effects compact. Labels MUZZLE / BULLET / HIT / EXPLOSION / SHIELD / DASH / HEAL / ROPE only. Animations are concept sequences with visible changes, not repeated identical sprites.",
+      "source": "AI-original, 2026-10-28",
+      "author": "AI generated, directed by Codex for Bound Shoot",
+      "license": "Generated project concept; no external asset license asserted",
+      "attribution": "No third-party images used",
+      "status": "preview-awaiting-user-review",
+      "qaEvidence": [
+        "Inspected inline for coherent style and subject coverage",
+        "Not sliced, grid-normalized or integrated; no production-readiness claim"
+      ]
+    }
+  ],
+  "decisions": [
+    "Preview only; existing code unchanged this turn"
+  ],
+  "unresolved": [
+    "User review",
+    "Production asset processing and animation validation"
+  ],
+  "unityPrototype": {
+    "date": "2026-10-29",
+    "evidence": [
+      "23 EditMode checks passed",
+      "1 PlayMode training lifecycle passed",
+      "Unity camera screenshot art-proposals/2026-10-29/unity-preview.png"
+    ],
+    "status": "imported-prototype",
+    "method": "built-in image_gen: transparent generation from approved concept boards",
+    "atlasPaths": [
+      "unity-client/Assets/BoundShoot/Resources/Art/actors.png",
+      "unity-client/Assets/BoundShoot/Resources/Art/items.png",
+      "unity-client/Assets/BoundShoot/Resources/Art/environment.png"
+    ],
+    "readiness": "visual sample; animation and pixel grid need refinement",
+    "spriteCount": 20
+  }
+}

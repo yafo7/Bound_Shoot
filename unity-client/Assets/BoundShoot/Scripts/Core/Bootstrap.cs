@@ -7,7 +7,7 @@ namespace BoundShoot {
   public static NetworkManager Network;
   [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
   static void Launch(){
-   if(FindObjectOfType<Bootstrap>()!=null)return;
+   if(FindObjectOfType<Bootstrap>()!=null||FindObjectOfType<ArtPreviewMarker>()!=null)return;
    new GameObject("Bound Shoot").AddComponent<Bootstrap>();
   }
   void Awake(){
@@ -20,10 +20,12 @@ namespace BoundShoot {
     TickRate=(uint)GameConfig.Current.physicsHz,ClientConnectionBufferTimeout=20,ForceSamePrefabs=true};
    Network.AddNetworkPrefab(Resources.Load<GameObject>("NetPlayer"));
    Network.AddNetworkPrefab(Resources.Load<GameObject>("NetWorld"));
-   if(!Application.isBatchMode&&Camera.main==null){
+   if((!Application.isBatchMode||Draw2D.RenderInBatch)&&Camera.main==null){
     var cameraObject=new GameObject("Main Camera");cameraObject.tag="MainCamera";var camera=cameraObject.AddComponent<Camera>();
-    camera.orthographic=true;camera.orthographicSize=13.5f;camera.transform.position=new Vector3(0,0,-20);camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color(.055f,.08f,.12f);
+    camera.orthographic=true;camera.orthographicSize=8.5f;camera.transform.position=new Vector3(0,0,-20);camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=new Color(.13f,.2f,.11f);
    }
+   if((!Application.isBatchMode||Draw2D.RenderInBatch)&&Camera.main!=null&&Camera.main.GetComponent<MeadowCamera>()==null)Camera.main.gameObject.AddComponent<MeadowCamera>();
+   if((!Application.isBatchMode||Draw2D.RenderInBatch)&&Camera.main!=null&&FindObjectOfType<AudioListener>()==null)Camera.main.gameObject.AddComponent<AudioListener>();
    bool server=Array.IndexOf(Environment.GetCommandLineArgs(),"-matchFile")>=0;
    if(server)gameObject.AddComponent<ServerRuntime>();else gameObject.AddComponent<GameClient>();
   }

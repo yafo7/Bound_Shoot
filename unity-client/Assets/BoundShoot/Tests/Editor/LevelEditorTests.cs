@@ -44,15 +44,15 @@ namespace BoundShoot.Tests {
    var other=JsonUtility.FromJson<MapDefinition>(JsonUtility.ToJson(latest.maps[0]));other.id="Arena_02";other.name="同伴新地图";other.available=false;
    latest.maps=latest.maps.Concat(new[]{other}).ToArray();File.WriteAllText(file,JsonUtility.ToJson(latest));
    root.mapName="编辑器修改的名称";LevelLayoutIO.Save(root,file);
-   var saved=Config();Assert.AreEqual(123,saved.weapons[1].damage);Assert.AreEqual("同伴新地图",saved.maps[1].name);Assert.AreEqual(root.mapName,saved.maps[0].name);
+   var saved=Config();Assert.AreEqual(123,saved.weapons[1].damage);Assert.AreEqual("同伴新地图",saved.maps.Single(m=>m.id=="Arena_02").name);Assert.AreEqual(root.mapName,saved.maps[0].name);
   }
   [Test] public void ConcurrentSameMapEditIsRejectedWithoutChangingTheFile(){
    Load();var latest=Config();latest.maps[0].name="同伴已更新";File.WriteAllText(file,JsonUtility.ToJson(latest));string before=File.ReadAllText(file);
    root.mapName="过期的编辑器";Assert.Throws<InvalidOperationException>(()=>LevelLayoutIO.Save(root,file));Assert.AreEqual(before,File.ReadAllText(file));
   }
   [Test] public void NewMapCannotOverwriteExistingAndDefaultMapCannotBeDisabled(){
-   Load();root.newMap=true;Assert.Throws<InvalidOperationException>(()=>LevelLayoutIO.Save(root,file));
-   root.mapId="Arena_02";root.mapName="复制关卡";root.available=false;LevelLayoutIO.Save(root,file);Assert.AreEqual(2,Config().maps.Length);
+   Load();int originalCount=Config().maps.Length;root.newMap=true;Assert.Throws<InvalidOperationException>(()=>LevelLayoutIO.Save(root,file));
+   root.mapId="Arena_02";root.mapName="复制关卡";root.available=false;LevelLayoutIO.Save(root,file);Assert.AreEqual(originalCount+1,Config().maps.Length);
    root.mapId="Arena_01";root.available=false;Assert.IsTrue(LevelLayoutIO.Validate(root).Any(s=>s.Contains("必须保持开放")));
   }
   [Test] public void InvalidPlacementsAndSeatDuplicatesBlockExport(){

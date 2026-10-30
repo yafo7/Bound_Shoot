@@ -23,11 +23,11 @@ namespace BoundShoot.Editor {
    Undo.RegisterFullObjectHierarchyUndo(root.gameObject,"载入关卡");
    foreach(Transform child in root.transform.Cast<Transform>().ToArray())Undo.DestroyObjectImmediate(child.gameObject);
    root.transform.position=Vector3.zero;root.transform.rotation=Quaternion.identity;root.transform.localScale=Vector3.one;
-   root.mapId=map.id;root.mapName=map.name;root.available=map.available;
+   root.mapId=map.id;root.mapName=map.name;root.available=map.available;root.theme=map.theme;
    root.dimensions=new Vector2(map.halfWidth*2,map.halfHeight*2);root.groundColor=MapContent.Ground(map);
    root.sourceMapId=map.id;root.sourceMapJson=JsonUtility.ToJson(map);root.newMap=false;
    if(map.floors!=null)foreach(var p in map.floors){var piece=Add(root,LevelPieceKind.Floor,p.center,p.size);piece.color=p.color;}
-   foreach(var p in map.blocks??Array.Empty<BlockDefinition>())Add(root,LevelPieceKind.Obstacle,p.center,p.size);
+   foreach(var p in map.blocks??Array.Empty<BlockDefinition>())Add(root,LevelPieceKind.Obstacle,p.center,p.size).visual=p.visual;
    for(int team=0;team<2;team++){
     var positions=team==0?map.blueSpawns:map.redSpawns;
     for(int seat=0;seat<(positions?.Length??0);seat++){var piece=Add(root,LevelPieceKind.Spawn,positions[seat],Vector2.one);piece.team=team;piece.seat=seat;Rename(piece);}
@@ -63,9 +63,9 @@ namespace BoundShoot.Editor {
    var zones=parts.Where(p=>p.kind==LevelPieceKind.Revival).Select(p=>new RevivalDefinition{center=p.transform.localPosition,size=p.transform.localScale}).ToArray();
    Vector2[] Spawns(int team)=>parts.Where(p=>p.kind==LevelPieceKind.Spawn&&p.team==team).OrderBy(p=>p.seat).Select(p=>(Vector2)p.transform.localPosition).ToArray();
    return new MapDefinition{layoutVersion=1,id=root.mapId,name=root.mapName,available=root.available,halfWidth=root.dimensions.x*.5f,halfHeight=root.dimensions.y*.5f,
-    groundColor=root.groundColor,blueSpawns=Spawns(0),redSpawns=Spawns(1),pickups=pickups,supplies=pickups.Select(p=>p.position).ToArray(),
+    groundColor=root.groundColor,theme=root.theme,blueSpawns=Spawns(0),redSpawns=Spawns(1),pickups=pickups,supplies=pickups.Select(p=>p.position).ToArray(),
     revivalZones=zones,revivals=zones.Select(p=>p.center).ToArray(),
-    blocks=parts.Where(p=>p.kind==LevelPieceKind.Obstacle).Select(p=>new BlockDefinition{center=p.transform.localPosition,size=p.transform.localScale}).ToArray(),
+    blocks=parts.Where(p=>p.kind==LevelPieceKind.Obstacle).Select(p=>new BlockDefinition{center=p.transform.localPosition,size=p.transform.localScale,visual=p.visual}).ToArray(),
     floors=parts.Where(p=>p.kind==LevelPieceKind.Floor).Select(p=>new FloorDefinition{center=p.transform.localPosition,size=p.transform.localScale,color=p.color}).ToArray()};
   }
   public static List<string> Validate(LevelLayout root){

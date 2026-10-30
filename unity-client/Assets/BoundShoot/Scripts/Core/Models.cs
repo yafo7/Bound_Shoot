@@ -15,7 +15,7 @@ namespace BoundShoot {
  [Serializable] public class SeatBody {public int team,seat;}
  [Serializable] public class ReadyBody {public bool ready;}
  [Serializable] public class RoomConfigBody {public int size;public string mapId;}
- [Serializable] public class RoomMember {public string userId,username;public int skin,team,seat,ready,isBot;}
+ [Serializable] public class RoomMember {public string userId,username;public int skin,team,seat,ready,isBot,trainingRole;}
  [Serializable] public class RoomData {public string id,code,hostId,mapId,status,matchId;public int size;public RoomMember[] members;}
  [Serializable] public class MatchData {public string id,roomId,mapId,status,host;public int port;public RoomMember[] players;}
  [Serializable] public class TicketData {public string matchId,ticket,host;public int port;}
@@ -37,7 +37,7 @@ namespace BoundShoot {
  [Serializable] public class ItemDefinition {
   public string name;public ItemKind kind;public bool enabled=true;public float weight=1,duration=10;
  }
- [Serializable] public class BlockDefinition {public Vector2 center,size;}
+ [Serializable] public class BlockDefinition {public Vector2 center,size;public int visual;}
  [Serializable] public class FloorDefinition {public Vector2 center,size;public Color color=Color.gray;}
  [Serializable] public class RevivalDefinition {public Vector2 center,size;}
  [Serializable] public class PickupDefinition {
@@ -45,7 +45,7 @@ namespace BoundShoot {
   public float respawnSeconds=10;public bool randomizeOnRespawn;
  }
  [Serializable] public class MapDefinition {
-  public string id,name;public bool available;public float halfWidth,halfHeight;
+  public string id,name,theme;public bool available;public float halfWidth,halfHeight;
   public Vector2[] blueSpawns,redSpawns,supplies,revivals;public BlockDefinition[] blocks;
   public int layoutVersion;public Color groundColor;public FloorDefinition[] floors;
   // Version 0 uses legacy positional arrays; version 1 uses explicit typed arrays.
@@ -69,7 +69,7 @@ namespace BoundShoot {
   public static void Damage(ref int health,ref int shield,int amount){
    int absorbed=Math.Min(shield,Math.Max(0,amount));shield-=absorbed;health=Math.Max(0,health-Math.Max(0,amount-absorbed));
   }
-  public static bool CanEquip(bool alive,WeaponKind current){return alive&&current==WeaponKind.None;}
+  public static bool CanEquip(bool alive,WeaponKind current){return alive;}
   public static int Winner(int blueAlive,int redAlive,int blueHealth,int redHealth){
    if(blueAlive==0&&redAlive==0)return -1;
    if(blueAlive==0)return 1;if(redAlive==0)return 0;

@@ -1,0 +1,8 @@
+{
+  "weapons": [
+    { "weapon": 1, "size": { "x": 2.1, "y": 0.9133 }, "grip": { "x": 0.26, "y": 0.39 }, "muzzle": { "x": 0.99, "y": 0.65 }, "recoil": 0.19, "flashSize": { "x": 0.95, "y": 0.6 }, "trailLength": 0.8 },
+    { "weapon": 2, "size": { "x": 1.15, "y": 0.869 }, "grip": { "x": 0.34, "y": 0.28 }, "muzzle": { "x": 0.99, "y": 0.70 }, "recoil": 0.13, "flashSize": { "x": 0.5, "y": 0.4 }, "trailLength": 0.25 },
+    { "weapon": 3, "size": { "x": 1.75, "y": 0.82 }, "grip": { "x": 0.30, "y": 0.32 }, "muzzle": { "x": 0.99, "y": 0.68 }, "recoil": 0.10, "flashSize": { "x": 0.65, "y": 0.45 }, "trailLength": 0.42 },
+    { "weapon": 4, "size": { "x": 0.85, "y": 0.358 }, "grip": { "x": 0.18, "y": 0.50 }, "muzzle": { "x": 0.99, "y": 0.53 }, "recoil": 0.0, "flashSize": { "x": 0.0, "y": 0.0 }, "trailLength": 0.0 }
+  ]
+}

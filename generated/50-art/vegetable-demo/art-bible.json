@@ -1,0 +1,120 @@
+{
+  "$schema": "script-game-art-bible/v1",
+  "schemaVersion": "1.0.0",
+  "status": "implemented-demo",
+  "date": "2026-10-29",
+  "sourceHash": "C28129859180DF039AA7A16CB4F6CA2F7628F0CAC8170E12911B5ECAF1E3A362",
+  "style": {
+    "direction": "原图八蔬果的粗像素田野射击",
+    "anchor": "../../../example/images.jpg",
+    "supersedesVisualDirection": "cyberpunk stick figures",
+    "scope": "Unity source demo; local validation; no cloud update"
+  },
+  "palette": {
+    "rule": "从用户参考图提取，当前不宣称已测量精确色值",
+    "outline": "深紫灰",
+    "subjects": "保留八角色原本颜色",
+    "ground": "低对比灰绿草地、暖土路",
+    "teams": "通过绳索、脚下标记和形状区分，不整体染色"
+  },
+  "characterRules": {
+    "ids": [
+      "VEG01",
+      "VEG02",
+      "VEG03",
+      "VEG04",
+      "VEG05",
+      "VEG06",
+      "VEG07",
+      "VEG08"
+    ],
+    "identity": "上排左到右VEG01–05，下排左到右VEG06–08",
+    "logicalCanvasProposal": [
+      48,
+      48
+    ],
+    "canvasStatus": "待首个角色样板验证",
+    "pivot": "脚底统一锚点，保留叶片与天然体型差异",
+    "collision": "统一逻辑身体，不随图片画幅缩放",
+    "frameBudgetPerCharacter": 34,
+    "totalUniqueCharacterFrames": 272,
+    "directions": "front/side/back；left镜像side",
+    "weapon": "身体与武器独立",
+    "sourceLimit": "JPEG裁片需要整理边缘；无法恢复原始PNG已丢失像素",
+    "selection": "八角色均可选择；默认2v2四人任选，最大4v4；本稿默认允许重复，不要求八种互斥",
+    "teamRope": "2v2每队一段绳；4v4按座位1-2-3-4串成三段，非两两全连接"
+  },
+  "environmentRules": {
+    "ground": "grass/dirt transition tiles",
+    "initialWorldSizeProposal": [
+      80,
+      64
+    ],
+    "obstacles": "mounds/rocks/trunks block bodies, bullets and ropes; canopy is visual only",
+    "collisionStatus": "当前仅轴对齐矩形；多边形需同时升级物理、绳索和导航"
+  },
+  "compositionRules": {
+    "hierarchy": "危险预警/角色和枪 > 绳索和道具 > 地面装饰",
+    "camera": "本地跟随、有限前瞻、边界约束、屏外队友提示",
+    "weaponScale": "依角色不含叶片身体高度H：手枪0.75–1.0H、AK1.25–1.5H、狙击1.6–1.9H、匕首0.65–0.9H"
+  },
+  "lightingRules": {
+    "direction": "顶左小色块高光、独立接地影",
+    "avoid": "霓虹和强Bloom"
+  },
+  "uiRules": {
+    "language": "必要中文短标签",
+    "theme": "暖木牌/米白/草绿深边",
+    "modeSpecific": "生命、护盾、当前枪、E槽、原存活/时间、绳索增益和屏外队友；无撤离HUD"
+  },
+  "motionRules": {
+    "idle": "2帧×3方向",
+    "walk": "6帧×3方向，8–10fps初调",
+    "hurt": "2帧",
+    "down": "4帧",
+    "revive": "4帧",
+    "acceptance": "切图、对齐、逐帧和循环均需验收；没有任何动画已生成"
+  },
+  "accessibilityRules": {
+    "teams": "色彩+形状",
+    "cameraShake": "低强度、可关闭",
+    "readability": "树冠遮挡时降低透明度，不挡本地角色与绳"
+  },
+  "prohibitedDrift": [
+    "把8种物种随机重画成其他蔬果",
+    "保留赛博金属地板作为主风格",
+    "逐帧紧裁并拉伸导致脚底漂移",
+    "用视觉范围暗示不存在的伤害",
+    "用全局时间缩放实现多人命中停顿"
+  ],
+  "decisions": [
+    "本轮仅修改策划文档，不改代码/数值/地图/素材/云端",
+    "M0八静态裁片和一个角色完整样板",
+    "默认2v2、最多4v4，八角色自由选择，默认允许重复",
+    "正式战斗与训练统一踩枪自动切换",
+    "外围适应绑定、中央开展对战；无强制禁战教程阶段",
+    "本地优先、云端阶段发布",
+    "Runtime uses full-cell sprite frames to avoid per-frame crop scaling",
+    "Source textures remain unchanged; sprites reference atlas rectangles"
+  ],
+  "unresolved": [
+    "部分物种正式命名",
+    "原图来源信息",
+    "最终逻辑像素密度",
+    "大地图尺寸与4v4布局试玩",
+    "换枪生命/冷却处理建议与数值同学对齐"
+  ],
+  "designVersion": "1.1",
+  "gameplayRules": {
+    "mode": "保留原队伍竞技的消灭/计时结算",
+    "healthProposal": "换枪不回血，当前生命取原生命与新最大生命较小值；待数值同学对齐",
+    "exclusions": [
+      "搜打撤",
+      "撤离点",
+      "战利品",
+      "种子袋",
+      "带出结算"
+    ],
+    "weaponSwitch": "活着时踩到不同地面武器自动切换；同枪不重复消费；不要求先死"
+  }
+}

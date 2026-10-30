@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BoundShoot.Tests {
  public class BattleRulesTests {
   [Test] public void ShieldAbsorbsBeforeIntegerHealth(){int hp=3,s=1;BattleRules.Damage(ref hp,ref s,2);Assert.AreEqual(2,hp);Assert.AreEqual(0,s);BattleRules.Damage(ref hp,ref s,9);Assert.AreEqual(0,hp);}
-  [Test] public void WeaponLockOnlyResetsWithDeath(){Assert.IsTrue(BattleRules.CanEquip(true,WeaponKind.None));foreach(WeaponKind w in new[]{WeaponKind.AK,WeaponKind.Sniper,WeaponKind.Pistol,WeaponKind.Dagger})Assert.IsFalse(BattleRules.CanEquip(true,w));Assert.IsFalse(BattleRules.CanEquip(false,WeaponKind.None));}
+  [Test] public void LivingPlayersCanSwitchWeaponsWithoutDying(){foreach(WeaponKind w in new[]{WeaponKind.None,WeaponKind.AK,WeaponKind.Sniper,WeaponKind.Pistol,WeaponKind.Dagger})Assert.IsTrue(BattleRules.CanEquip(true,w));Assert.IsFalse(BattleRules.CanEquip(false,WeaponKind.None));}
   [Test] public void WinnerHonorsWipeThenSurvivorsThenHealthThenDraw(){Assert.AreEqual(1,BattleRules.Winner(0,1,0,1));Assert.AreEqual(0,BattleRules.Winner(2,1,2,5));Assert.AreEqual(1,BattleRules.Winner(1,1,2,3));Assert.AreEqual(-1,BattleRules.Winner(1,1,3,3));Assert.AreEqual(-1,BattleRules.Winner(0,0,0,0));}
   [Test] public void ReviveRequiresContinuousFiveSeconds(){float t=0;for(int i=0;i<4;i++)t=BattleRules.ReviveProgress(t,true,1);Assert.AreEqual(4,t);Assert.AreEqual(0,BattleRules.ReviveProgress(t,false,.01f));Assert.AreEqual(5,BattleRules.ReviveProgress(t,true,1));}
   [Test] public void RopeModifiersRestoreBaseAndDoNotAccumulate(){var c=new GameConfig();Assert.AreEqual(.975f,BattleRules.RopeScale(true,true,c),.001f);Assert.AreEqual(1,BattleRules.RopeScale(false,false,c));}

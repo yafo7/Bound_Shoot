@@ -22,6 +22,41 @@ namespace BoundShoot {
     if(Intersects(a,b,r))return false;
    }return true;
   }
+  // A visible chord alone is insufficient: the moving chord must not sweep
+  // across a cover enclosed by the old bend and its replacement.
+  public bool CanShortcut(Vector2 a,Vector2 bend,Vector2 b){
+   if(!Visible(a,b))return false;
+   if(Mathf.Abs(Cross(bend-a,b-a))<.000001f)return true;
+   foreach(var block in blocks){
+    var r=new Rect(block.xMin+.005f,block.yMin+.005f,block.width-.01f,block.height-.01f);
+    if(Intersects(a,bend,r)||Intersects(bend,b,r)||Intersects(a,b,r))return false;
+    if(InTriangle(new Vector2(r.xMin,r.yMin),a,bend,b)||InTriangle(new Vector2(r.xMin,r.yMax),a,bend,b)||
+       InTriangle(new Vector2(r.xMax,r.yMin),a,bend,b)||InTriangle(new Vector2(r.xMax,r.yMax),a,bend,b))return false;
+   }
+   return true;
+  }
+  static float Cross(Vector2 a,Vector2 b)=>a.x*b.y-a.y*b.x;
+  static bool InTriangle(Vector2 p,Vector2 a,Vector2 b,Vector2 c){
+   float x=Cross(b-a,p-a),y=Cross(c-b,p-b),z=Cross(a-c,p-c);
+   return (x>=0&&y>=0&&z>=0)||(x<=0&&y<=0&&z<=0);
+  }
+  public Vector2[] Deform(Vector2[] previous,Vector2 a,Vector2 b){
+   if(previous==null||previous.Length<2)return Solve(a,b);
+   var points=new List<Vector2>{a};points.AddRange(previous);points.Add(b);
+   // Endpoint motion can step across an expanded corner even when the body
+   // itself clears the cover. Repair only that local segment, never reroute
+   // the whole rope into a different winding around an obstacle.
+   for(int i=1;i<points.Count;i++)if(!Visible(points[i-1],points[i])){
+    var repair=Solve(points[i-1],points[i]);if(repair.Length<2)return Array.Empty<Vector2>();
+    for(int j=1;j<repair.Length-1;j++)points.Insert(i++,repair[j]);
+   }
+   int at=1;
+   while(at<points.Count-1){
+    if(CanShortcut(points[at-1],points[at],points[at+1])){points.RemoveAt(at);at=Mathf.Max(1,at-1);}
+    else at++;
+   }
+   return points.ToArray();
+  }
   static bool Intersects(Vector2 a,Vector2 b,Rect r){
    float lo=0,hi=1;Vector2 delta=b-a;
    for(int axis=0;axis<2;axis++){
@@ -48,26 +83,32 @@ namespace BoundShoot {
      if(dist[at]+weight<dist[j]){dist[j]=dist[at]+weight;prev[j]=at;}
     }
    }
-   if(prev[target]<0)return new[]{a,b}; // Overlap/depenetration lasts at most a physics step.
+   if(prev[target]<0)return Array.Empty<Vector2>(); // Never fall back to a segment through a wall.
    var path=new List<Vector2>();for(int p=target;p>=0;p=prev[p]){path.Add(points[p]);if(p==0)break;}
    path.Reverse();return path.ToArray();
   }
   public static float Length(Vector2[] path){float result=0;for(int i=1;i<path.Length;i++)result+=Vector2.Distance(path[i-1],path[i]);return result;}
  }
  public class RopeLink {
-  public NetPlayer a,b;public Vector2[] path;public readonly LineRenderer line;
-  public RopeLink(NetPlayer a,NetPlayer b,Transform parent){this.a=a;this.b=b;if(!Application.isBatchMode)line=Draw2D.Line(parent,a.Team.Value==0?Draw2D.Blue:Draw2D.Red,.095f);}
+  public NetPlayer a,b;public Vector2[] path;readonly RopeLineView view;public LineRenderer line=>view?.Line;
+  public float Tension {get;private set;}
+  readonly RopeRoute route=new RopeRoute();
+  bool taut;float nextSound;
+  public RopeLink(NetPlayer a,NetPlayer b,Transform parent){this.a=a;this.b=b;if(!Application.isBatchMode||Draw2D.RenderInBatch)view=new RopeLineView(parent);}
   public void Apply(RopePath solver,float maxLength,float spring,float damping,float maxForce){
-   path=solver.Solve(a.Body.position,b.Body.position);
+   path=route.Update(solver,a.Body.position,b.Body.position);
    RopePhysics.Apply(a.Body,b.Body,path,maxLength,spring,damping,maxForce);
+   Tension=maxLength>.001f?RopePath.Length(path)/maxLength:0;bool tight=Tension>1;
+   if(tight&&!taut&&Time.time>nextSound){GardenFx.Tone(5,.08f,(a.Body.position+b.Body.position)*.5f);nextSound=Time.time+.5f;}taut=tight;
   }
+  public void ResetRoute(){route.Clear();path=null;Tension=0;view?.Show(null,a.Team.Value,0);}
   public void Show(Vector2[] points){
-   if(points==null||line==null)return;line.positionCount=points.Length;
-   for(int i=0;i<points.Length;i++)line.SetPosition(i,new Vector3(points[i].x,points[i].y,0));
+   view?.Show(points,a.Team.Value,Tension);
   }
  }
  public static class RopePhysics {
   public static void Apply(Rigidbody2D a,Rigidbody2D b,Vector2[] path,float maxLength,float spring,float damping,float maxForce){
+   if(path==null||path.Length<2)return;
    float extension=RopePath.Length(path)-maxLength;if(extension<=0)return;
    Vector2 da=(path[1]-path[0]).normalized,db=(path[path.Length-2]-path[path.Length-1]).normalized;
    float outward=-Vector2.Dot(a.velocity,da)-Vector2.Dot(b.velocity,db);

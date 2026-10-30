@@ -1,0 +1,32 @@
+{
+  "screenshots": "art-proposals/2026-10-29/vegetable-demo",
+  "network": "Real UDP connections between independent NetworkManager peers in one Unity test process; 4 and 8 participants",
+  "notes": [
+    "No exe build",
+    "No cloud update",
+    "Human hand-feel and cross-machine LAN remain follow-up acceptance"
+  ],
+  "visual": "Five actual Unity UI/camera renders; staged positions/results for display review",
+  "play": {
+    "passed": 4,
+    "cases": [
+      "AiTeamsPlayAnEntireRoundFromSpawn",
+      "EightNetworkPeersCanPlaySettleAndReplay",
+      "FourNetworkPeersCanPlaySettleAndReplay",
+      "TrainingRunsWithoutBackendAndCanRestart"
+    ],
+    "result": "Passed"
+  },
+  "date": "2026-10-29",
+  "scope": "Unity local source demo; no build, push, cloud or cross-computer test",
+  "edit": {
+    "result": "Passed",
+    "passed": 35
+  },
+  "art": {
+    "characters": 8,
+    "coreMotionFrames": 272,
+    "namedSprites": 344,
+    "motionFrames": 288
+  }
+}

@@ -1,17 +1,16 @@
 # 给枪械、道具、地图设计同学
 
-当前任务是可迭代的基础逻辑和占位画面。参考图仍保留在 example/，没有拷贝商业游戏美术到客户端。
+现行规则更新：2026-10-30。当前为八蔬果主题、本地2v2/4v4完整对局Demo。外观仅装饰；本文件取代早期“拾枪满血且锁定”说明。参考图与资源来源记录仍保留，没有拷贝商业游戏美术到客户端。
 
 ## 日常改动入口
 
 关卡优先使用 **Bound Shoot → Level Editor 关卡编辑器**，详细操作见 [LEVEL_EDITOR.md](LEVEL_EDITOR.md)。支持直接摆放地面、障碍、四类武器、七种道具和问号盒、出生点及可调整尺寸的复活区；保存到游戏配置后由运行时读取。旧地图补给顺序规则仅适用于尚未转为明确点位配置的地图。
 
 Unity → Assets/BoundShoot/Resources/GameConfig.json。
-客户端和专用服务器共用这份配置；后端也读取同一份配置中的可用地图列表。修改后需重新构建客户端与游戏服务器，后端重启。
-同一场比赛的所有参与者应使用同一版本。发布时同时更新三端。
+本地Editor测试修改后停止并重新Play即可，不用每次更新云端。客户端和专用服务器共用这份配置；后端也读取同一份配置中的可用地图列表。未来发布构建时集中更新客户端、游戏服务器及配置；需要时重启后端。同一场比赛使用同一版本。当前云端仍为旧版，入口禁用，本地通过后另行集中升级。
 
 - weapons：name、maxHealth、damage、range、cooldown（秒）、bulletSpeed（单位/秒）。kind 固定：1狙击、2手枪、3AK、4匕首；0为空手。
-- 正式初始值：狙击1血4伤；手枪3血1伤；AK3血2伤；匕首5血3伤。首次捡取直接填满对应生命。锁定直到死亡，不能替换。
+- 当前基线：狙击1最大血4伤；手枪3最大血1伤；AK3最大血2伤；匕首5最大血3伤，以最新GameConfig为准。踩不同枪立即自动替换；同枪不消费；不回血。当前生命取旧当前生命与新最大生命的较小值，盾保留；开火时间取旧冷却与新武器冷却截止的较晚者，不能靠换枪刷冷却。
 - items：kind 固定1收缩/2延长/3护盾/4冲刺/5炸弹/6弹性强化/7血包。weight 是问号盒抽中权重，enabled 是是否启用，duration 是临时效果秒数。
 - 问号盒 kind=8。状态立即执行；冲刺和炸弹进入一个槽，后来者覆盖，E消费，死亡清空。
 - ropeLength、ropeSpring、ropeDamping、ropeMaxForce；shortenScale=.65、extendScale=1.5、elasticScale=3。重复同类刷新截止时间，效果结束后用基础值重新计算，双方弹性效果共用截止时间。
@@ -23,17 +22,17 @@ Unity → Assets/BoundShoot/Resources/GameConfig.json。
 maps 每条：id、name、available、halfWidth、halfHeight、blueSpawns、redSpawns、supplies、revivals、blocks。
 坐标单位为 Unity 世界单位，俯视平面 XY，Z仅绘图排序。出生数组必须各有4个位置，分别对应队内座位0–3。
 blocks 用 center(x,y)、size(x,y) 定义轴对齐矩形。绳索可见性图、角色与子弹碰撞都由这些数据生成；不要仅修改美术位置而不修改碰撞数据。
-补给位置初始左右各4类武器和问号盒；刷新后随机武器/道具。复活点以中心±(2,1.5)矩形判定。
-只将可玩的地图设 available=true。房间地图按钮会轮换已注册地图；未开放地图不会出现。编辑器新增地图会导出layoutVersion=1、pickups、floors和revivalZones，具体道具种类及刷新周期无需再依靠supplies的数组顺序推断。
+layoutVersion=0是旧supplies/revivals兼容图；当前Field_01及编辑器新图使用layoutVersion=1的pickups/floors/revivalZones。每个拾取点明确武器或道具、刷新秒数和是否随机；复活区按明确center/size矩形判定，不依靠supplies数组顺序推断。
+只将可玩的地图设available=true。当前本地入口默认Field_01，任意地图选择/直接测试属于升级计划的后续任务，不能把旧云端地图按钮当成本地已经支持。
 
-当前地图是参考图的结构占位版，使用基本几何体，不是最终视觉。角色、拾取物、障碍、绳子绘制入口：
+当前Field_01为草土大图，碰撞仍为轴对齐矩形；theme/visual控制场景风格与障碍外观。设计同学继续负责地图和武器道具数值，程序/美术负责挂点、动画与反馈，不直接覆盖同伴调参。绘制入口：
 Scripts/Gameplay/ArenaView.cs（Draw2D/ArenaView）
-Scripts/Gameplay/NetPlayer.cs（人物与名字）
+Scripts/Gameplay/NetPlayer.cs、CyberPlayerView.cs（人物、名字与武器姿态）
 Scripts/Gameplay/BattleWorld.cs（拾取物、弹丸、爆炸）
 
 ## 必须保留的规则
 
-外观无属性差异；同队相邻座位连成链，不是网状；尸体仍在链里；无默认友伤；计时平局比较存活人数再比较存活成员血量（不含盾）。
+八外观可重复选且无属性差异；默认2v2最多4v4；同队相邻座位连成链，不是网状；尸体仍在链里；无默认友伤；计时平局比较存活人数再比较存活成员血量（不含盾）。保留原消灭/计时玩法，不做搜打撤。训练增加的队友无自主AI，正式空位AI补齐。
 所有玩法数值由服务器判定；不要在客户端加“扣血”“获取道具”等直接改状态的逻辑。
 添加全新武器攻击形式或新道具效果需要程序增加对应枚举与服务器分支；修改现有数值、名称和地图布局无需改网络代码。
 

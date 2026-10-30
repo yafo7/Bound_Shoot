@@ -1,0 +1,52 @@
+{
+  "label": "local-m0m1-20261030",
+  "date": "2026-10-30",
+  "gitBase": "37abbf3",
+  "worktree": "Source snapshot based on 37abbf3; saved to the repository on user request; not a built release",
+  "unity": "2022.3.62f3c1",
+  "netcode": "1.8.1",
+  "transport": "1.4.0",
+  "scope": "M0/M1 first implementation batch; BS-01 through BS-05",
+  "compatibility": "Same-source local peers; old cloud entrance remains disabled; no version handshake claimed",
+  "hashes": {
+    "unity-client/Assets/BoundShoot/Resources/GameConfig.json": "a42d1405c802b8bdb16d061ef2d75e2ed3650be4295bcd44f50326c78b5ca3e0",
+    "unity-client/Assets/BoundShoot/Resources/WeaponPresentation.json": "f2792c7647b66430d7951fb5318346e5896e01de0bf1269c0edddd03182bd9a3",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs": "d02da1fefc77b87b33ea95e01b9f93bae5db303c22053979c6a187a242fa1819",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/CyberPlayerView.cs": "f1a5fdff13c647e30af8181d20262e143bcb61fe14d5538fe5edda12e790fa4b",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/ProjectileVisuals.cs": "b94fe93980f85f1d268967870ce3f06eee5eed63f0c60ad4e38981d6384d272b",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/RopeLineView.cs": "35ab50d225b79bcd90fd676f342ba4e53a1af6c0c7179177652fe7e5b1e0dbae",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/RopePath.cs": "4bfa2d854a54ecc86a11e7fe3158aa76a127ac6fc039a38348359dd31202a44d",
+    "unity-client/Assets/BoundShoot/Scripts/Gameplay/WeaponPresentation.cs": "87e242dcefe832b476cbfe4eed2ac2cc39eab52fef593561b9c5111543ebc389"
+  },
+  "validation": {
+    "edit": {
+      "result": "Passed",
+      "passed": 52,
+      "report": "logs/m0m1-edit.xml",
+      "startUtc": "2026-10-30 01:39:33Z"
+    },
+    "play": {
+      "result": "Passed",
+      "passed": 7,
+      "report": "logs/m0m1-play.xml",
+      "startUtc": "2026-10-30 01:39:46Z",
+      "cases": [
+        "NearbyShootersKeepTheirOwnRecoilAndBlockedMuzzlesNeverLaunch",
+        "RemoteObserverReceivesExactShooterAndClearsProjectilesAtResult",
+        "AiTeamsPlayAnEntireRoundFromSpawn",
+        "EightNetworkPeersCanPlaySettleAndReplay",
+        "FourNetworkPeersCanPlaySettleAndReplay",
+        "ManualRoomsSurviveNinetySecondWaitBeforeFirstStartAndRematch",
+        "TrainingRunsWithoutBackendAndCanRestart"
+      ]
+    },
+    "content": "node tools/validate-content.mjs: Passed",
+    "limits": [
+      "Network peers share one test process with real localhost UDP",
+      "Waiting regression uses accelerated game time",
+      "No cross-computer, weak-network or real-player hand-feel acceptance",
+      "No build, archive or cloud update; Git publication is recorded separately"
+    ],
+    "visual": "Five actual Unity scripted UI/camera captures; art-proposals/2026-10-30/m0m1; staged combat/results, not natural-match evidence"
+  }
+}

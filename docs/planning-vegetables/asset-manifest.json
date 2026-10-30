@@ -1,0 +1,352 @@
+{
+  "$schema": "script-game-asset-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "status": "draft-specification-only",
+  "sourceHash": "C28129859180DF039AA7A16CB4F6CA2F7628F0CAC8170E12911B5ECAF1E3A362",
+  "assets": [
+    {
+      "id": "reference-vegetables-8",
+      "kind": "user-reference",
+      "ownerId": "BoundShoot",
+      "state": "reference-only",
+      "path": "../../example/images.jpg",
+      "dimensions": {
+        "width": 736,
+        "height": 725
+      },
+      "alpha": false,
+      "generationMethod": "user-provided JPEG",
+      "referenceAssetIds": [],
+      "promptOrBrief": "八蔬果身份与风格基准，不是可直接播放的精灵表",
+      "source": "用户指定本地图片",
+      "author": "未核实",
+      "license": "来源/许可待补充，不宣称CC0或原创",
+      "attribution": "待原作者信息",
+      "status": "reference-inspected",
+      "qaEvidence": [
+        "已目视确认五个上排与三个下排角色",
+        "原图含背景/阴影/JPEG边缘，不是透明PNG"
+      ]
+    },
+    {
+      "id": "VEG01-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG01",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG02-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG02",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG03-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG03",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG04-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG04",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG05-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG05",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG06-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG06",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG07-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG07",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "VEG08-identity-and-motion",
+      "kind": "planned-character-package",
+      "ownerId": "VEG08",
+      "state": "planned",
+      "path": null,
+      "dimensions": {
+        "proposedCanvas": [
+          48,
+          48
+        ],
+        "confirmed": false
+      },
+      "alpha": "required-for-future-output",
+      "generationMethod": "planned cutout + image_gen reference edits + alignment review",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "保留原图身份，6 idle + 18 walk + 2 hurt + 4 down + 4 revive，枪械分离，脚底对齐",
+      "source": "not-generated",
+      "author": null,
+      "license": "同源图出处记录待补充",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "weapons-four",
+      "kind": "planned-weapons",
+      "ownerId": "BoundShoot",
+      "state": "planned",
+      "path": null,
+      "dimensions": null,
+      "alpha": "per-final-asset-type",
+      "generationMethod": "planned AI-original derived from style specification, or explicitly licensed audio/fonts",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "狙击/手枪/AK/匕首，独立持有、拾取、HUD、枪口与握持锚点",
+      "source": "not-generated",
+      "author": null,
+      "license": "逐项记录，不推定外部资产可用",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "items-eight",
+      "kind": "planned-items",
+      "ownerId": "BoundShoot",
+      "state": "planned",
+      "path": null,
+      "dimensions": null,
+      "alpha": "per-final-asset-type",
+      "generationMethod": "planned AI-original derived from style specification, or explicitly licensed audio/fonts",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "收缩/延长/盾/冲刺/炸弹/弹性/血包/问号盒",
+      "source": "not-generated",
+      "author": null,
+      "license": "逐项记录，不推定外部资产可用",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "field-environment",
+      "kind": "planned-environment",
+      "ownerId": "BoundShoot",
+      "state": "planned",
+      "path": null,
+      "dimensions": null,
+      "alpha": "per-final-asset-type",
+      "generationMethod": "planned AI-original derived from style specification, or explicitly licensed audio/fonts",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "草土边缘、土堆、石、树干树冠、栅栏、木箱、功能点",
+      "source": "not-generated",
+      "author": null,
+      "license": "逐项记录，不推定外部资产可用",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "feedback-effects",
+      "kind": "planned-vfx-audio",
+      "ownerId": "BoundShoot",
+      "state": "planned",
+      "path": null,
+      "dimensions": null,
+      "alpha": "per-final-asset-type",
+      "generationMethod": "planned AI-original derived from style specification, or explicitly licensed audio/fonts",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "射击、命中、倒地、复活、爆炸、状态、脚步、绳索反馈",
+      "source": "not-generated",
+      "author": null,
+      "license": "逐项记录，不推定外部资产可用",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    },
+    {
+      "id": "vegetable-ui",
+      "kind": "planned-ui",
+      "ownerId": "BoundShoot",
+      "state": "planned",
+      "path": null,
+      "dimensions": null,
+      "alpha": "per-final-asset-type",
+      "generationMethod": "planned AI-original derived from style specification, or explicitly licensed audio/fonts",
+      "referenceAssetIds": [
+        "reference-vegetables-8"
+      ],
+      "promptOrBrief": "名字、八选角、默认2v2/最多4v4、HUD、原胜负结算；不做撤离界面",
+      "source": "not-generated",
+      "author": null,
+      "license": "逐项记录，不推定外部资产可用",
+      "attribution": null,
+      "status": "not-produced",
+      "qaEvidence": []
+    }
+  ],
+  "decisions": [
+    "没有修改旧赛博素材清单；新规划独立保存",
+    "path=null表示没有制作新素材",
+    "v1.1取消前稿搜打撤方向；保留原竞技玩法，扩大地图先适应绑定再中央交战",
+    "八角色自由选，最大4v4；增加踩枪自动切换的显示反馈"
+  ],
+  "unresolved": [
+    "身份样板验收",
+    "逐帧播放验收",
+    "原图来源信息"
+  ],
+  "designVersion": "1.1"
+}

@@ -23,7 +23,7 @@ namespace BoundShoot {
     nextDecision=Time.time+.25f;
     enemy=players.Where(p=>p.Team.Value!=player.Team.Value&&p.Alive).OrderBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
     destination=pos;
-    var partner=players.FirstOrDefault(p=>p!=player&&p.Team.Value==player.Team.Value);
+    var partner=players.Where(p=>p!=player&&p.Team.Value==player.Team.Value&&Mathf.Abs(p.Seat.Value-player.Seat.Value)==1).OrderBy(p=>p.IsBot.Value?1:0).ThenBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
     if(partner!=null&&!partner.Alive&&MapContent.Revivals(map).Length>0)
      destination=MapContent.Revivals(map).OrderBy(v=>(v.center-partner.Body.position).sqrMagnitude).First().center;
     else if(player.Weapon.Value==0){
