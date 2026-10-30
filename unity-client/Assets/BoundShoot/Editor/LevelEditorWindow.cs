@@ -11,7 +11,7 @@ namespace BoundShoot.Editor {
  public sealed class LevelEditorWindow:EditorWindow {
   LevelLayout root;GameConfig catalog;int mapIndex;Vector2 scroll;string status="",newId="Arena_02",newName="新竞技场";
   MessageType statusType;UnityEditor.Editor inspector;int brush=-1;bool placing;
-  static readonly string[] Palette={"地面块","障碍柱","蓝队出生点","红队出生点","复活区","狙击枪","手枪","AK","匕首","问号盒","绳索收缩","绳索延长","护盾","冲刺装置","炸弹","弹性强化","血包"};
+  static readonly string[] Palette={"地面块","障碍柱","蓝队出生点","红队出生点","狙击枪","手枪","AK","匕首","问号盒","绳索收缩","绳索延长","护盾","冲刺装置","炸弹","弹性强化","血包"};
   [MenuItem("Bound Shoot/Level Editor 关卡编辑器")]
   public static void Open(){var w=GetWindow<LevelEditorWindow>("关卡编辑器");w.minSize=new Vector2(340,560);w.Show();}
   public static void OpenStarter(){
@@ -97,7 +97,7 @@ namespace BoundShoot.Editor {
   void Place(Vector2 point){
    if(root==null||brush<0)return;
    if(root.snap)point=Snapped(point,root.grid);
-   LevelPieceKind kind=brush==0?LevelPieceKind.Floor:brush==1?LevelPieceKind.Obstacle:brush<4?LevelPieceKind.Spawn:brush==4?LevelPieceKind.Revival:LevelPieceKind.Pickup;
+   LevelPieceKind kind=brush==0?LevelPieceKind.Floor:brush==1?LevelPieceKind.Obstacle:brush<4?LevelPieceKind.Spawn:LevelPieceKind.Pickup;
    Vector2 size=kind==LevelPieceKind.Floor?new Vector2(4,4):kind==LevelPieceKind.Obstacle?new Vector2(1.5f,1.5f):kind==LevelPieceKind.Revival?new Vector2(4,3):Vector2.one;
    if(kind==LevelPieceKind.Spawn){
     int team=brush==2?0:1;var existing=root.GetComponentsInChildren<LevelPiece>();
@@ -106,7 +106,7 @@ namespace BoundShoot.Editor {
     var spawn=LevelLayoutIO.Add(root,kind,point,size);spawn.team=team;spawn.seat=seat;LevelLayoutIO.Rename(spawn);Selection.activeGameObject=spawn.gameObject;
    }else{
     var piece=LevelLayoutIO.Add(root,kind,point,size);
-    if(kind==LevelPieceKind.Pickup){if(brush<=8)piece.weapon=(WeaponKind)(brush-4);else piece.item=brush==9?ItemKind.Mystery:(ItemKind)(brush-9);LevelLayoutIO.Rename(piece);}
+    if(kind==LevelPieceKind.Pickup){if(brush<=7)piece.weapon=(WeaponKind)(brush-3);else piece.item=brush==8?ItemKind.Mystery:(ItemKind)(brush-8);LevelLayoutIO.Rename(piece);}
     Selection.activeGameObject=piece.gameObject;
    }
    EditorSceneManager.MarkSceneDirty(root.gameObject.scene);Changed();

@@ -5,18 +5,18 @@ using UnityEngine.EventSystems;
 namespace BoundShoot {
  public class UiKit:MonoBehaviour {
   public RectTransform Root;public Font Font;
-  public static readonly Color Ink=new Color(.13f,.17f,.13f),Panel=new Color(.23f,.30f,.21f),Soft=new Color(.64f,.71f,.52f),White=new Color(.98f,.94f,.80f);
+  public static readonly Color Ink=new Color(.075f,.13f,.105f),Panel=new Color(.15f,.25f,.19f),Soft=new Color(.61f,.72f,.48f),White=new Color(.98f,.94f,.80f);
+  Image backdrop;
   public void Initialize(){
    Font=UnityEngine.Font.CreateDynamicFontFromOSFont(new[]{"Microsoft YaHei","Microsoft YaHei UI","Noto Sans CJK SC","Arial"},24);
    var canvas=gameObject.AddComponent<Canvas>();canvas.renderMode=RenderMode.ScreenSpaceOverlay;canvas.sortingOrder=100;
    var scaler=gameObject.AddComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1600,900);scaler.screenMatchMode=CanvasScaler.ScreenMatchMode.Expand;
-   gameObject.AddComponent<GraphicRaycaster>();Root=GetComponent<RectTransform>();
+   gameObject.AddComponent<GraphicRaycaster>();var frame=new GameObject("Centred interface",typeof(RectTransform));Root=frame.GetComponent<RectTransform>();Root.SetParent(transform,false);Root.anchorMin=Root.anchorMax=Root.pivot=Vector2.one*.5f;Root.sizeDelta=new Vector2(1600,900);
    if(FindObjectOfType<EventSystem>()==null)new GameObject("EventSystem",typeof(EventSystem),typeof(StandaloneInputModule));
   }
-  public void Clear(){foreach(Transform child in transform){child.gameObject.SetActive(false);Destroy(child.gameObject);}}
+  public void Clear(){if(backdrop!=null)backdrop.enabled=false;foreach(Transform child in Root){child.gameObject.SetActive(false);Destroy(child.gameObject);}}
   public void Backdrop(Color color){
-   var go=new GameObject("Background",typeof(RectTransform),typeof(Image));var r=go.GetComponent<RectTransform>();r.SetParent(Root,false);
-   r.anchorMin=Vector2.zero;r.anchorMax=Vector2.one;r.offsetMin=r.offsetMax=Vector2.zero;go.GetComponent<Image>().color=color;
+   if(backdrop==null){var go=new GameObject("Background",typeof(RectTransform),typeof(Image));var r=go.GetComponent<RectTransform>();r.SetParent(transform,false);r.SetAsFirstSibling();r.anchorMin=Vector2.zero;r.anchorMax=Vector2.one;r.offsetMin=r.offsetMax=Vector2.zero;backdrop=go.GetComponent<Image>();}backdrop.enabled=true;backdrop.color=color;
   }
   RectTransform Rect(string name,Transform parent,float x,float y,float w,float h){
    var go=new GameObject(name,typeof(RectTransform));var r=go.GetComponent<RectTransform>();r.SetParent(parent,false);
@@ -26,12 +26,12 @@ namespace BoundShoot {
    var r=Rect("Panel",parent??Root,x,y,w,h);r.gameObject.AddComponent<Image>().color=color;
    var outline=r.gameObject.AddComponent<Outline>();outline.effectColor=new Color(.07f,.10f,.08f,.9f);outline.effectDistance=new Vector2(3,-3);return r;
   }
-  public Image Picture(Sprite sprite,float x,float y,float w,float h){var r=Rect("Artwork",Root,x,y,w,h);var image=r.gameObject.AddComponent<Image>();image.sprite=sprite;image.preserveAspect=true;image.raycastTarget=false;return image;}
+  public Image Picture(Sprite sprite,float x,float y,float w,float h,Transform parent=null){var r=Rect("Artwork",parent??Root,x,y,w,h);var image=r.gameObject.AddComponent<Image>();image.sprite=sprite;image.preserveAspect=true;image.raycastTarget=false;return image;}
   public Text Text(string text,float x,float y,float w,float h,int size=24,Color? color=null,Transform parent=null,TextAnchor align=TextAnchor.MiddleLeft){
    var r=Rect("Text",parent??Root,x,y,w,h);var t=r.gameObject.AddComponent<Text>();t.font=Font;t.text=text;t.fontSize=size;t.color=color??White;t.alignment=align;t.raycastTarget=false;t.horizontalOverflow=HorizontalWrapMode.Wrap;t.verticalOverflow=VerticalWrapMode.Truncate;return t;
   }
   public Button Button(string title,float x,float y,float w,float h,Action action,Color? color=null,Transform parent=null){
-   var r=Box(x,y,w,h,color??Draw2D.Blue,parent);var b=r.gameObject.AddComponent<Button>();
+   var r=Box(x,y,w,h,color??new Color(.83f,.89f,.55f),parent);var b=r.gameObject.AddComponent<Button>();
    var c=b.colors;c.highlightedColor=new Color(1,1,1,.88f);c.pressedColor=new Color(.75f,.8f,.85f);b.colors=c;b.onClick.AddListener(()=>action());
    Text(title,12,0,w-24,h,23,Ink,r,TextAnchor.MiddleCenter);return b;
   }

@@ -1,0 +1,91 @@
+{
+  "$schema": "script-game-art-bible/v1",
+  "schemaVersion": "1.0.0",
+  "status": "integrated-local-demo-user-review-pending",
+  "sourceHash": "0764438ABDC085EB74270AB8E4656A4EB80CBC31317AA8E23F07B1FD859D71A4",
+  "style": {
+    "theme": "Clean top-down pixel forest; existing eight vegetables and oversized guns",
+    "scope": "Local Unity implementation; existing vegetable art preserved; CC0 environment and code-drawn stairs/UI"
+  },
+  "palette": {
+    "ground": "Low contrast light green and warm earth",
+    "boundary": "Dark green trees",
+    "actors": "Preserve established vegetable identities"
+  },
+  "characterRules": {
+    "duplicatesAllowed": true,
+    "count": 8,
+    "preserve": "Faces, silhouettes, leaves, colours; same gameplay attributes"
+  },
+  "environmentRules": {
+    "mainAssetCandidates": [
+      "Tiny Swords",
+      "Ninja Adventure"
+    ],
+    "levels": [
+      "low left/right spawns",
+      "central high plateau"
+    ],
+    "walk": "Stairs connect surfaces; no bridge underpasses",
+    "clutter": "Sparse combat zones; dense border forest",
+    "mainAssetSelected": "Ninja Adventure"
+  },
+  "compositionRules": {
+    "hud": "Health hearts in upper right",
+    "camera": "Local player fixed centre",
+    "world": "Distinct lowland, stairs and plateau"
+  },
+  "lightingRules": {
+    "shadows": "Separate contact shadows",
+    "direction": "Consistent across selected pack",
+    "effects": "Readable shots and rope first"
+  },
+  "uiRules": {
+    "roomSizes": [
+      "2v2",
+      "3v3",
+      "4v4"
+    ],
+    "language": "Short necessary labels and icons; centred layouts",
+    "flow": [
+      "title",
+      "name-and-character",
+      "mode",
+      "room",
+      "battle",
+      "result"
+    ]
+  },
+  "motionRules": {
+    "follow": "No aim look-ahead or camera shake offsets",
+    "rope": "Stronger drag; preserve continuous obstacle route",
+    "revive": "Individual 5s while at least one teammate survives"
+  },
+  "accessibilityRules": {
+    "resolutions": [
+      "720p",
+      "900p",
+      "1080p",
+      "16:10"
+    ],
+    "teams": "Colour and shape markers",
+    "health": "Red filled hearts, grey lost hearts; separate shield"
+  },
+  "prohibitedDrift": [
+    "Account/password flow",
+    "Extraction gameplay",
+    "Revival zones",
+    "Randomly mixed environment packs",
+    "Unverified assets presented as imported"
+  ],
+  "decisions": [
+    "New user requirements supersede conflicting v2 design",
+    "Generic environment assets may be sourced online",
+    "Preserve current character identities"
+  ],
+  "unresolved": [
+    "Final visual approval and longer human playtest",
+    "Cross-machine and weak-network acceptance",
+    "Future coordinated cloud/client upgrade"
+  ]
+}

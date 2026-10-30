@@ -38,6 +38,7 @@ namespace BoundShoot.Tests {
    yield return runtime.Stop();
   }
   [UnityTest] public IEnumerator FourNetworkPeersCanPlaySettleAndReplay(){yield return Exercise(2,17879);}
+  [UnityTest] public IEnumerator SixNetworkPeersCanPlaySettleAndReplay(){yield return Exercise(3,17886);}
   [UnityTest] public IEnumerator EightNetworkPeersCanPlaySettleAndReplay(){yield return Exercise(4,17880);}
   IEnumerator Exercise(int teamSize,ushort port){
    if(Object.FindObjectOfType<Bootstrap>()==null)new GameObject("Local test bootstrap").AddComponent<Bootstrap>();yield return null;yield return null;
@@ -62,9 +63,9 @@ namespace BoundShoot.Tests {
    for(int i=0;i<15;i++){clientPlayer.SubmitInput(Vector2.right,Vector2.right,false,false);yield return new WaitForFixedUpdate();}
    Assert.Greater(authority.Body.position.x,before.x+.2f);
    // Switching preserves HP, shield and cooldown; same weapon is a no-op.
-   authority.Health.Value=2;authority.Shield.Value=1;Assert.IsTrue(authority.Equip(WeaponKind.AK));Assert.AreEqual(2,authority.Health.Value);
-   float cooldown=authority.NextShot;Assert.IsTrue(authority.Equip(WeaponKind.Sniper));Assert.AreEqual(1,authority.Health.Value);Assert.GreaterOrEqual(authority.NextShot,cooldown);
-   Assert.IsTrue(authority.Equip(WeaponKind.AK));Assert.AreEqual(1,authority.Health.Value);Assert.AreEqual(1,authority.Shield.Value);Assert.IsFalse(authority.Equip(WeaponKind.AK));
+   authority.Health.Value=7;authority.Shield.Value=1;Assert.IsTrue(authority.Equip(WeaponKind.AK));Assert.AreEqual(7,authority.Health.Value);
+   float cooldown=authority.NextShot;Assert.IsTrue(authority.Equip(WeaponKind.Sniper));Assert.AreEqual(3,authority.Health.Value);Assert.GreaterOrEqual(authority.NextShot,cooldown);
+   Assert.IsTrue(authority.Equip(WeaponKind.AK));Assert.AreEqual(3,authority.Health.Value);Assert.AreEqual(1,authority.Shield.Value);Assert.IsFalse(authority.Equip(WeaponKind.AK));
    BattleResult result=null;world.OnResult+=r=>result=r;
    foreach(var player in world.Players.Where(p=>p.Team.Value==1)){player.ProtectionUntil=0;player.Hurt(999,null);}
    yield return WaitFor(()=>world.Phase.Value==3);Assert.IsNotNull(result);Assert.AreEqual(0,result.winner);Assert.AreEqual(teamSize*2,result.players.Length);

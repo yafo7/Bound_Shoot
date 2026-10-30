@@ -31,6 +31,7 @@ namespace BoundShoot {
     Wall(new Vector2(0,map.halfHeight+.5f),new Vector2(map.halfWidth*2+2,1));Wall(new Vector2(0,-map.halfHeight-.5f),new Vector2(map.halfWidth*2+2,1));
     Wall(new Vector2(-map.halfWidth-.5f,0),new Vector2(1,map.halfHeight*2));Wall(new Vector2(map.halfWidth+.5f,0),new Vector2(1,map.halfHeight*2));return;
    }
+   if(map.theme=="forest"){gameObject.AddComponent<ForestView>().Build(map);return;}
    if(map.theme=="meadow"){BuildMeadow(map);return;}
    Draw2D.Shape(transform,"Floor base",Vector2.zero,new Vector2(map.halfWidth*2,map.halfHeight*2),new Color(.10f,.15f,.23f),false,-11);
    for(float x=-map.halfWidth;x<map.halfWidth;x+=6)for(float y=-map.halfHeight;y<map.halfHeight;y+=6){
@@ -38,10 +39,6 @@ namespace BoundShoot {
     CyberArt.Place(transform,"floor",new Vector2(x,y)+size*.5f,size,-10,new Color(.58f,.65f,.76f));
    }
    if(map.layoutVersion>=1&&map.floors!=null)foreach(var floor in map.floors)Draw2D.Shape(transform,"Floor patch",floor.center,floor.size,floor.color,false,-9);
-   foreach(var zone in MapContent.Revivals(map)){
-    var p=zone.center;Draw2D.Shape(transform,"Revival zone",p,zone.size,new Color(0,.75f,.8f,.12f),false,-7);
-    CyberArt.Place(transform,"revival",p,Vector2.one*1.8f,-6);
-   }
    foreach(var b in map.blocks)Wall(b.center,b.size);
    Wall(new Vector2(0,map.halfHeight+.5f),new Vector2(map.halfWidth*2+2,1));
    Wall(new Vector2(0,-map.halfHeight-.5f),new Vector2(map.halfWidth*2+2,1));
@@ -76,7 +73,6 @@ namespace BoundShoot {
     CyberArt.Place(transform,"grass",new Vector2(x,y),new Vector2(.7f,.5f),-10,new Color(.85f,.9f,.72f));
    }
    foreach(var floor in map.floors??new FloorDefinition[0])Draw2D.Shape(transform,"Designer floor patch",floor.center,floor.size,floor.color,false,-11);
-   foreach(var zone in MapContent.Revivals(map)){Draw2D.Shape(transform,"Revival area",zone.center,zone.size,new Color(.6f,.9f,.55f,.25f),false,-8);CyberArt.Place(transform,"revival",zone.center,Vector2.one*1.9f,-7);}
    foreach(var block in map.blocks){
     var go=new GameObject("Obstacle");go.transform.SetParent(transform,false);go.transform.localPosition=block.center;go.layer=8;go.AddComponent<BoxCollider2D>().size=block.size;
     Draw2D.Shape(transform,"Ground shadow",block.center+new Vector2(.1f,-.12f),block.size,new Color(.1f,.14f,.09f,.22f),true,-4);

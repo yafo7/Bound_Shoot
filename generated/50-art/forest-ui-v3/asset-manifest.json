@@ -1,0 +1,174 @@
+{
+  "$schema": "script-game-asset-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "status": "integrated-local-demo-user-review-pending",
+  "date": "2026-10-30",
+  "reference": {
+    "sha256": "0764438ABDC085EB74270AB8E4656A4EB80CBC31317AA8E23F07B1FD859D71A4",
+    "provenance": "User supplied visual reference; original author not established; composition analysis only",
+    "id": "user-forest-reference",
+    "path": "../../../art-proposals/2026-10-30/forest-v3-plan/user-forest-reference.png"
+  },
+  "assets": [
+    {
+      "id": "forest-tiny-swords",
+      "kind": "environment-pack-candidate",
+      "ownerId": "BoundShoot",
+      "state": "candidate",
+      "path": null,
+      "dimensions": "64x64 tile grid, author page",
+      "alpha": "pending actual file inspection",
+      "generationMethod": "External source research only",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://pixelfrog-assets.itch.io/tiny-swords",
+      "author": "Pixel Frog",
+      "license": "Custom: personal/commercial and modification allowed; asset redistribution/resale/repackaging prohibited",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "researched-not-downloaded",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Author page inspected for content and terms",
+        "No integration or visual acceptance claimed"
+      ]
+    },
+    {
+      "id": "forest-ninja-adventure",
+      "kind": "environment-pack",
+      "ownerId": "BoundShoot",
+      "state": "integrated",
+      "path": "../../../unity-client/Assets/BoundShoot/Resources/Forest",
+      "dimensions": "floor 336x448; village 320x192; hearts 80x16",
+      "alpha": "PNG alpha retained; opaque terrain is not stamped as transparent grass",
+      "generationMethod": "Official CC0 PNGs, runtime sprite rectangles, tint; no raster changes",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://pixel-boy.itch.io/ninja-adventure-asset-pack",
+      "author": "Pixel-Boy and AAA",
+      "license": "CC0",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "integrated-visual-reviewed",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Unity Camera/Canvas renders inspected: art-proposals/2026-10-30/forest-v3",
+        "Corrected heart, rock and stump rectangles; native scale rather than stretched atlas tiles",
+        "See docs/FOREST_V3_ASSETS.md for license, files, hashes and changes"
+      ],
+      "sourceRevision": "6ac78232d5aedcc85ce5f27d060ea92366f7c24a",
+      "files": [
+        {
+          "name": "tileset_floor.png",
+          "sha256": "e111065065edf806e7e893330086e68efc8755175d92f14d087b42d40a331e16"
+        },
+        {
+          "name": "tileset_village_abandoned.png",
+          "sha256": "6787c6e22a4d44ceee4f158309b2519707bdb70c59aca00b3d49006cadcca06e"
+        },
+        {
+          "name": "heart.png",
+          "sha256": "f1163b91560c5097ac1de4f26470abaa9e3461f3bc4a8685fd7daae2d8cabb61"
+        }
+      ]
+    },
+    {
+      "id": "forest-kenney-tiny-town",
+      "kind": "environment-pack-candidate",
+      "ownerId": "BoundShoot",
+      "state": "candidate",
+      "path": null,
+      "dimensions": "16x16 tiles",
+      "alpha": "pending actual file inspection",
+      "generationMethod": "External source research only",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://kenney.nl/assets/tiny-town",
+      "author": "Kenney",
+      "license": "CC0",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "researched-not-downloaded",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Author page inspected for content and terms",
+        "No integration or visual acceptance claimed"
+      ]
+    },
+    {
+      "id": "forest-cainos-basic",
+      "kind": "environment-pack-candidate",
+      "ownerId": "BoundShoot",
+      "state": "candidate",
+      "path": null,
+      "dimensions": "32x32 tiles",
+      "alpha": "pending actual file inspection",
+      "generationMethod": "External source research only",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://cainos.itch.io/pixel-art-top-down-basic",
+      "author": "Cainos",
+      "license": "Custom: free/commercial projects and modification allowed; redistribution/resale prohibited",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "researched-not-downloaded",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Author page inspected for content and terms",
+        "No integration or visual acceptance claimed"
+      ]
+    },
+    {
+      "id": "forest-cozy-farm",
+      "kind": "environment-pack-candidate",
+      "ownerId": "BoundShoot",
+      "state": "candidate",
+      "path": null,
+      "dimensions": "16x16 tiles",
+      "alpha": "pending actual file inspection",
+      "generationMethod": "External source research only",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://shubibubi.itch.io/cozy-farm",
+      "author": "shubibubi",
+      "license": "Free non-commercial only; paid complete commercial-capable terms; redistribution prohibited",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "researched-not-downloaded",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Author page inspected for content and terms",
+        "No integration or visual acceptance claimed"
+      ]
+    },
+    {
+      "id": "forest-sprout-lands",
+      "kind": "environment-pack-candidate",
+      "ownerId": "BoundShoot",
+      "state": "candidate",
+      "path": null,
+      "dimensions": "Exact dimensions pending selected archive inspection",
+      "alpha": "pending actual file inspection",
+      "generationMethod": "External source research only",
+      "referenceAssetIds": [
+        "user-forest-reference"
+      ],
+      "promptOrBrief": "Simple forest grass, trees, cliff rims and stairs, coherent with vegetable characters",
+      "source": "https://cupnooble.itch.io/sprout-lands-asset-pack",
+      "author": "Cup Nooble",
+      "license": "Free non-commercial only; premium commercial-capable terms; credit requested; redistribution prohibited",
+      "attribution": "Record source and author; follow selected pack terms",
+      "status": "researched-not-downloaded",
+      "retrievalDate": "2026-10-30",
+      "qaEvidence": [
+        "Author page inspected for content and terms",
+        "No integration or visual acceptance claimed"
+      ]
+    }
+  ]
+}

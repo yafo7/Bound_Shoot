@@ -11,11 +11,13 @@ namespace BoundShoot {
  public sealed class LocalMatchRuntime:MonoBehaviour {
   public static LocalMatchRuntime Instance;BattleWorld hostWorld;public BattleWorld World=>hostWorld!=null?hostWorld:BattleWorld.Instance;
   public string Error {get;private set;}public bool Ready=>World!=null&&World.IsSpawned;
-  public bool IsHost=>network!=null&&network.IsHost;public int TeamSize {get;private set;}
+  public bool IsHost=>network!=null&&network.IsHost;public int TeamSize=>Ready?World.TeamSize.Value:initialSize;int initialSize;bool fillAI=true;
+  public bool HasPendingSeats=>pending.Count>0;
+  public bool CanStart=>IsHost&&Ready&&!HasPendingSeats&&World.Phase.Value==0&&World.Players.All(p=>p.Connected.Value);
   NetworkManager network;readonly Dictionary<ulong,RoomMember> pending=new Dictionary<ulong,RoomMember>();
   readonly Dictionary<ulong,string> clients=new Dictionary<ulong,string>();
-  public IEnumerator Begin(string name,int skin,int teamSize,bool host,string address="127.0.0.1",ushort port=7779){
-   Instance=this;TeamSize=teamSize;network=Bootstrap.Network;
+  public IEnumerator Begin(string name,int skin,int teamSize,bool host,string address="127.0.0.1",ushort port=7779,bool aiFill=true){
+   Instance=this;initialSize=teamSize;fillAI=aiFill;network=Bootstrap.Network;
    if(network.IsListening){Error="请先退出当前对局";yield break;}
    network.OnClientDisconnectCallback+=Disconnected;
    network.OnClientConnectedCallback+=Connected;
@@ -23,19 +25,19 @@ namespace BoundShoot {
    network.NetworkConfig.ConnectionData=Encoding.UTF8.GetBytes(JsonUtility.ToJson(new LocalIdentity{name=name,skin=skin}));
    network.GetComponent<UnityTransport>().SetConnectionData(address,port,host?"0.0.0.0":null);
    if(host){
-    if(teamSize!=2&&teamSize!=4){Error="人数设置无效";yield break;}
+    if(teamSize<2||teamSize>4){Error="人数设置无效";yield break;}
     if(!network.StartHost()){Error="本地房间启动失败，端口可能被占用";yield break;}
     var roster=new List<RoomMember>();
-    for(int t=0;t<2;t++)for(int s=0;s<teamSize;s++)roster.Add(new RoomMember{userId=Guid.NewGuid().ToString(),username=t==0&&s==0?name:"菜园搭档 "+(t*teamSize+s+1),team=t,seat=s,skin=t==0&&s==0?skin:t*teamSize+s,isBot=t==0&&s==0?0:1});
-    var map=GameConfig.Current.Map(FieldMap.Id)??FieldMap.Create();var world=Instantiate(Resources.Load<GameObject>("NetWorld")).GetComponent<BattleWorld>();
+    for(int t=0;t<2;t++)for(int s=0;s<teamSize;s++)roster.Add(new RoomMember{userId=Guid.NewGuid().ToString(),username=t==0&&s==0?name:"菜园搭档 "+(t*4+s+1),team=t,seat=s,skin=t==0&&s==0?skin:t*4+s,isBot=t==0&&s==0?0:1});
+    var map=GameConfig.Current.Map(ForestMap.Id)??ForestMap.Create();var world=Instantiate(Resources.Load<GameObject>("NetWorld")).GetComponent<BattleWorld>();
     hostWorld=world;world.MapOverride=map;world.SelectedMap=map.id;world.ManualStart=true;world.NetworkObject.Spawn();world.Setup(new ServerRoster{mapId=map.id,players=roster.ToArray()});
     world.Attach(NetworkManager.ServerClientId,roster[0]);clients[NetworkManager.ServerClientId]=roster[0].userId;
+    world.SetBotFill(fillAI);
    }else{
     if(!network.StartClient()){Error="无法连接本地房间";yield break;}
     float timeout=Time.realtimeSinceStartup+10;
     while(!Ready&&network.IsListening&&Time.realtimeSinceStartup<timeout)yield return null;
     if(!Ready)Error=string.IsNullOrEmpty(network.DisconnectReason)?"连接超时，请确认房间已创建":network.DisconnectReason;
-    else TeamSize=NetPlayer.All.Count/2;
    }
    yield return null;
   }
@@ -60,11 +62,13 @@ namespace BoundShoot {
   void Disconnected(ulong client){
    pending.Remove(client);
    if(network.IsServer&&clients.TryGetValue(client,out var id)&&World!=null){
-    var player=World.Find(id);if(player!=null){player.NetworkObject.RemoveOwnership();player.IsBot.Value=true;player.Connected.Value=true;player.DisconnectAt=-1;player.ResetInput();}
+    var player=World.Find(id);if(player!=null){player.NetworkObject.RemoveOwnership();player.IsBot.Value=true;player.Connected.Value=World.Phase.Value!=0||fillAI;player.DisconnectAt=-1;player.ResetInput();}
     clients.Remove(client);
    }else if(!network.IsServer&&client==network.LocalClientId)Error=string.IsNullOrEmpty(network.DisconnectReason)?"房主已离开":network.DisconnectReason;
   }
-  public void StartRound(){if(IsHost&&Ready)World.BeginLocalRound();}
+  public void StartRound(){if(CanStart)World.BeginLocalRound();}
+  public bool SetTeamSize(int size)=>IsHost&&Ready&&!HasPendingSeats&&World.ConfigureTeamSize(size,fillAI);
+  public void FillWithAI(){if(IsHost&&Ready){fillAI=true;World.SetBotFill(true);}}
   public void Restart(){if(IsHost&&Ready)World.RestartLocalRound();}
   public IEnumerator Stop(){
    if(network!=null){

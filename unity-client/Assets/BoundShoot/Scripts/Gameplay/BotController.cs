@@ -24,9 +24,7 @@ namespace BoundShoot {
     enemy=players.Where(p=>p.Team.Value!=player.Team.Value&&p.Alive).OrderBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
     destination=pos;
     var partner=players.Where(p=>p!=player&&p.Team.Value==player.Team.Value&&Mathf.Abs(p.Seat.Value-player.Seat.Value)==1).OrderBy(p=>p.IsBot.Value?1:0).ThenBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
-    if(partner!=null&&!partner.Alive&&MapContent.Revivals(map).Length>0)
-     destination=MapContent.Revivals(map).OrderBy(v=>(v.center-partner.Body.position).sqrMagnitude).First().center;
-    else if(player.Weapon.Value==0){
+    if(player.Weapon.Value==0){
      var supply=pickups.Where(p=>p.active&&p.weapon>0).OrderBy(p=>Vector2.Distance(p.position,pos)+(p.weapon==(player.Seat.Value==0?2:3)?0:2)).FirstOrDefault();
      destination=supply!=null?supply.position:partner!=null?partner.Body.position:pos;
     }else if(enemy!=null){

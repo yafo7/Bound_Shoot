@@ -33,7 +33,10 @@ namespace BoundShoot {
    if(body==null)Build();skin=Mathf.Clamp(skin,0,7);
    if(Time.time<shotPoseUntil)angle=shotAngle;
    walkCycle.Advance(transform.position,Time.deltaTime);bool moving=walkCycle.Moving;
-   int direction=Mathf.Sin(angle*Mathf.Deg2Rad)>.55f?2:Mathf.Sin(angle*Mathf.Deg2Rad)<-.55f?0:1;
+   // Body follows actual travel (including rope dragging); aiming only turns the gun.
+   Vector2 facing=player!=null?walkCycle.Direction:WeaponPresentation.Rotate(Vector2.right,angle);
+   int direction=Mathf.Abs(facing.y)>Mathf.Abs(facing.x)?(facing.y>0?2:0):1;
+   bool aimLeft=Mathf.Cos(angle*Mathf.Deg2Rad)<0;
    if(alive!=wasAlive){wasAlive=alive;phaseAt=Time.time;}
    if(lastHealth>=0&&health>=0&&health<lastHealth){hitUntil=Time.time+.1f;GardenFx.Emit(transform.position,9,3,.3f,Vector2.one*.85f);if(player!=null&&player.IsOwner&&!player.IsBot.Value)MeadowCamera.Instance?.Impulse(.13f);}
    lastHealth=health;
@@ -46,10 +49,10 @@ namespace BoundShoot {
    CyberArt.Set(body,"veg"+skin+"_f"+frame.ToString("00"),Vector2.one*1.9f,true);
    // Standing frames share a foot pivot; special poses retain their canvas pivot.
    body.transform.localPosition=new Vector2(0,frame<24?-.42f:.27f);
-   body.flipX=Mathf.Cos(angle*Mathf.Deg2Rad)<0;body.color=Time.time<hitUntil?new Color(1,.65f,.6f):Color.white;
+   body.flipX=direction==1&&facing.x<0;body.color=Time.time<hitUntil?new Color(1,.65f,.6f):Color.white;
    teamMarker.color=team==0?Draw2D.Blue:Draw2D.Red;
    gun.enabled=alive&&weapon>0;recoil=Mathf.MoveTowards(recoil,0,Time.deltaTime*3);
-   if(weapon>0){var profile=WeaponPresentation.Get(weapon);CyberArt.Set(gun,"weapon"+weapon,profile.size);gun.transform.localPosition=profile.Centre(recoil,body.flipX);gun.flipY=body.flipX;gun.sortingOrder=direction==2?7:10;}
+   if(weapon>0){var profile=WeaponPresentation.Get(weapon);CyberArt.Set(gun,"weapon"+weapon,profile.size);gun.transform.localPosition=profile.Centre(recoil,aimLeft);gun.flipY=aimLeft;gun.sortingOrder=Mathf.Sin(angle*Mathf.Deg2Rad)>.55f?7:10;}
    aimPivot.localRotation=Quaternion.Euler(0,0,angle);
    if(Time.time>=slashUntil||!alive)slash.positionCount=0;else slash.startColor=slash.endColor=new Color(1,.98f,.8f,Mathf.Clamp01((slashUntil-Time.time)/.14f));
    shield.positionCount=hasShield&&alive?33:0;

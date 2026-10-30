@@ -1,24 +1,18 @@
 using System.Linq;
 using UnityEngine;
 namespace BoundShoot {
- [RequireComponent(typeof(Camera))] public sealed class MeadowCamera:MonoBehaviour {
+ [DefaultExecutionOrder(200),RequireComponent(typeof(Camera))] public sealed class MeadowCamera:MonoBehaviour {
   public static MeadowCamera Instance;public float Shake;Camera cameraView;
   void Awake(){Instance=this;cameraView=GetComponent<Camera>();}
-  public void Impulse(float strength){Shake=Mathf.Max(Shake,strength);}
+  public void Impulse(float strength){} // The local character remains exactly centred.
   void LateUpdate(){
    var world=BattleWorld.Instance;
    var player=NetPlayer.All.FirstOrDefault(p=>p.IsOwner&&p.IsClient&&!p.IsBot.Value&&p.TrainingRole==0);
    if(world==null||player==null)return;var map=world.MapOverride??GameConfig.Current.Map(world.MapKey.Value.ToString());if(map==null)return;
    cameraView.orthographicSize=8.5f;
-   float halfX=cameraView.orthographicSize*cameraView.aspect;
-   Vector3 target=player.transform.position;
-   if(Application.isFocused){Vector3 pointer=cameraView.ScreenToWorldPoint(Input.mousePosition);target+=(Vector3)Vector2.ClampMagnitude((pointer-player.transform.position)*.08f,1.2f);}
-   target.x=map.halfWidth<=halfX?0:Mathf.Clamp(target.x,-map.halfWidth+halfX,map.halfWidth-halfX);
-   target.y=map.halfHeight<=8.5f?0:Mathf.Clamp(target.y,-map.halfHeight+8.5f,map.halfHeight-8.5f);target.z=-20;
-   var position=Vector3.Lerp(transform.position,target,1-Mathf.Exp(-9*Time.deltaTime));
-   Shake=Mathf.MoveTowards(Shake,0,Time.deltaTime*2);position+=(Vector3)(UnityEngine.Random.insideUnitCircle*Shake*(PlayerPrefs.GetInt("BoundShoot.Shake",1)==1?1:0));
-   transform.position=new Vector3(Mathf.Round(position.x*48)/48,Mathf.Round(position.y*48)/48,-20);
+   transform.position=Anchor(player)+Vector3.back*20;
   }
+  public static Vector3 Anchor(NetPlayer player)=>player.transform.position+Vector3.up*.25f;
   void OnGUI(){
    if(Application.isBatchMode||BattleWorld.Instance==null)return;
    var me=NetPlayer.All.FirstOrDefault(p=>p.IsOwner&&!p.IsBot.Value&&p.TrainingRole==0);if(me==null)return;

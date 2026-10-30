@@ -6,9 +6,11 @@ import {Store} from './database.js';
 export class QuickPlay {
  constructor(readonly store:Store,readonly rooms:Rooms,readonly auth:Auth){
   store.transaction(()=>{
-   for(let team=0;team<2;team++)for(let seat=0;seat<2;seat++){
+   for(let team=0;team<2;team++)for(let seat=0;seat<4;seat++){
     const name='AI_'+(team===0?'A':'B')+(seat+1);
-    if(!store.get('SELECT user_id FROM quick_identities WHERE name=?',name))this.create(name,true,team*2+seat);
+    const bot=store.get('SELECT user_id FROM quick_identities WHERE name=?',name);
+    if(!bot)this.create(name,true,team*4+seat);
+    else store.run('UPDATE user_cosmetics SET skin=? WHERE user_id=?',team*4+seat,bot.user_id);
    }
   });
  }

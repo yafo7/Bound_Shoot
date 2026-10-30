@@ -28,7 +28,13 @@ test('name only → one 2v2 room → AI fill → authoritative result → reente
   assert.equal(room.members.length,4);assert.equal(room.members.filter((m:any)=>m.isBot===1).length,3);
   assert.equal((await call('POST','/api/auth/quick',{name:'YAFO777'})).status,409);
   assert.equal((await call('POST','/api/rooms',{},token)).status,410);
-  assert.equal((await call('PUT','/api/rooms/'+room.id+'/config',{size:3,mapId:'Arena_01'},token)).status,400);
+  for(const size of [3,4,2]){
+   const changed=await call('PUT','/api/rooms/'+room.id+'/config',{size,mapId:'Forest_01'},token);
+   assert.equal(changed.status,200);assert.equal(changed.data.members.length,size*2);
+   assert.equal(new Set(changed.data.members.map((m:any)=>m.team+':'+m.seat)).size,size*2);
+  }
+  assert.equal((await call('PATCH','/api/users/me/cosmetic',{skin:7},token)).status,200);
+  assert.equal((await call('PATCH','/api/users/me/cosmetic',{skin:8},token)).status,400);
   // A human can select a bot's seat; the old seat becomes a bot.
   const seated=await call('PUT','/api/rooms/'+room.id+'/seat',{team:1,seat:1},token);
   assert.equal(seated.data.members.filter((m:any)=>m.isBot===1).length,3);
@@ -72,7 +78,7 @@ test('schema upgrade keeps previous password accounts separate from name-only ID
  const service=createService({dbPath:db,runtimeDir:dir});
  try{
   assert.equal(service.auth.profile(legacyId).username,'yafo777');
-  assert.equal(service.store.get('SELECT count(*) n FROM schema_migrations').n,2);
+  assert.equal(service.store.get('SELECT count(*) n FROM schema_migrations').n,3);
   const {QuickPlay}=await import('../src/quickplay.js');const quick=new QuickPlay(service.store,service.rooms,service.auth);
   const fresh=quick.login('yafo777');assert.notEqual(fresh.user.id,legacyId);
   assert.equal(fresh.user.username,'yafo777');assert.equal((await service.auth.login('yafo777','legacy-password')).user.id,legacyId);

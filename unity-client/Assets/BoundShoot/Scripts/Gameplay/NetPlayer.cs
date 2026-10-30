@@ -9,7 +9,7 @@ namespace BoundShoot {
   public NetworkVariable<FixedString64Bytes> UserId=new NetworkVariable<FixedString64Bytes>();
   public NetworkVariable<FixedString128Bytes> DisplayName=new NetworkVariable<FixedString128Bytes>();
   public NetworkVariable<int> Team=new NetworkVariable<int>(),Seat=new NetworkVariable<int>(),Skin=new NetworkVariable<int>();
-  public NetworkVariable<int> Health=new NetworkVariable<int>(3),MaxHealth=new NetworkVariable<int>(3),Shield=new NetworkVariable<int>();
+  public NetworkVariable<int> Health=new NetworkVariable<int>(9),MaxHealth=new NetworkVariable<int>(9),Shield=new NetworkVariable<int>();
   public NetworkVariable<int> Weapon=new NetworkVariable<int>(),Item=new NetworkVariable<int>(),Kills=new NetworkVariable<int>(),Deaths=new NetworkVariable<int>(),DamageDone=new NetworkVariable<int>();
   public NetworkVariable<Vector2> Position=new NetworkVariable<Vector2>();
   public NetworkVariable<float> Angle=new NetworkVariable<float>(),Revive=new NetworkVariable<float>();
@@ -19,7 +19,8 @@ namespace BoundShoot {
   public NetworkVariable<bool> IsBot=new NetworkVariable<bool>();
   public Rigidbody2D Body {get;private set;}
   public Vector2 Move,Aim=Vector2.right;public bool Fire,Use;
-  public float LastInput,NextShot,ProtectionUntil,DashUntil,DisconnectAt=-1;
+  public float LastInput,NextShot,ProtectionUntil,DashUntil,DisconnectAt=-1,DeathAt=-1;
+  public BattleWorld AuthorityWorld;public NetworkVariable<int> Surface=new NetworkVariable<int>();
   // Local training role: 0 controlled player, 1 passive teammate, 2 target. Never an AI.
   public int TrainingRole {get;private set;}
   public Vector2 DashDirection;
@@ -75,9 +76,10 @@ namespace BoundShoot {
   float visualAngle;
   void LateUpdate(){if(IsSpawned&&art!=null)art.Show(Team.Value,Weapon.Value,visualAngle,Alive,Shield.Value>0);}
   public void SubmitInput(Vector2 move,Vector2 aim,bool fire,bool use){if(IsOwner&&IsClient&&!IsBot.Value)InputServerRpc(move,aim,fire,use,++sequence,InputEpoch.Value);}
-  [ServerRpc]
-  void InputServerRpc(Vector2 move,Vector2 aim,bool fire,bool use,uint seq,uint epoch){
-   if(!Connected.Value||epoch!=InputEpoch.Value||!Finite(move)||!Finite(aim)||seq<=lastSequence)return;
+  [ServerRpc(RequireOwnership=false)]
+  void InputServerRpc(Vector2 move,Vector2 aim,bool fire,bool use,uint seq,uint epoch,ServerRpcParams rpc=default){
+   // Ownership can change while a final input packet is in flight on disconnect.
+   if(rpc.Receive.SenderClientId!=OwnerClientId||IsBot.Value||!Connected.Value||epoch!=InputEpoch.Value||!Finite(move)||!Finite(aim)||seq<=lastSequence)return;
    lastSequence=seq;Move=Vector2.ClampMagnitude(move,1);Aim=aim.sqrMagnitude>.01f?aim.normalized:Aim;Fire=fire;Use|=use;LastInput=Time.time;
   }
   static bool Finite(Vector2 p)=>!float.IsNaN(p.x)&&!float.IsNaN(p.y)&&!float.IsInfinity(p.x)&&!float.IsInfinity(p.y);
@@ -88,12 +90,13 @@ namespace BoundShoot {
    if(Time.time-LastInput>c.inputTimeout||!Connected.Value){Move=Vector2.zero;Fire=false;Use=false;}
    if(Alive&&playing&&Connected.Value){
     Vector2 target=Time.time<DashUntil?DashDirection*c.dashSpeed:Move*c.moveSpeed;
-    Body.AddForce((target-Body.velocity)*c.acceleration);
+    Body.AddForce((target-Body.velocity)*(Move.sqrMagnitude>.01f?c.acceleration:2.5f));
     Angle.Value=Mathf.Atan2(Aim.y,Aim.x)*Mathf.Rad2Deg;
-   }else Body.velocity*=Mathf.Exp(-dt*1.2f);
-   Body.mass=Alive?1:1.6f;
+   }
+   Body.mass=1;Body.drag=Move.sqrMagnitude>.01f?1:.6f;
    if(Body.velocity.magnitude>c.dashSpeed*1.5f)Body.velocity=Body.velocity.normalized*c.dashSpeed*1.5f;
    Position.Value=Body.position;
+   if(AuthorityWorld!=null)Surface.Value=ForestMap.SurfaceAt(AuthorityWorld.MapOverride??c.Map(AuthorityWorld.MapKey.Value.ToString()),Body.position);
    SnapshotTime.Value=NetworkManager.ServerTime.Time;
   }
   public bool Equip(WeaponKind kind){
@@ -108,10 +111,10 @@ namespace BoundShoot {
    int hp=Health.Value,shield=Shield.Value;int before=hp+shield;
    BattleRules.Damage(ref hp,ref shield,amount);Shield.Value=shield;Health.Value=hp;
    if(source!=null)source.DamageDone.Value+=before-hp-shield;
-   if(hp<=0){Deaths.Value++;Weapon.Value=Item.Value=Shield.Value=0;Revive.Value=0;DashUntil=0;ResetInput();if(source!=null)source.Kills.Value++;}
+   if(hp<=0){Deaths.Value++;Weapon.Value=Item.Value=Shield.Value=0;Revive.Value=0;DeathAt=Time.time;DashUntil=0;ResetInput();if(source!=null)source.Kills.Value++;}
   }
   public void Resurrect(){
-   Health.Value=MaxHealth.Value=GameConfig.Current.baseHealth;Weapon.Value=Item.Value=Shield.Value=0;Revive.Value=0;
+   Health.Value=MaxHealth.Value=GameConfig.Current.baseHealth;Weapon.Value=Item.Value=Shield.Value=0;Revive.Value=0;DeathAt=-1;
    ProtectionUntil=Time.time+GameConfig.Current.protectionSeconds;DashUntil=0;ResetInput();
   }
  }

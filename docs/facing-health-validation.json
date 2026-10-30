@@ -1,0 +1,198 @@
+{
+  "playMode": {
+    "failed": 0,
+    "report": "docs/validation/facing-health/play.xml",
+    "passed": 11
+  },
+  "configSha256": "A5A189CE577694D3CBAF2C37521B88994343B6AB950F2E0E18C8B09E4F1FE2A8",
+  "changes": [
+    "body faces actual travel independently of gun aim",
+    "health 9/3/9/9/15",
+    "15-heart HUD",
+    "pickup weapon stats card expires after 3 unscaled seconds"
+  ],
+  "date": "2026-10-30",
+  "networkScope": "localhost UDP, same-process multiple NetworkManagers, 4/6/8 participants",
+  "editMode": {
+    "failed": 0,
+    "report": "docs/validation/facing-health/edit.xml",
+    "passed": 59,
+    "workerShutdown": "Passed XML produced; edit worker was stopped after shutdown hang"
+  },
+  "content": "passed",
+  "artScope": "Unity Camera/Canvas scripted review; no human playtest",
+  "notPerformed": [
+    "exe builds",
+    "cloud update",
+    "cross-machine/weak-network acceptance"
+  ],
+  "unity": "2022.3.62f3c1",
+  "sourceFiles": [
+    {
+      "sha256": "6248C68C8EEFAAAB6084818717AD3C42D45A0D1A5B7841CBF228D825B59DD732",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Authoring/LevelLayout.cs"
+    },
+    {
+      "sha256": "A76C8AB4797C3BA7FA7D34567BF6BCF4D4714D2E02BA459D856EED181DB0EFCB",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Authoring/LevelPiece.cs"
+    },
+    {
+      "sha256": "930FF2444F7AE1BC05CFFE17D39A2A9A502BC60711339CBB3511D8BA30B375C1",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Bootstrap.cs"
+    },
+    {
+      "sha256": "938B2B982ACE642D43417A1E4D5BF735FED6960E10E89E3FA068F1DDFE945647",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/HttpApi.cs"
+    },
+    {
+      "sha256": "2969E402D6B7EB0B511F0B4EA75C6C8297D23C720E7C88AB21650F59426FA979",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs"
+    },
+    {
+      "sha256": "E80110E5DFA0E8D78F74F1F0FC1769AF966B0D4F0CDAE4FA72CE8861EDCA0D7D",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ArenaView.cs"
+    },
+    {
+      "sha256": "2F0FF732024DA9E059F4160C0864AD37E8D0988EDC2F820BF31DD0F972F87D6D",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ArtPreviewMarker.cs"
+    },
+    {
+      "sha256": "0897B2C6CABC1927C572EF35B206D4418469CA1A4E6960AD385A07CA0EADD5D6",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs"
+    },
+    {
+      "sha256": "D533565273891624916106117AC813C56A70E09870B149DA4E82BD6698510521",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BotController.cs"
+    },
+    {
+      "sha256": "2833AD492A3FEFFC22819804FFE4EDE02121F332D54071917DC79581B896E9C6",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/CyberArt.cs"
+    },
+    {
+      "sha256": "572458A80F350C20796FD1676B2268FBF724A50F01BCC9F389CADF57AA421A30",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/CyberPlayerView.cs"
+    },
+    {
+      "sha256": "EFE8F8D1EF3B8736C1BCDE5495E3AFEDCF4E7D0F8B48857F87522508A1F055AE",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/FieldMap.cs"
+    },
+    {
+      "sha256": "4D2E52892A7DCC1F6EFBDDB80C350B97029D804DF85FD296A2A6AF831565A1B5",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ForestArt.cs"
+    },
+    {
+      "sha256": "F0C02BBC078F4E71240C21B3C3DECE64C72EBE682E5560F18101CD6648FFCCED",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ForestMap.cs"
+    },
+    {
+      "sha256": "F17D47A7E97F4548C294102BAE3CEE12461241726239C8ECE0BBBD6333222EAD",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/GardenFx.cs"
+    },
+    {
+      "sha256": "565B8BCB7138C2F0991C82009E22112E89ECA0B914B7B5689716FF31435E313A",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/MapContent.cs"
+    },
+    {
+      "sha256": "46301CD61099AC25A76717CE8E0E6E499B1A90F22F1B95A350EDD415F8E33F45",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/MeadowCamera.cs"
+    },
+    {
+      "sha256": "8274A2CF164830E1207CDD5ACFBB30CB797418120D0C3AC3206484BC741483D5",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs"
+    },
+    {
+      "sha256": "B94FE93980F85F1D268967870CE3F06EEE5EED63F0C60AD4E38981D6384D272B",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ProjectileVisuals.cs"
+    },
+    {
+      "sha256": "35AB50D225B79BCD90FD676F342BA4E53A1AF6C0C7179177652FE7E5B1E0DBAE",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/RopeLineView.cs"
+    },
+    {
+      "sha256": "4BFA2D854A54ECC86A11E7FE3158AA76A127AC6FC039A38348359DD31202A44D",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/RopePath.cs"
+    },
+    {
+      "sha256": "0B95551FAFAAC08A2F7551FDFEF9AEEBED55FA273A0E04A9151A1DBF1340CFBB",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/RopeRoute.cs"
+    },
+    {
+      "sha256": "3FAE18B3FB9163460631C1BED819DEA1D8AA04E9F48659BB5CF1E133F81AB9F3",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/TreeCanopyView.cs"
+    },
+    {
+      "sha256": "176FCEA2D2893D3EAAE0DCE2C7B00A64F215F171390467298A0C0952C25D8FA2",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/VegetableArt.cs"
+    },
+    {
+      "sha256": "ECF075F51E585E2B447563521A3A13D10E0BA3EFA0DF7AC35AA82ED557BE8F3A",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/VegetableWalkCycle.cs"
+    },
+    {
+      "sha256": "87E242DCEFE832B476CBFE4EED2AC2CC39EAB52FEF593561B9C5111543EBC389",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/WeaponPresentation.cs"
+    },
+    {
+      "sha256": "1168957A23DC96D3FBA7EAF4484712F8CAB739850245A8DFA67DF8AA4CF36396",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Networking/LobbyRealtime.cs"
+    },
+    {
+      "sha256": "D24C21E38C0CB4A5974A80D46F6E274AAC842CC3ABE63C09E48B95C03621D82F",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Networking/NetworkSettings.cs"
+    },
+    {
+      "sha256": "C422CCCD318B55D5480C1083756B337481FEC94AD9FFB72F2AFAAB4BEF67BE28",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Networking/QaClientDriver.cs"
+    },
+    {
+      "sha256": "197B5754700772A810049AD8FC8FED570112316A78A3BDAB120087CB4D97ED7C",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Networking/ServerRuntime.cs"
+    },
+    {
+      "sha256": "A1922B009206F57453D988CDAB1F774BD90C2D343717442751FCFAF51BDE67F7",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Networking/SnapshotBuffer2D.cs"
+    },
+    {
+      "sha256": "BC7FCA1767689C9328F3705E9DF6E6E28414EE8C9FAAA97ABADC5C0D9B3D8C96",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Training/LocalMatchRuntime.cs"
+    },
+    {
+      "sha256": "928F7178B7E23E536D1637057F539C679AB84CD7F4A16BFDFFE9A5201003E469",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Training/TrainingMap.cs"
+    },
+    {
+      "sha256": "DB649EDB47DF87D92086248D61EA06A8221E5D08F10741319C5EE625DD3B311D",
+      "path": "unity-client/Assets/BoundShoot/Scripts/Training/TrainingRuntime.cs"
+    },
+    {
+      "sha256": "454D08538F64F432F9D1279FBEC9A3D1695450688B5B7F7688853DAC0C1261BF",
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/ForestFlow.cs"
+    },
+    {
+      "sha256": "0C870F7067E4D421F9906B243F1BB1217025357300EC88713DC4F2F07790702F",
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/GameClient.cs"
+    },
+    {
+      "sha256": "BFF6009A0FC6D8A51838141E45956F5089C7BD0FFBD140E47BF08CF76B0E71B5",
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/UiKit.cs"
+    },
+    {
+      "sha256": "BB5CAB8DE913BE39F53E00D149E45704D6A7490826B4F13D95E516BB9C9E1D5D",
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/WeaponPickupNotice.cs"
+    }
+  ],
+  "backend": {
+    "typescript": "passed",
+    "testsPassed": 4
+  },
+  "visualReview": {
+    "result": "passed",
+    "workerExit": 0,
+    "resolution": "1600x900",
+    "screenshots": [
+      "art-proposals/2026-10-30/forest-v3/12-fifteen-hearts-weapon-stats.png",
+      "art-proposals/2026-10-30/forest-v3/13-weapon-card-hidden.png"
+    ],
+    "inspection": "15 hearts (12 red / 3 grey), full weapon stats, three-second hide checked in actual Camera/Canvas render"
+  }
+}

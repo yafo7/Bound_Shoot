@@ -16,13 +16,14 @@ namespace BoundShoot {
   public string SelectedMap="Arena_01";
   public bool Training,ManualStart;public MapDefinition MapOverride;
   public int RopeCount=>ropes.Count;
-  public void BeginLocalRound(){if(IsServer&&ManualStart&&Phase.Value==0){ManualStart=false;Phase.Value=1;roundAt=Time.time+GameConfig.Current.countdownSeconds;}}
+  public void BeginLocalRound(){if(IsServer&&ManualStart&&Phase.Value==0&&Players.All(p=>p.Connected.Value)){ManualStart=false;Clock.Value=GameConfig.Current.countdownSeconds;Phase.Value=1;roundAt=Time.time+GameConfig.Current.countdownSeconds;}}
   [ServerRpc(RequireOwnership=false)] public void LeaveLocalServerRpc(ServerRpcParams rpc=default){if(LocalMatchRuntime.Instance!=null&&rpc.Receive.SenderClientId!=NetworkManager.ServerClientId)NetworkManager.DisconnectClient(rpc.Receive.SenderClientId);}
   public IReadOnlyList<PickupState> Supplies=>pickups;
   public NetworkVariable<FixedString64Bytes> MapKey=new NetworkVariable<FixedString64Bytes>(new FixedString64Bytes("Arena_01"));
   public NetworkVariable<int> Phase=new NetworkVariable<int>(),Winner=new NetworkVariable<int>(-1);
   public NetworkVariable<float> Clock=new NetworkVariable<float>();
   public NetworkVariable<uint> RoundId=new NetworkVariable<uint>(1);
+  public NetworkVariable<int> TeamSize=new NetworkVariable<int>(2);
   public ServerRoster Roster;public readonly List<NetPlayer> Players=new List<NetPlayer>();
   readonly List<RopeLink> ropes=new List<RopeLink>();
   readonly List<PickupState> pickups=new List<PickupState>();
@@ -52,7 +53,7 @@ namespace BoundShoot {
   void RoundChanged(uint oldRound,uint newRound){ClearPresentation();}
   void PhaseChanged(int previous,int current){if(current==0||current==3)ClearPresentation();}
   public void Setup(ServerRoster roster){
-   Roster=roster;map=MapOverride??GameConfig.Current.Map(roster.mapId);
+   Roster=roster;map=MapOverride??GameConfig.Current.Map(roster.mapId);TeamSize.Value=Mathf.Clamp(roster.players.Count(p=>p.team==0),2,4);
    foreach(var m in roster.players){
     SpawnPlayer(m);
    }
@@ -64,7 +65,7 @@ namespace BoundShoot {
   NetPlayer SpawnPlayer(RoomMember member){
    var p=Instantiate(Resources.Load<GameObject>("NetPlayer")).GetComponent<NetPlayer>();
    p.NetworkObject.Spawn();p.NetworkObject.DontDestroyWithOwner=true;
-   Players.Add(p);p.Initialize(member,(member.team==0?map.blueSpawns:map.redSpawns)[member.seat]);p.DisconnectAt=-1;
+   Players.Add(p);p.AuthorityWorld=this;p.Initialize(member,(member.team==0?map.blueSpawns:map.redSpawns)[member.seat]);p.DisconnectAt=-1;
    if(Training&&member.trainingRole>0)p.Connected.Value=true;
    if(!Training)bots[p]=new BotController(p,map,Players,pickups);
    return p;
@@ -108,6 +109,22 @@ namespace BoundShoot {
    for(int i=0;i<pickups.Count;i++){pickups[i].active=true;pickups[i].respawnAt=0;pickups[i].weapon=(int)definitions[i].weapon;pickups[i].item=(int)definitions[i].item;}
   }
   public NetPlayer Find(string uid)=>Players.Find(p=>p.UserId.Value.ToString()==uid);
+  public bool ConfigureTeamSize(int size,bool fillAI){
+   if(!IsServer||Phase.Value!=0||size<2||size>4||Players.Any(p=>!p.IsBot.Value&&p.Seat.Value>=size))return false;
+   foreach(var p in Players.Where(p=>p.Seat.Value>=size).ToArray()){Players.Remove(p);bots.Remove(p);p.NetworkObject.Despawn();}
+   for(int t=0;t<2;t++)for(int s=0;s<size;s++)if(!Players.Any(p=>p.Team.Value==t&&p.Seat.Value==s))SpawnPlayer(new RoomMember{userId=Guid.NewGuid().ToString(),username="菜园搭档 "+(t*4+s+1),team=t,seat=s,skin=t*4+s,isBot=1});
+   TeamSize.Value=size;SetBotFill(fillAI);RefreshRoster();RebuildRopes();return true;
+  }
+  public void SetBotFill(bool enabled){if(!IsServer||Phase.Value!=0)return;foreach(var p in Players.Where(p=>p.IsBot.Value)){p.Connected.Value=enabled;p.ResetInput();}}
+  void RefreshRoster(){Roster.players=Players.Select(p=>new RoomMember{userId=p.UserId.Value.ToString(),username=p.DisplayName.Value.ToString(),team=p.Team.Value,seat=p.Seat.Value,skin=p.Skin.Value,isBot=p.IsBot.Value?1:0,trainingRole=p.TrainingRole}).ToArray();}
+  [ServerRpc(RequireOwnership=false)]public void RequestSeatServerRpc(int team,int seat,ServerRpcParams rpc=default){
+   if(Phase.Value!=0||team<0||team>1||seat<0||seat>=TeamSize.Value)return;
+   var actor=Players.Find(p=>!p.IsBot.Value&&p.OwnerClientId==rpc.Receive.SenderClientId);var target=Players.Find(p=>p.Team.Value==team&&p.Seat.Value==seat);
+   if(actor==null||target==null||!target.IsBot.Value||LocalMatchRuntime.Instance!=null&&LocalMatchRuntime.Instance.HasPendingSeats)return;
+   target.Team.Value=actor.Team.Value;target.Seat.Value=actor.Seat.Value;actor.Team.Value=team;actor.Seat.Value=seat;
+   foreach(var p in new[]{actor,target}){Vector2 point=(p.Team.Value==0?map.blueSpawns:map.redSpawns)[p.Seat.Value];p.Body.position=point;p.transform.position=point;p.Position.Value=point;p.Body.velocity=Vector2.zero;p.ResetInput();}
+   RefreshRoster();RebuildRopes();
+  }
   public void ResetRopesForTeleport(NetPlayer player){foreach(var rope in ropes)if(rope.a==player||rope.b==player)rope.ResetRoute();}
   public void Attach(ulong clientId,RoomMember member){
    var p=Find(member.userId);if(p==null)return;
@@ -134,7 +151,6 @@ namespace BoundShoot {
     p.Tick(dt,playing);
     if(!playing)continue;
     if(p.Alive){if(p.Fire)TryAttack(p);if(p.Use){p.Use=false;UseItem(p);}}
-    else if(p.Connected.Value)RevivePlayer(p,dt);
    }
    foreach(var r in ropes){
     int t=r.a.Team.Value;
@@ -142,9 +158,10 @@ namespace BoundShoot {
     r.Apply(paths,c.ropeLength*scale,c.ropeSpring*(Time.time<elasticUntil?c.elasticScale:1),c.ropeDamping,c.ropeMaxForce*(Time.time<elasticUntil?c.elasticScale:1));
    }
    if(playing){
-    TickPickups();TickBullets(dt);TickBombs();
+    TickBullets(dt);TickBombs();
     int ba=Players.Count(p=>p.Team.Value==0&&p.Alive),ra=Players.Count(p=>p.Team.Value==1&&p.Alive);
     if(!Training&&(ba==0||ra==0||Clock.Value<=0))Finish();
+    else{foreach(var p in Players)if(!p.Alive&&p.Connected.Value&&(!Training||p.TrainingRole!=2))RevivePlayer(p,dt);TickPickups();}
    }
    if(Time.time>=nextSnapshot){nextSnapshot=Time.time+1f/c.snapshotHz;BroadcastSnapshot();}
   }
@@ -152,7 +169,7 @@ namespace BoundShoot {
    if(!IsServer||Phase.Value!=2||p==null||!Players.Contains(p)||!p.Alive||!p.Connected.Value||Time.time<p.NextShot)return false;
    var w=GameConfig.Current.Weapon((WeaponKind)p.Weapon.Value);
    // Empty hands have no combat attack: weapons must be found in the supply area.
-   if(w==null)return false;p.NextShot=Time.time+w.cooldown;
+   if(w==null)return false;p.NextShot=Time.time+w.cooldown;p.ProtectionUntil=0;
    if(w.kind==WeaponKind.Dagger){
     foreach(var target in Players){
      Vector2 delta=target.Body.position-p.Body.position;
@@ -268,9 +285,9 @@ namespace BoundShoot {
    if(Camera.main!=null&&Vector2.Distance(Camera.main.transform.position,position)<12)MeadowCamera.Instance?.Impulse(.25f);
   }
   void RevivePlayer(NetPlayer p,float dt){
-   bool inside=MapContent.InRevival(map,p.Body.position);
-   p.Revive.Value=BattleRules.ReviveProgress(p.Revive.Value,inside,dt);
-   if(p.Revive.Value>=GameConfig.Current.reviveSeconds)p.Resurrect();
+   if(p.DeathAt<0)p.DeathAt=Time.time;
+   p.Revive.Value=Mathf.Clamp(Time.time-p.DeathAt,0,GameConfig.Current.reviveSeconds);
+   if(p.Revive.Value>=GameConfig.Current.reviveSeconds){p.Resurrect();ItemClientRpc(p.Body.position,(int)ItemKind.Heal);}
   }
   void Finish(){
    resultSent=true;Phase.Value=3;

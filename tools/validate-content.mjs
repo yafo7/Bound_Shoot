@@ -27,8 +27,8 @@ for(const m of c.maps.filter(m=>m.available)){
  const pickups=typed?m.pickups:m.supplies.map((position,i)=>({position,weapon:i<5?i<4?i+1:0:i<10?i-5<4?i-4:0:0}));
  const zones=typed?m.revivalZones:m.revivals.map(center=>({center,size:{x:4,y:3}}));
  assert.ok(Array.isArray(pickups)&&pickups.some(p=>p.weapon>0),'provide at least one weapon pickup');
- assert.ok(Array.isArray(zones)&&zones.length>=1,'provide at least one revival zone');
- if(!typed)assert.ok(m.supplies.length>=8&&m.revivals.length>=2,'legacy supply/revival arrays are incomplete');
+ assert.ok(Array.isArray(zones),'invalid legacy revival array');
+ if(!typed)assert.ok(m.supplies.length>=8,'legacy supply array is incomplete');
  const inside=(p,h={x:0,y:0})=>Number.isFinite(p.x)&&Number.isFinite(p.y)&&Math.abs(p.x)+h.x<=m.halfWidth&&Math.abs(p.y)+h.y<=m.halfHeight;
  for(const rect of [...m.blocks,...(m.floors||[]),...zones]){
   positive(rect.size.x,'rectangle width');positive(rect.size.y,'rectangle height');assert.ok(inside(rect.center,{x:rect.size.x/2,y:rect.size.y/2}),'rectangle outside '+m.id);

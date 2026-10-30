@@ -1,5 +1,5 @@
 {
-  "baseHealth": 3,
+  "baseHealth": 9,
   "roundSeconds": 180,
   "countdownSeconds": 3,
   "physicsHz": 30,
@@ -7,9 +7,9 @@
   "moveSpeed": 5,
   "acceleration": 14,
   "ropeLength": 5,
-  "ropeSpring": 45,
-  "ropeDamping": 6,
-  "ropeMaxForce": 100,
+  "ropeSpring": 90,
+  "ropeDamping": 12,
+  "ropeMaxForce": 200,
   "shortenScale": 0.65,
   "extendScale": 1.5,
   "elasticScale": 3,
@@ -30,7 +30,7 @@
     {
       "kind": 1,
       "name": "狙击枪",
-      "maxHealth": 1,
+      "maxHealth": 3,
       "damage": 4,
       "range": 100,
       "cooldown": 1.4,
@@ -39,7 +39,7 @@
     {
       "kind": 2,
       "name": "手枪",
-      "maxHealth": 3,
+      "maxHealth": 9,
       "damage": 1,
       "range": 7,
       "cooldown": 0.45,
@@ -48,7 +48,7 @@
     {
       "kind": 3,
       "name": "AK",
-      "maxHealth": 3,
+      "maxHealth": 9,
       "damage": 2,
       "range": 15,
       "cooldown": 0.22,
@@ -57,7 +57,7 @@
     {
       "kind": 4,
       "name": "匕首",
-      "maxHealth": 5,
+      "maxHealth": 15,
       "damage": 3,
       "range": 1.4,
       "cooldown": 0.6,
@@ -852,6 +852,560 @@
       }
     }
   ]
+},
+{
+  "id": "Forest_01",
+  "name": "林间高台",
+  "theme": "forest",
+  "available": true,
+  "halfWidth": 36,
+  "halfHeight": 24,
+  "plateau": {
+    "center": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 36,
+      "y": 32
+    },
+    "stairs": [
+      -10,
+      0,
+      10
+    ],
+    "stairWidth": 6
+  },
+  "blueSpawns": [
+    {
+      "x": -29,
+      "y": -4.5
+    },
+    {
+      "x": -29,
+      "y": -1.5
+    },
+    {
+      "x": -29,
+      "y": 1.5
+    },
+    {
+      "x": -29,
+      "y": 4.5
+    }
+  ],
+  "redSpawns": [
+    {
+      "x": 29,
+      "y": -4.5
+    },
+    {
+      "x": 29,
+      "y": -1.5
+    },
+    {
+      "x": 29,
+      "y": 1.5
+    },
+    {
+      "x": 29,
+      "y": 4.5
+    }
+  ],
+  "supplies": [
+    {
+      "x": -26,
+      "y": -4.5
+    },
+    {
+      "x": -26,
+      "y": -1.5
+    },
+    {
+      "x": -26,
+      "y": 1.5
+    },
+    {
+      "x": -26,
+      "y": 4.5
+    },
+    {
+      "x": -10,
+      "y": 11
+    },
+    {
+      "x": -10,
+      "y": -10
+    },
+    {
+      "x": -3,
+      "y": 8
+    },
+    {
+      "x": -6,
+      "y": -11
+    },
+    {
+      "x": -9,
+      "y": 8
+    },
+    {
+      "x": -12,
+      "y": -11
+    },
+    {
+      "x": 26,
+      "y": -4.5
+    },
+    {
+      "x": 26,
+      "y": -1.5
+    },
+    {
+      "x": 26,
+      "y": 1.5
+    },
+    {
+      "x": 26,
+      "y": 4.5
+    },
+    {
+      "x": 10,
+      "y": 11
+    },
+    {
+      "x": 10,
+      "y": -10
+    },
+    {
+      "x": 3,
+      "y": 8
+    },
+    {
+      "x": 6,
+      "y": -11
+    },
+    {
+      "x": 9,
+      "y": 8
+    },
+    {
+      "x": 12,
+      "y": -11
+    }
+  ],
+  "revivals": [],
+  "blocks": [
+    {
+      "center": {
+        "x": -18,
+        "y": -14.5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 3
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": -18,
+        "y": -5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 4
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": -18,
+        "y": 5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 4
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": -18,
+        "y": 14.5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 3
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 0,
+        "y": -16
+      },
+      "size": {
+        "x": 37,
+        "y": 1.1
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": -6,
+        "y": 5
+      },
+      "size": {
+        "x": 2,
+        "y": 2
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": -7,
+        "y": -6
+      },
+      "size": {
+        "x": 2,
+        "y": 2
+      },
+      "visual": 2
+    },
+    {
+      "center": {
+        "x": -25,
+        "y": 9
+      },
+      "size": {
+        "x": 1.4,
+        "y": 1.4
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": -25,
+        "y": -13
+      },
+      "size": {
+        "x": 1.4,
+        "y": 1.4
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": 18,
+        "y": -14.5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 3
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 18,
+        "y": -5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 4
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 18,
+        "y": 5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 4
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 18,
+        "y": 14.5
+      },
+      "size": {
+        "x": 1.1,
+        "y": 3
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 0,
+        "y": 16
+      },
+      "size": {
+        "x": 37,
+        "y": 1.1
+      },
+      "visual": 5
+    },
+    {
+      "center": {
+        "x": 6,
+        "y": 5
+      },
+      "size": {
+        "x": 2,
+        "y": 2
+      },
+      "visual": 0
+    },
+    {
+      "center": {
+        "x": 7,
+        "y": -6
+      },
+      "size": {
+        "x": 2,
+        "y": 2
+      },
+      "visual": 2
+    },
+    {
+      "center": {
+        "x": 25,
+        "y": 9
+      },
+      "size": {
+        "x": 1.4,
+        "y": 1.4
+      },
+      "visual": 4
+    },
+    {
+      "center": {
+        "x": 25,
+        "y": -13
+      },
+      "size": {
+        "x": 1.4,
+        "y": 1.4
+      },
+      "visual": 4
+    }
+  ],
+  "layoutVersion": 1,
+  "groundColor": {
+    "r": 0.4,
+    "g": 0.54,
+    "b": 0.25,
+    "a": 1
+  },
+  "floors": [],
+  "pickups": [
+    {
+      "position": {
+        "x": -26,
+        "y": -4.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -26,
+        "y": -1.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -26,
+        "y": 1.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -26,
+        "y": 4.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -10,
+        "y": 11
+      },
+      "weapon": 1,
+      "item": 0,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -10,
+        "y": -10
+      },
+      "weapon": 4,
+      "item": 0,
+      "respawnSeconds": 10,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -3,
+        "y": 8
+      },
+      "weapon": 0,
+      "item": 3,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -6,
+        "y": -11
+      },
+      "weapon": 0,
+      "item": 4,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -9,
+        "y": 8
+      },
+      "weapon": 0,
+      "item": 5,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": -12,
+        "y": -11
+      },
+      "weapon": 0,
+      "item": 8,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 26,
+        "y": -4.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 26,
+        "y": -1.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 26,
+        "y": 1.5
+      },
+      "weapon": 2,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 26,
+        "y": 4.5
+      },
+      "weapon": 3,
+      "item": 0,
+      "respawnSeconds": 8,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": 11
+      },
+      "weapon": 1,
+      "item": 0,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 10,
+        "y": -10
+      },
+      "weapon": 4,
+      "item": 0,
+      "respawnSeconds": 10,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 3,
+        "y": 8
+      },
+      "weapon": 0,
+      "item": 3,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 6,
+        "y": -11
+      },
+      "weapon": 0,
+      "item": 4,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 9,
+        "y": 8
+      },
+      "weapon": 0,
+      "item": 5,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    },
+    {
+      "position": {
+        "x": 12,
+        "y": -11
+      },
+      "weapon": 0,
+      "item": 8,
+      "respawnSeconds": 12,
+      "randomizeOnRespawn": false
+    }
+  ],
+  "revivalZones": []
 }
 ]
 }

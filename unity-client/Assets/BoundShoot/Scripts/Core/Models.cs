@@ -40,20 +40,21 @@ namespace BoundShoot {
  [Serializable] public class BlockDefinition {public Vector2 center,size;public int visual;}
  [Serializable] public class FloorDefinition {public Vector2 center,size;public Color color=Color.gray;}
  [Serializable] public class RevivalDefinition {public Vector2 center,size;}
+ [Serializable] public class PlateauDefinition {public Vector2 center,size;public float[] stairs;public float stairWidth=6;}
  [Serializable] public class PickupDefinition {
   public Vector2 position;public WeaponKind weapon;public ItemKind item;
   public float respawnSeconds=10;public bool randomizeOnRespawn;
  }
  [Serializable] public class MapDefinition {
-  public string id,name,theme;public bool available;public float halfWidth,halfHeight;
+  public string id,name,theme;public bool available;public float halfWidth,halfHeight;public PlateauDefinition plateau;
   public Vector2[] blueSpawns,redSpawns,supplies,revivals;public BlockDefinition[] blocks;
   public int layoutVersion;public Color groundColor;public FloorDefinition[] floors;
   // Version 0 uses legacy positional arrays; version 1 uses explicit typed arrays.
   public PickupDefinition[] pickups;public RevivalDefinition[] revivalZones;
  }
  [Serializable] public class GameConfig {
-  public int baseHealth=3,roundSeconds=180,shieldCap=1,bombDamage=2;
-  public float moveSpeed=5,acceleration=14,ropeLength=5,ropeSpring=45,ropeDamping=6,ropeMaxForce=100,
+  public int baseHealth=9,roundSeconds=180,shieldCap=1,bombDamage=2;
+  public float moveSpeed=5,acceleration=14,ropeLength=5,ropeSpring=90,ropeDamping=12,ropeMaxForce=200,
    shortenScale=.65f,extendScale=1.5f,elasticScale=3,buffSeconds=10,reviveSeconds=5,
    protectionSeconds=2,bombFuse=3,bombRadius=2.5f,dashSpeed=14,dashSeconds=.18f,
    pickupRadius=.75f,pickupRespawn=10,inputTimeout=.3f,disconnectGrace=20;

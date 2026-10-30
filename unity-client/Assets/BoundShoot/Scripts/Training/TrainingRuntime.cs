@@ -12,17 +12,19 @@ namespace BoundShoot {
   readonly Dictionary<NetPlayer,float> targetDeaths=new Dictionary<NetPlayer,float>();
   NetworkManager network;
   public int Teammates=>World==null?0:World.Players.Count(p=>p.TrainingRole==1);
-  public IEnumerator Begin(string name,int skin=0){
+  public IEnumerator Begin(string name,int skin=0,int teamSize=0){
    Instance=this;network=Bootstrap.Network;
    if(network.IsListening){Error="请先退出当前对局";yield break;}
    network.ConnectionApprovalCallback+=Approve;
    network.NetworkConfig.ConnectionData=Array.Empty<byte>();
    network.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1",0,"127.0.0.1");
    if(!network.StartHost()){Error="训练房启动失败";yield break;}
-   var map=TrainingMap.Create();map.theme="meadow";var human=new RoomMember{userId=Guid.NewGuid().ToString(),username=name,skin=skin,team=0,seat=0};
-   var roster=new ServerRoster{mapId=map.id,players=new[]{human,
-    new RoomMember{userId=Guid.NewGuid().ToString(),username="靶子 1",team=1,seat=0,trainingRole=2},
-    new RoomMember{userId=Guid.NewGuid().ToString(),username="靶子 2",team=1,seat=1,trainingRole=2}}};
+   var map=TrainingMap.Create();map.theme="forest";var human=new RoomMember{userId=Guid.NewGuid().ToString(),username=name,skin=skin,team=0,seat=0};
+   var members=new List<RoomMember>{human,
+    new RoomMember{userId=Guid.NewGuid().ToString(),username="靶子 1",team=1,seat=0,skin=4,trainingRole=2},
+    new RoomMember{userId=Guid.NewGuid().ToString(),username="靶子 2",team=1,seat=1,skin=5,trainingRole=2}};
+   if(teamSize>=2&&teamSize<=4){for(int seat=1;seat<teamSize;seat++)members.Add(new RoomMember{userId=Guid.NewGuid().ToString(),username="伙伴 "+seat,team=0,seat=seat,skin=seat,trainingRole=1});for(int seat=2;seat<teamSize;seat++)members.Add(new RoomMember{userId=Guid.NewGuid().ToString(),username="靶子 "+(seat+1),team=1,seat=seat,skin=seat+4,trainingRole=2});}
+   var roster=new ServerRoster{mapId=map.id,players=members.ToArray()};
    World=Instantiate(Resources.Load<GameObject>("NetWorld")).GetComponent<BattleWorld>();
    World.Training=true;World.MapOverride=map;World.SelectedMap=map.id;World.NetworkObject.Spawn();World.Setup(roster);
    World.Attach(NetworkManager.ServerClientId,human);Ready=true;

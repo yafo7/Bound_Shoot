@@ -12,6 +12,8 @@ export class Store {
   this.db.exec(readFileSync(migration,'utf8'));
   if(!this.get('SELECT version FROM schema_migrations WHERE version=2'))
    this.transaction(()=>this.db.exec(readFileSync(path.join(path.dirname(migration),'002_quick_play.sql'),'utf8')));
+  if(!this.get('SELECT version FROM schema_migrations WHERE version=3'))
+   this.transaction(()=>this.db.exec(readFileSync(path.join(path.dirname(migration),'003_eight_characters.sql'),'utf8')));
  }
  get(sql:string,...args:any[]):any {return this.db.prepare(sql).get(...args);}
  all(sql:string,...args:any[]):any[] {return this.db.prepare(sql).all(...args);}

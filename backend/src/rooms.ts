@@ -11,7 +11,7 @@ export class Rooms {
   room.members=this.store.all('SELECT m.user_id as userId,u.display_name as username,c.skin,m.team,m.seat,m.ready,0 as isBot FROM room_members m JOIN users u ON u.id=m.user_id JOIN user_cosmetics c ON c.user_id=m.user_id WHERE m.room_id=? ORDER BY m.team,m.seat',roomId);
   if(roomId===QUICK_ROOM_ID){
    for(const m of room.members)m.ready=1;
-   for(let team=0;team<2;team++)for(let seat=0;seat<2;seat++)if(!room.members.some((m:any)=>m.team===team&&m.seat===seat)){
+   for(let team=0;team<2;team++)for(let seat=0;seat<room.size;seat++)if(!room.members.some((m:any)=>m.team===team&&m.seat===seat)){
     const bot=this.store.get('SELECT q.user_id as userId,u.display_name as username,c.skin FROM quick_identities q JOIN users u ON u.id=q.user_id JOIN user_cosmetics c ON c.user_id=q.user_id WHERE q.is_bot=1 AND q.name=?','AI_'+(team===0?'A':'B')+(seat+1));
     room.members.push({...bot,team,seat,ready:1,isBot:1});
    }
@@ -32,7 +32,7 @@ export class Rooms {
   // Remove timed-out humans before deciding whether a seat is available.
   this.store.run('DELETE FROM room_members WHERE room_id=? AND last_seen<?',QUICK_ROOM_ID,now()-20);
   const members=this.store.all('SELECT team,seat FROM room_members WHERE room_id=?',QUICK_ROOM_ID);
-  const free=[{team:0,seat:0},{team:1,seat:0},{team:0,seat:1},{team:1,seat:1}].find(p=>!members.some(m=>m.team===p.team&&m.seat===p.seat));
+  const free=Array.from({length:room.size*2},(_,i)=>({team:i%2,seat:Math.floor(i/2)})).find(p=>!members.some(m=>m.team===p.team&&m.seat===p.seat));
   check(free,409,'ROOM_FULL','房间已满，请稍后进入');
   this.store.run('INSERT INTO room_members(user_id,room_id,team,seat,ready,last_seen) VALUES(?,?,?,?,1,?)',uid,QUICK_ROOM_ID,free.team,free.seat,now());
   if(!this.store.get('SELECT 1 FROM room_members WHERE user_id=? AND room_id=?',room.host_id,QUICK_ROOM_ID))this.store.run('UPDATE rooms SET host_id=? WHERE id=?',uid,QUICK_ROOM_ID);
@@ -90,9 +90,8 @@ export class Rooms {
  }
  configure(uid:string,roomId:string,size:number,mapId:string) {
   const r=this.waiting(uid,roomId,true);
-  check(roomId!==QUICK_ROOM_ID||size===2,400,'FIXED_MODE','当前房间固定为2v2');
   check(this.maps.includes(mapId),400,'MAP_UNAVAILABLE','地图尚未开放');
-  check(r.members.every((m:any)=>m.seat<size),409,'SEATS_OUTSIDE_MODE','请先腾出超出新模式的座位');
+  check(r.members.every((m:any)=>m.isBot||m.seat<size),409,'SEATS_OUTSIDE_MODE','请先腾出超出新模式的座位');
   this.store.transaction(()=>{
    this.store.run('UPDATE rooms SET size=?,map_id=? WHERE id=?',size,mapId,roomId);
    this.store.run('UPDATE room_members SET ready=0 WHERE room_id=?',roomId);

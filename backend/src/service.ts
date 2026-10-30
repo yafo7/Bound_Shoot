@@ -63,7 +63,7 @@ export function createService(overrides:Partial<Config>={}) {
   ok(res,{...user,roomId:member?.room_id||''});
  }));
  app.patch('/api/users/me/cosmetic',route((req,res)=>{
-  const {skin}=z.object({skin:z.number().int().min(0).max(3)}).parse(req.body);
+  const {skin}=z.object({skin:z.number().int().min(0).max(7)}).parse(req.body);
   const member=rooms.member(uid(res));if(member)rooms.waiting(uid(res),member.room_id);
   store.run('UPDATE user_cosmetics SET skin=? WHERE user_id=?',skin,uid(res));
   if(member){store.run('UPDATE room_members SET ready=0 WHERE user_id=?',uid(res));publish(member.room_id,'cosmetic.changed');}

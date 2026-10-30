@@ -14,7 +14,8 @@ namespace BoundShoot.Editor {
    EditorGUILayout.PropertyField(serializedObject.FindProperty("available"),new GUIContent("在游戏中开放"));
    EditorGUILayout.PropertyField(serializedObject.FindProperty("dimensions"),new GUIContent("地图宽高"));
    EditorGUILayout.PropertyField(serializedObject.FindProperty("groundColor"),new GUIContent("基础地面颜色"));
-   EditorGUILayout.PropertyField(serializedObject.FindProperty("theme"),new GUIContent("主题（meadow为草地）"));
+   EditorGUILayout.PropertyField(serializedObject.FindProperty("theme"),new GUIContent("主题（forest森林/meadow草地）"));
+   if(serializedObject.FindProperty("theme").stringValue=="forest")EditorGUILayout.PropertyField(serializedObject.FindProperty("plateau"),new GUIContent("高台外观与台阶"),true);
    EditorGUILayout.PropertyField(serializedObject.FindProperty("snap"),new GUIContent("网格吸附"));
    EditorGUILayout.PropertyField(serializedObject.FindProperty("grid"),new GUIContent("网格大小"));
    serializedObject.ApplyModifiedProperties();
@@ -35,10 +36,10 @@ namespace BoundShoot.Editor {
     t.localScale=piece.Rectangular?new Vector3(size.x,size.y,1):Vector3.one;EditorUtility.SetDirty(t);
    }
    switch(piece.kind){
-    case LevelPieceKind.Obstacle:Popup("visual","外观",new[]{"石块","土堆","木箱","栅栏","树干与树冠"});break;
+    case LevelPieceKind.Obstacle:Popup("visual","外观",new[]{"石块","土堆","木箱","栅栏","树干与树冠","崖壁（forest）"});break;
     case LevelPieceKind.Floor:EditorGUILayout.PropertyField(serializedObject.FindProperty("color"),new GUIContent("地面颜色"));break;
     case LevelPieceKind.Spawn:
-     Popup("team","队伍",new[]{"蓝队","红队"});Popup("seat","队内位置",new[]{"1","2","3（4v4）","4（4v4）"});break;
+     Popup("team","队伍",new[]{"蓝队","红队"});Popup("seat","队内位置",new[]{"1","2","3（3v3/4v4）","4（4v4）"});break;
     case LevelPieceKind.Pickup:
      bool weapon=piece.weapon!=WeaponKind.None;
      int category=EditorGUILayout.Popup("拾取物分类",weapon?0:1,new[]{"武器","道具"});

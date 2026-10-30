@@ -1,6 +1,10 @@
 # 派对射击 / Bound Shoot
 
+最新修正：身体随移动转向、枪独立瞄准；全体生命×3；右下拾枪数值卡显示3秒后隐藏。[变更说明](docs/FACING_HEALTH_PICKUP_FIX.md)。
+
 Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威战斗服务器，Node.js 负责账号、房间和战绩。
+
+**最新本地源码：森林/UI v3**。标题→名字与八角色同屏→训练/本地AI/联机→房内2v2/3v3/4v4→对战结算。右上红/灰心、严格居中相机、中央高台森林、五秒自动复活及更强队友拖拽已接入。打开Boot场景Play即可。当前联机调试使用本地主机/局域网，云端旧版保持不动；没有新exe、压缩包或部署。操作、实现和限制见[森林v3实施说明](docs/FOREST_V3_IMPLEMENTATION.md)。下述M0/M1及公网说明属于前期记录。
 
 当前源码版（2026-10-30）：**蔬果主题本地Demo，产品提升首批M0/M1已接入**。修复手动房间等待超时，加入连续弹丸、准确开火归属、统一枪口与近战表现、绳索张力/拐点反馈。保留八角色、2v2/4v4、AI补位、踩枪换枪和结算再战。Unity菜单 **Bound Shoot → Play Vegetable Demo**。详见[首批实施说明](docs/PRODUCT_UPGRADE_M0_M1.md)和[基础运行说明](docs/VEGETABLE_DEMO.md)。没有生成新exe或更新云端，旧构建不代表当前源码。
 
@@ -10,7 +14,7 @@ Unity 2022.3.62f3c1 的 2D 绳索射击项目。使用 NGO + Unity 独立权威�
 
 最新方向：[产品提升策划v2](docs/PRODUCT_UPGRADE_PLAN_2026-10-30.md)及[执行任务状态](docs/PRODUCT_UPGRADE_BACKLOG_2026-10-30.csv)，保留[蔬果玩法策划v1.1](docs/UPGRADE_PLAN_VEGETABLES.md)；此前[美术讨论](docs/ART_STYLE_OPTIONS.md)保留存档。
 
-关卡设计入口：**Unity → Bound Shoot → Level Editor 关卡编辑器**，操作见 [关卡编辑器说明](docs/LEVEL_EDITOR.md)。可视化摆放地面、障碍、武器、道具、出生点和复活区，直接保存游戏地图配置。
+关卡设计入口：**Unity → Bound Shoot → Level Editor 关卡编辑器**，操作见 [关卡编辑器说明](docs/LEVEL_EDITOR.md)。可视化摆放地面、障碍、武器、道具与出生点，直接保存游戏地图配置。v3已取消复活点玩法。
 
 - [设计同学交接](docs/DESIGNER_HANDOFF.md)
 - [接口说明](docs/API.md)

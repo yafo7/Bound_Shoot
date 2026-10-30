@@ -9,6 +9,27 @@ using UnityEngine.TestTools;
 namespace BoundShoot.Tests {
  public class CombatPresentationPlayTests {
   TrainingRuntime runtime;LocalMatchRuntime local;NetworkManager peer;GameObject extraCover;bool previousRender;
+  [UnityTest]public IEnumerator EveryVegetableFacesTravelWhileGunKeepsItsOwnAim(){
+   previousRender=Draw2D.RenderInBatch;Draw2D.RenderInBatch=true;
+   if(Object.FindObjectOfType<Bootstrap>()==null)new GameObject("Facing bootstrap").AddComponent<Bootstrap>();yield return null;yield return null;
+   if(Camera.main==null){var camera=new GameObject("Facing test camera");camera.tag="MainCamera";camera.AddComponent<Camera>().orthographic=true;camera.transform.position=Vector3.back*20;}
+   if(Object.FindObjectOfType<AudioListener>()==null)Camera.main.gameObject.AddComponent<AudioListener>();
+   runtime=new GameObject("Facing practice").AddComponent<TrainingRuntime>();yield return runtime.Begin("facing_test",6);
+   var player=runtime.World.Players.Single(p=>p.TrainingRole==0);player.enabled=false;player.Body.simulated=false;
+   var view=player.GetComponent<CyberPlayerView>();Assert.IsNotNull(view);
+   var body=view.GetComponentsInChildren<SpriteRenderer>().Single(r=>r.name=="portrait0");var gun=view.GetComponentsInChildren<SpriteRenderer>().Single(r=>r.name=="weapon3");
+   view.ShowCharacter(0,0,3,90,true,false);
+   var moves=new[]{Vector2.right,Vector2.left,Vector2.up,Vector2.down};var aim=new[]{90f,0f,-90f,180f};int[] directions={1,1,2,0};
+   for(int skin=0;skin<8;skin++)for(int d=0;d<4;d++){
+    player.transform.position+=(Vector3)(moves[d]*.15f);view.ShowCharacter(skin,0,3,aim[d],true,false);
+    int frame=int.Parse(body.sprite.name.Substring(body.sprite.name.Length-2));Assert.AreEqual(directions[d],frame/6,"Skin "+skin+" move "+moves[d]);
+    Assert.AreEqual(d==1,body.flipX);Assert.AreEqual(Mathf.Cos(aim[d]*Mathf.Deg2Rad)<0,gun.flipY);
+    Assert.Less(Quaternion.Angle(Quaternion.Euler(0,0,aim[d]),gun.transform.parent.localRotation),.01f);
+   }
+   player.transform.position+=Vector3.right*.15f;view.ShowCharacter(6,0,3,90,true,false);
+   for(int i=0;i<12;i++){yield return null;view.ShowCharacter(6,0,3,90,true,false);}
+   int idle=int.Parse(body.sprite.name.Substring(body.sprite.name.Length-2));Assert.That(idle,Is.InRange(20,21),"Stopping must retain side facing even when aiming up");
+  }
   [UnityTest] public IEnumerator NearbyShootersKeepTheirOwnRecoilAndBlockedMuzzlesNeverLaunch(){
    previousRender=Draw2D.RenderInBatch;Draw2D.RenderInBatch=true;
    if(Object.FindObjectOfType<Bootstrap>()==null)new GameObject("Combat rendering bootstrap").AddComponent<Bootstrap>();

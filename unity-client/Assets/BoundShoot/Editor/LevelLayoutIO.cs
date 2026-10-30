@@ -24,6 +24,7 @@ namespace BoundShoot.Editor {
    foreach(Transform child in root.transform.Cast<Transform>().ToArray())Undo.DestroyObjectImmediate(child.gameObject);
    root.transform.position=Vector3.zero;root.transform.rotation=Quaternion.identity;root.transform.localScale=Vector3.one;
    root.mapId=map.id;root.mapName=map.name;root.available=map.available;root.theme=map.theme;
+   root.plateau=map.plateau==null?null:JsonUtility.FromJson<PlateauDefinition>(JsonUtility.ToJson(map.plateau));
    root.dimensions=new Vector2(map.halfWidth*2,map.halfHeight*2);root.groundColor=MapContent.Ground(map);
    root.sourceMapId=map.id;root.sourceMapJson=JsonUtility.ToJson(map);root.newMap=false;
    if(map.floors!=null)foreach(var p in map.floors){var piece=Add(root,LevelPieceKind.Floor,p.center,p.size);piece.color=p.color;}
@@ -63,7 +64,7 @@ namespace BoundShoot.Editor {
    var zones=parts.Where(p=>p.kind==LevelPieceKind.Revival).Select(p=>new RevivalDefinition{center=p.transform.localPosition,size=p.transform.localScale}).ToArray();
    Vector2[] Spawns(int team)=>parts.Where(p=>p.kind==LevelPieceKind.Spawn&&p.team==team).OrderBy(p=>p.seat).Select(p=>(Vector2)p.transform.localPosition).ToArray();
    return new MapDefinition{layoutVersion=1,id=root.mapId,name=root.mapName,available=root.available,halfWidth=root.dimensions.x*.5f,halfHeight=root.dimensions.y*.5f,
-    groundColor=root.groundColor,theme=root.theme,blueSpawns=Spawns(0),redSpawns=Spawns(1),pickups=pickups,supplies=pickups.Select(p=>p.position).ToArray(),
+     groundColor=root.groundColor,theme=root.theme,plateau=root.theme=="forest"&&root.plateau!=null&&root.plateau.size.sqrMagnitude>0?root.plateau:null,blueSpawns=Spawns(0),redSpawns=Spawns(1),pickups=pickups,supplies=pickups.Select(p=>p.position).ToArray(),
     revivalZones=zones,revivals=zones.Select(p=>p.center).ToArray(),
     blocks=parts.Where(p=>p.kind==LevelPieceKind.Obstacle).Select(p=>new BlockDefinition{center=p.transform.localPosition,size=p.transform.localScale,visual=p.visual}).ToArray(),
     floors=parts.Where(p=>p.kind==LevelPieceKind.Floor).Select(p=>new FloorDefinition{center=p.transform.localPosition,size=p.transform.localScale,color=p.color}).ToArray()};
@@ -119,6 +120,7 @@ namespace BoundShoot.Editor {
    void Rect(Vector2 center,Vector2 size,string title){if(!Point(size)||size.x<=0||size.y<=0||!Inside(center,size*.5f))errors.Add(title+"尺寸无效或超出边界。");}
    foreach(var b in map.blocks??Array.Empty<BlockDefinition>())Rect(b.center,b.size,"障碍");
    foreach(var f in map.floors??Array.Empty<FloorDefinition>())Rect(f.center,f.size,"地面");
+   if(map.plateau!=null){var h=map.plateau;Rect(h.center,h.size,"高台");if(!Finite(h.stairWidth)||h.stairWidth<=.9f||h.stairs==null||h.stairs.Length==0||h.stairs.Any(y=>!Finite(y)||Mathf.Abs(y-h.center.y)+h.stairWidth*.5f>h.size.y*.5f))errors.Add("台阶宽度或位置无效。");}
    var spawns=(map.blueSpawns??Array.Empty<Vector2>()).Concat(map.redSpawns??Array.Empty<Vector2>()).ToArray();
    if(map.blueSpawns?.Length!=4||map.redSpawns?.Length!=4)errors.Add("红蓝队各需要4个有序出生点，当前2v2使用前两个。");
    foreach(var p in spawns)if(!Inside(p,Vector2.one*.45f)||Covered(p,.45f))errors.Add("出生点在边界外或与障碍重叠。");
@@ -133,7 +135,6 @@ namespace BoundShoot.Editor {
    }
    if(!pickups.Any(p=>p.weapon!=WeaponKind.None))errors.Add("关卡至少需要一个武器拾取点。");
    var zones=MapContent.Revivals(map);
-   if(zones.Length==0)errors.Add("关卡至少需要一个复活区。");
    foreach(var r in zones){Rect(r.center,r.size,"复活区");if(Covered(r.center,.45f))errors.Add("复活区中心与障碍重叠。");}
    return errors.Distinct().ToList();
   }
