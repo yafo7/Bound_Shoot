@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "base": "http://123.207.238.56:3000",
+  "humans": 2,
+  "size": 2,
+  "bots": 2,
+  "scope": "Two Windows clients on one computer over the public network to the deployed Linux dedicated server; separate client networks not exercised",
+  "health": {
+    "ok": true,
+    "data": {
+      "service": "Bound Shoot",
+      "version": "0.3.0",
+      "entry": "name-only",
+      "mode": "lobby"
+    }
+  },
+  "reports": [
+    {
+      "stage": "passed",
+      "username": "qa_6cba2298_0",
+      "matchId": "4425e2a2-981d-464a-9bfe-82ef3614a238",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "bots": 2,
+      "botDamage": 404,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 8,
+      "duration": 180,
+      "passed": true
+    },
+    {
+      "stage": "passed",
+      "username": "qa_6cba2298_1",
+      "matchId": "4425e2a2-981d-464a-9bfe-82ef3614a238",
+      "error": "",
+      "players": 4,
+      "owned": 1,
+      "bots": 2,
+      "botDamage": 404,
+      "games": 2,
+      "rounds": 2,
+      "kills": 0,
+      "deaths": 8,
+      "duration": 180,
+      "passed": true
+    }
+  ],
+  "work": "D:\\GitHubHome\\Bound_Shoot\\logs\\public-lobby-1793716929110"
+}

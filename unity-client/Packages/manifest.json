@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity",
     "com.unity.netcode.gameobjects": "1.8.1",
     "com.unity.test-framework": "1.1.33",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.11",

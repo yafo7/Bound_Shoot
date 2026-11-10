@@ -3,9 +3,9 @@ namespace BoundShoot {
  public sealed class WeaponPickupNotice {
   public const float Duration=3;
   public int Weapon {get;private set;}
-  float until;
-  public void Clear(){Weapon=0;until=0;}
-  public void Observe(int weapon,float now){if(weapon==Weapon)return;Weapon=weapon;until=weapon>0?now+Duration:0;}
+  float until;uint revision;
+  public void Clear(){Weapon=0;until=0;revision=0;}
+  public void Observe(int weapon,float now,uint equipmentVersion=0){if(weapon==Weapon&&revision==equipmentVersion)return;Weapon=weapon;revision=equipmentVersion;until=weapon>0?now+Duration:0;}
   public bool Visible(float now)=>Weapon>0&&now<until;
  }
 }

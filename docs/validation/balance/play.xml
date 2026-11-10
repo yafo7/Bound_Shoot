@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="15" result="Passed" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:10:07Z" duration="64.2520299">
+  <test-suite type="TestSuite" id="1000" name="派对射击 - Bound Shoot" fullname="派对射击 - Bound Shoot" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:10:07Z" duration="64.252030" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1021" name="BoundShoot.PlayTests.dll" fullname="D:/GitHubHome/Bound_Shoot/logs/knockback/project/Library/ScriptAssemblies/BoundShoot.PlayTests.dll" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:10:07Z" duration="64.246097" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="45484" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1022" name="BoundShoot" fullname="BoundShoot" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:10:07Z" duration="64.232668" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1023" name="Tests" fullname="BoundShoot.Tests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:10:07Z" duration="64.216015" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="CombatPresentationPlayTests" fullname="BoundShoot.Tests.CombatPresentationPlayTests" classname="BoundShoot.Tests.CombatPresentationPlayTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:09:08Z" duration="4.770385" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1002" name="EveryVegetableFacesTravelWhileGunKeepsItsOwnAim" fullname="BoundShoot.Tests.CombatPresentationPlayTests.EveryVegetableFacesTravelWhileGunKeepsItsOwnAim" methodname="EveryVegetableFacesTravelWhileGunKeepsItsOwnAim" classname="BoundShoot.Tests.CombatPresentationPlayTests" runstate="Runnable" seed="1221306116" result="Passed" start-time="2026-11-01 16:09:03Z" end-time="2026-11-01 16:09:04Z" duration="0.684531" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="NearbyShootersKeepTheirOwnRecoilAndBlockedMuzzlesNeverLaunch" fullname="BoundShoot.Tests.CombatPresentationPlayTests.NearbyShootersKeepTheirOwnRecoilAndBlockedMuzzlesNeverLaunch" methodname="NearbyShootersKeepTheirOwnRecoilAndBlockedMuzzlesNeverLaunch" classname="BoundShoot.Tests.CombatPresentationPlayTests" runstate="Runnable" seed="2078917131" result="Passed" start-time="2026-11-01 16:09:04Z" end-time="2026-11-01 16:09:04Z" duration="0.179305" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="RemoteObserverReceivesExactShooterAndClearsProjectilesAtResult" fullname="BoundShoot.Tests.CombatPresentationPlayTests.RemoteObserverReceivesExactShooterAndClearsProjectilesAtResult" methodname="RemoteObserverReceivesExactShooterAndClearsProjectilesAtResult" classname="BoundShoot.Tests.CombatPresentationPlayTests" runstate="Runnable" seed="1659791629" result="Passed" start-time="2026-11-01 16:09:04Z" end-time="2026-11-01 16:09:08Z" duration="3.888377" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1005" name="ForestRulesPlayTests" fullname="BoundShoot.Tests.ForestRulesPlayTests" classname="BoundShoot.Tests.ForestRulesPlayTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-01 16:09:08Z" end-time="2026-11-01 16:09:13Z" duration="5.129640" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1007" name="PassiveLivingAndDeadPartnersCanBeDraggedAndCameraStaysCentred" fullname="BoundShoot.Tests.ForestRulesPlayTests.PassiveLivingAndDeadPartnersCanBeDraggedAndCameraStaysCentred" methodname="PassiveLivingAndDeadPartnersCanBeDraggedAndCameraStaysCentred" classname="BoundShoot.Tests.ForestRulesPlayTests" runstate="Runnable" seed="338095045" result="Passed" start-time="2026-11-01 16:09:08Z" end-time="2026-11-01 16:09:11Z" duration="3.656810" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="ResizeSwapAndAutomaticRevivalUseAuthoritativeState" fullname="BoundShoot.Tests.ForestRulesPlayTests.ResizeSwapAndAutomaticRevivalUseAuthoritativeState" methodname="ResizeSwapAndAutomaticRevivalUseAuthoritativeState" classname="BoundShoot.Tests.ForestRulesPlayTests" runstate="Runnable" seed="234639123" result="Passed" start-time="2026-11-01 16:09:11Z" end-time="2026-11-01 16:09:13Z" duration="1.449580" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1008" name="KnockbackPlayTests" fullname="BoundShoot.Tests.KnockbackPlayTests" classname="BoundShoot.Tests.KnockbackPlayTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-01 16:09:13Z" end-time="2026-11-01 16:09:14Z" duration="1.288327" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1009" name="CloseHitHonorsShieldProtectionDeathAndNonSniperRules" fullname="BoundShoot.Tests.KnockbackPlayTests.CloseHitHonorsShieldProtectionDeathAndNonSniperRules" methodname="CloseHitHonorsShieldProtectionDeathAndNonSniperRules" classname="BoundShoot.Tests.KnockbackPlayTests" runstate="Runnable" seed="1732453156" result="Passed" start-time="2026-11-01 16:09:13Z" end-time="2026-11-01 16:09:13Z" duration="0.152279" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="ConfiguredDaggerImpulseUsesTheSameDamageAndProtectionRules" fullname="BoundShoot.Tests.KnockbackPlayTests.ConfiguredDaggerImpulseUsesTheSameDamageAndProtectionRules" methodname="ConfiguredDaggerImpulseUsesTheSameDamageAndProtectionRules" classname="BoundShoot.Tests.KnockbackPlayTests" runstate="Runnable" seed="1847305149" result="Passed" start-time="2026-11-01 16:09:13Z" end-time="2026-11-01 16:09:13Z" duration="0.132320" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="FlyingBulletKeepsLaunchImpulseAfterShooterSwitchesWeapon" fullname="BoundShoot.Tests.KnockbackPlayTests.FlyingBulletKeepsLaunchImpulseAfterShooterSwitchesWeapon" methodname="FlyingBulletKeepsLaunchImpulseAfterShooterSwitchesWeapon" classname="BoundShoot.Tests.KnockbackPlayTests" runstate="Runnable" seed="1175331314" result="Passed" start-time="2026-11-01 16:09:13Z" end-time="2026-11-01 16:09:13Z" duration="0.165771" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="KnockbackCollidesWithWallAndTautRopeOpposesIt" fullname="BoundShoot.Tests.KnockbackPlayTests.KnockbackCollidesWithWallAndTautRopeOpposesIt" methodname="KnockbackCollidesWithWallAndTautRopeOpposesIt" classname="BoundShoot.Tests.KnockbackPlayTests" runstate="Runnable" seed="456573593" result="Passed" start-time="2026-11-01 16:09:13Z" end-time="2026-11-01 16:09:14Z" duration="0.822244" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1013" name="LocalMatchTests" fullname="BoundShoot.Tests.LocalMatchTests" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-01 16:09:14Z" end-time="2026-11-01 16:10:01Z" duration="46.807188" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1015" name="AiTeamsPlayAnEntireRoundFromSpawn" fullname="BoundShoot.Tests.LocalMatchTests.AiTeamsPlayAnEntireRoundFromSpawn" methodname="AiTeamsPlayAnEntireRoundFromSpawn" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" seed="1557682524" result="Passed" start-time="2026-11-01 16:09:14Z" end-time="2026-11-01 16:09:16Z" duration="2.144742" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="EightNetworkPeersCanPlaySettleAndReplay" fullname="BoundShoot.Tests.LocalMatchTests.EightNetworkPeersCanPlaySettleAndReplay" methodname="EightNetworkPeersCanPlaySettleAndReplay" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" seed="814536548" result="Passed" start-time="2026-11-01 16:09:16Z" end-time="2026-11-01 16:09:25Z" duration="8.875480" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="FourNetworkPeersCanPlaySettleAndReplay" fullname="BoundShoot.Tests.LocalMatchTests.FourNetworkPeersCanPlaySettleAndReplay" methodname="FourNetworkPeersCanPlaySettleAndReplay" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" seed="845618017" result="Passed" start-time="2026-11-01 16:09:25Z" end-time="2026-11-01 16:09:33Z" duration="7.894609" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="ManualRoomsSurviveNinetySecondWaitBeforeFirstStartAndRematch" fullname="BoundShoot.Tests.LocalMatchTests.ManualRoomsSurviveNinetySecondWaitBeforeFirstStartAndRematch" methodname="ManualRoomsSurviveNinetySecondWaitBeforeFirstStartAndRematch" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" seed="1532305549" result="Passed" start-time="2026-11-01 16:09:33Z" end-time="2026-11-01 16:09:52Z" duration="19.491077" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="SixNetworkPeersCanPlaySettleAndReplay" fullname="BoundShoot.Tests.LocalMatchTests.SixNetworkPeersCanPlaySettleAndReplay" methodname="SixNetworkPeersCanPlaySettleAndReplay" classname="BoundShoot.Tests.LocalMatchTests" runstate="Runnable" seed="680977243" result="Passed" start-time="2026-11-01 16:09:52Z" end-time="2026-11-01 16:10:01Z" duration="8.385636" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1019" name="TrainingPlayTests" fullname="BoundShoot.Tests.TrainingPlayTests" classname="BoundShoot.Tests.TrainingPlayTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-01 16:10:01Z" end-time="2026-11-01 16:10:07Z" duration="6.201717" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1020" name="TrainingRunsWithoutBackendAndCanRestart" fullname="BoundShoot.Tests.TrainingPlayTests.TrainingRunsWithoutBackendAndCanRestart" methodname="TrainingRunsWithoutBackendAndCanRestart" classname="BoundShoot.Tests.TrainingPlayTests" runstate="Runnable" seed="1205527493" result="Passed" start-time="2026-11-01 16:10:01Z" end-time="2026-11-01 16:10:07Z" duration="6.184903" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+              </properties>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

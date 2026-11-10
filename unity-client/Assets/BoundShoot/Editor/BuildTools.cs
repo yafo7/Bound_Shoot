@@ -1,4 +1,5 @@
 using System.IO;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
@@ -21,7 +22,7 @@ namespace BoundShoot.Editor {
    }
    if(!File.Exists(Scene)){var scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);EditorSceneManager.SaveScene(scene,Scene);}
    EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(Scene,true)};
-   PlayerSettings.companyName="Bound Shoot Team";PlayerSettings.productName="派对射击 - Bound Shoot";
+   PlayerSettings.companyName="Bound Shoot Team";PlayerSettings.productName="绳紧兵大作战";
    PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;
    PlayerSettings.runInBackground=true;PlayerSettings.resizableWindow=true;PlayerSettings.forceSingleInstance=false;
    PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone,ScriptingImplementation.Mono2x);
@@ -37,6 +38,14 @@ namespace BoundShoot.Editor {
   static string OutputRoot=>Path.GetFullPath(GameClient.GetArg("-outputRoot")??Path.Combine(Application.dataPath,"../Builds"));
   [MenuItem("Bound Shoot/Build/Windows Client")]
   public static void BuildClient()=>Build(BuildTarget.StandaloneWindows64,StandaloneBuildSubtarget.Player,"Windows/BoundShoot.exe",false);
+  [MenuItem("Bound Shoot/Build/macOS Client")]
+  public static void BuildMacClient(){
+   string architecture=EditorUserBuildSettings.GetPlatformSettings("OSXUniversal","Architecture");
+   try{
+    EditorUserBuildSettings.SetPlatformSettings("OSXUniversal","Architecture","x64ARM64");
+    Build(BuildTarget.StandaloneOSX,StandaloneBuildSubtarget.Player,"MacOS/BoundShoot.app",false);
+   }finally{EditorUserBuildSettings.SetPlatformSettings("OSXUniversal","Architecture",architecture);}
+  }
   [MenuItem("Bound Shoot/Build/Linux Server")]
   public static void BuildLinuxServer()=>Build(BuildTarget.StandaloneLinux64,StandaloneBuildSubtarget.Server,"LinuxServer/BoundShootServer.x86_64",false);
   // QA code is included only in this separate executable, never in the player release.
@@ -49,6 +58,9 @@ namespace BoundShoot.Editor {
     locationPathName=output,options=qa?BuildOptions.Development:BuildOptions.None,
     extraScriptingDefines=qa?new[]{"BOUND_SHOOT_QA"}:System.Array.Empty<string>()});
    if(report.summary.result!=BuildResult.Succeeded)throw new System.InvalidOperationException("Build failed: "+report.summary.result);
+   string configHash;
+   using(var sha=SHA256.Create())configHash=System.BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes("Assets/BoundShoot/Resources/GameConfig.json"))).Replace("-","").ToLowerInvariant();
+   File.WriteAllText(Path.Combine(Path.GetDirectoryName(output),"release.json"),"{\"version\":\"0.3.0\",\"gameConfigSha256\":\""+configHash+"\",\"unity\":\""+Application.unityVersion+"\"}");
    Debug.Log("BOUND_BUILD_OK "+output);
   }
  }

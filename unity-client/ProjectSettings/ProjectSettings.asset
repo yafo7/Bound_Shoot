@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Bound Shoot Team
-  productName: "\u6D3E\u5BF9\u5C04\u51FB - Bound Shoot"
+  productName: "\u7EF3\u7D27\u5175\u5927\u4F5C\u6218"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.12156863, g: 0.12156863, b: 0.1254902, a: 1}

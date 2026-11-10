@@ -9,9 +9,10 @@ using UnityEngine;
 
 namespace BoundShoot.Editor {
  public sealed class LevelEditorWindow:EditorWindow {
+  [SerializeField] SupplyPoolEditor supplyEditor=new SupplyPoolEditor();
   LevelLayout root;GameConfig catalog;int mapIndex;Vector2 scroll;string status="",newId="Arena_02",newName="新竞技场";
   MessageType statusType;UnityEditor.Editor inspector;int brush=-1;bool placing;
-  static readonly string[] Palette={"地面块","障碍柱","蓝队出生点","红队出生点","狙击枪","手枪","AK","匕首","问号盒","绳索收缩","绳索延长","护盾","冲刺装置","炸弹","弹性强化","血包"};
+  static readonly string[] Palette={"地面块","障碍柱","蓝队出生点","红队出生点","狙击枪","手枪","AK","匕首","问号盒","绳索收缩","绳索延长","护盾","提速道具","炸弹","弹性强化","血包","普通物资点（白）","中等物资点（蓝）","高级物资点（红）","烟雾弹","燃烧弹","火箭炮"};
   [MenuItem("Bound Shoot/Level Editor 关卡编辑器")]
   public static void Open(){var w=GetWindow<LevelEditorWindow>("关卡编辑器");w.minSize=new Vector2(340,560);w.Show();}
   public static void OpenStarter(){
@@ -30,6 +31,8 @@ namespace BoundShoot.Editor {
    if(!EditorSceneManager.SaveScene(layout.gameObject.scene,path))throw new InvalidOperationException("Cannot save starter editing scene");
    AssetDatabase.Refresh();Debug.Log("BOUND_LEVEL_STARTER_READY");
   }
+  public override void SaveChanges(){if(supplyEditor.Save())base.SaveChanges();}
+  public override void DiscardChanges(){supplyEditor.Reload();base.DiscardChanges();}
   void OnDisable(){SceneView.duringSceneGui-=SceneGUI;Selection.selectionChanged-=SelectChanged;Undo.undoRedoPerformed-=Changed;if(inspector!=null)DestroyImmediate(inspector);}
   void RefreshCatalog(){try{catalog=LevelLayoutIO.Read();mapIndex=Mathf.Clamp(mapIndex,0,catalog.maps.Length-1);}catch(Exception e){Message(e.Message,MessageType.Error);}}
   void SelectChanged(){if(Selection.activeGameObject!=null){var selected=Selection.activeGameObject.GetComponentInParent<LevelLayout>();if(selected!=null)root=selected;}Repaint();}
@@ -39,6 +42,7 @@ namespace BoundShoot.Editor {
    using(new EditorGUI.DisabledScope(EditorApplication.isPlayingOrWillChangePlaymode)){
     scroll=EditorGUILayout.BeginScrollView(scroll);
     EditorGUILayout.LabelField("Bound Shoot 关卡编辑器",EditorStyles.boldLabel);
+    supplyEditor.Draw();hasUnsavedChanges=supplyEditor.Dirty;saveChangesMessage="物资概率池有未保存修改。地图布局请单独保存。";
     if(catalog?.maps==null){if(GUILayout.Button("读取配置"))RefreshCatalog();EditorGUILayout.EndScrollView();return;}
     mapIndex=EditorGUILayout.Popup("关卡",mapIndex,catalog.maps.Select(m=>m.name+"  ["+m.id+"]").ToArray());
     EditorGUILayout.BeginHorizontal();
@@ -52,7 +56,7 @@ namespace BoundShoot.Editor {
     if(root!=null){
      UnityEditor.Editor.CreateCachedEditor(root,null,ref inspector);inspector.OnInspectorGUI();
      EditorGUILayout.Space();EditorGUILayout.LabelField("物件面板",EditorStyles.boldLabel);
-     int chosen=GUILayout.SelectionGrid(brush,Palette,2,GUILayout.Height(250));
+     int chosen=GUILayout.SelectionGrid(brush,Palette,2,GUILayout.Height(345));
      if(chosen!=brush){brush=chosen;placing=brush>=0;SceneView.RepaintAll();}
      placing=GUILayout.Toggle(placing,"在 Scene 左键连续放置（Esc退出）","Button");
      EditorGUILayout.BeginHorizontal();
@@ -106,7 +110,7 @@ namespace BoundShoot.Editor {
     var spawn=LevelLayoutIO.Add(root,kind,point,size);spawn.team=team;spawn.seat=seat;LevelLayoutIO.Rename(spawn);Selection.activeGameObject=spawn.gameObject;
    }else{
     var piece=LevelLayoutIO.Add(root,kind,point,size);
-    if(kind==LevelPieceKind.Pickup){if(brush<=7)piece.weapon=(WeaponKind)(brush-3);else piece.item=brush==8?ItemKind.Mystery:(ItemKind)(brush-8);LevelLayoutIO.Rename(piece);}
+    if(kind==LevelPieceKind.Pickup){if(brush==21)piece.weapon=WeaponKind.RocketLauncher;else if(brush>=19)piece.item=brush==19?ItemKind.Smoke:ItemKind.Incendiary;else if(brush>=16){piece.supplyTier=(SupplyTier)(brush-15);piece.respawnSeconds=SupplyPools.Find(LevelLayoutIO.Read(),piece.supplyTier).respawnSeconds;}else if(brush<=7)piece.weapon=(WeaponKind)(brush-3);else piece.item=brush==8?ItemKind.Mystery:(ItemKind)(brush-8);LevelLayoutIO.Rename(piece);}
     Selection.activeGameObject=piece.gameObject;
    }
    EditorSceneManager.MarkSceneDirty(root.gameObject.scene);Changed();

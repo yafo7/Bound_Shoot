@@ -26,7 +26,9 @@ namespace BoundShoot {
    var net=Bootstrap.Network;net.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1",(ushort)launch.port,"0.0.0.0");
    net.ConnectionApprovalCallback+=Approve;net.OnClientConnectedCallback+=Connected;net.OnClientDisconnectCallback+=Disconnected;
    if(!net.StartServer()){Abort("UDP port bind failed");yield break;}
-   world=Instantiate(Resources.Load<GameObject>("NetWorld")).GetComponent<BattleWorld>();world.SelectedMap=roster.mapId;world.NetworkObject.Spawn();world.Setup(roster);
+   world=Instantiate(Resources.Load<GameObject>("NetWorld")).GetComponent<BattleWorld>();
+   world.SelectedMap=string.IsNullOrEmpty(roster.warmupHostId)?roster.mapId:TrainingMap.WarmupId;
+   world.NetworkObject.Spawn();world.Setup(roster);
    world.OnResult+=result=>StartCoroutine(Submit(result));
    bool ready=false;yield return Api.Request<Empty>("POST",Path("ready"),null,v=>ready=true,e=>error=e);
    if(!ready){Abort(error);yield break;}
@@ -63,7 +65,7 @@ namespace BoundShoot {
    float lastSuccess=Time.realtimeSinceStartup;
    while(!ending&&!finishing){
     bool success=false;
-    yield return Api.Request<Empty>("POST",Path("heartbeat"),new HeartbeatBody{playing=world.Phase.Value==2},v=>success=true,e=>{},false);
+    yield return Api.Request<Empty>("POST",Path("heartbeat"),new HeartbeatBody{playing=world.Phase.Value==2&&!world.IsOnlineWarmup},v=>success=true,e=>{},false);
     if(finishing||ending)yield break;
     if(success)lastSuccess=Time.realtimeSinceStartup;
     else if(Time.realtimeSinceStartup-lastSuccess>=20){Abort("后端心跳超时");yield break;}

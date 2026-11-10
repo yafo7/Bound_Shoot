@@ -35,4 +35,21 @@ export class QuickPlay {
   this.rooms.publish(QUICK_ROOM_ID,'member.joined');
   return result;
  }
+ loginLobby(name:string,skin:number){
+  check(!name.toUpperCase().startsWith('AI_'),400,'RESERVED_NAME','请换一个名字');
+  return this.store.transaction(()=>{
+   const identity=this.store.get('SELECT * FROM quick_identities WHERE name=?',name);
+   const uid=identity?.user_id??this.create(name,false,skin);
+   const active=this.store.get('SELECT 1 FROM auth_sessions WHERE user_id=? AND revoked=0 AND expires_at>? AND last_seen>?',uid,now(),now()-this.auth.cfg.reconnectSeconds);
+   check(!active,409,'NAME_IN_USE','这个名字正在使用，请换一个名字');
+   const previous=this.rooms.member(uid);
+   check(!previous||previous.last_seen<=now()-this.auth.cfg.reconnectSeconds,409,'NAME_IN_USE','这个名字正在使用，请换一个名字');
+   const room=previous?this.rooms.view(previous.room_id):null;
+   // A reconnect keeps the appearance already fixed in the active match roster.
+   if(!room||room.status==='Waiting')this.store.run('UPDATE user_cosmetics SET skin=? WHERE user_id=?',skin,uid);
+   this.store.run('UPDATE auth_sessions SET revoked=1 WHERE user_id=?',uid);
+   if(previous)this.store.run('UPDATE room_members SET last_seen=? WHERE user_id=?',now(),uid);
+   return {...this.auth.issue(uid),room:previous?this.rooms.view(previous.room_id):null};
+  });
+ }
 }

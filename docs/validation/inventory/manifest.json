@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "scope": "Local isolated Editor tests and screenshot; test ports 17894/17895; no builds or deployment",
+  "edit": {
+    "passed": 68,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "play": {
+    "passed": 30,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "visual": {
+    "exitCode": 0,
+    "fixture": "InventoryReview.cs.txt",
+    "image": "four-slots.png"
+  },
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "ee7f32ac0fe6d02d6cb970562a3d7a5c290cd95a3ac20405af7e14bf1483d066"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "df3f1a807c86068f034e665ae32e977789efca21aec0fb1f7a243dbd7ff02ae9"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BotController.cs",
+      "sha256": "1feef0a91ce583d8416e98af302eabb570ae928568d0cefe39864d46b8378c40"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Training/TrainingRuntime.cs",
+      "sha256": "9c128e0ffdde0e1de7219b5bd2dfed54c587fc5a0344b41fb5533897715828ef"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/ForestFlow.cs",
+      "sha256": "3fb32ac51d468201cbb80693c198ec59fe396bb31c953b98f57b57ab1ceee4dc"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/GameClient.cs",
+      "sha256": "c729d187afcd23c003c0423af2e8071b75d7a20605eff1ad7245eaa24d47740b"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "314d731f2de1fb03c41d96a882d899dc4775e21318d2bf5ab3c1f767bdf2deab"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/InventoryPlayTests.cs",
+      "sha256": "08609dd0a22b66e6a876981e357091bf50ef91ebdd9ffd5b6986699a74441803"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/LocalMatchTests.cs",
+      "sha256": "f3a045b70e760c1d7abd6b5c4393aeef4dcda8c5cbb968f467006fa1799e0a64"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/TrainingPlayTests.cs",
+      "sha256": "52da5654aa420cedd806b27398250a94680fa6c5ead50e514853bc74a115f942"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/KnockbackPlayTests.cs",
+      "sha256": "86374fee0dbf0f6e49da53973510445dfadde992a7c76f5128b962895a586210"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/MenuExitPlayTests.cs",
+      "sha256": "5c420dfe3e8b370273846abc1e1e09dfaf992693ae0c7400f1f9eb235ae7b02e"
+    }
+  ]
+}

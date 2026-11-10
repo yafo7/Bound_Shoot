@@ -37,7 +37,7 @@ namespace BoundShoot {
    if(!Ready||World==null||!network.IsServer)return;
    foreach(var p in World.Players){
     if(p.TrainingRole==0)continue;
-    p.Move=Vector2.zero;p.Fire=p.Use=false;p.DashUntil=0;p.LastInput=Time.time;
+    p.Move=Vector2.zero;p.Fire=false;p.SpeedBoostUntil=0;p.LastInput=Time.time;
     if(p.TrainingRole==2){
      if(!p.Alive){
       if(!targetDeaths.ContainsKey(p))targetDeaths[p]=Time.time;

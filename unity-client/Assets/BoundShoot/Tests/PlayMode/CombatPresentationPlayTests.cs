@@ -9,6 +9,8 @@ using UnityEngine.TestTools;
 namespace BoundShoot.Tests {
  public class CombatPresentationPlayTests {
   TrainingRuntime runtime;LocalMatchRuntime local;NetworkManager peer;GameObject extraCover;bool previousRender;
+  bool originalFriendlyFire;
+  [SetUp]public void SetFriendlyFire(){originalFriendlyFire=GameConfig.Current.friendlyFire;GameConfig.Current.friendlyFire=false;}
   [UnityTest]public IEnumerator EveryVegetableFacesTravelWhileGunKeepsItsOwnAim(){
    previousRender=Draw2D.RenderInBatch;Draw2D.RenderInBatch=true;
    if(Object.FindObjectOfType<Bootstrap>()==null)new GameObject("Facing bootstrap").AddComponent<Bootstrap>();yield return null;yield return null;
@@ -43,6 +45,7 @@ namespace BoundShoot.Tests {
    first.Equip(WeaponKind.AK);second.Equip(WeaponKind.Pistol);first.Aim=second.Aim=Vector2.right;
    var firstView=first.GetComponent<CyberPlayerView>();var secondView=second.GetComponent<CyberPlayerView>();Assert.IsNotNull(firstView);Assert.IsNotNull(secondView);
    for(int i=0;i<50;i++){
+    if(second.Ammo.Value==1)Assert.IsTrue(second.Equip(WeaponKind.Pistol),"Refill during sustained presentation stress test");
     first.NextShot=0;Assert.IsTrue(world.TryAttack(first));Assert.AreEqual(i+1,firstView.KickCount);Assert.AreEqual(i,secondView.KickCount);
     second.NextShot=0;Assert.IsTrue(world.TryAttack(second));Assert.AreEqual(i+1,firstView.KickCount);Assert.AreEqual(i+1,secondView.KickCount);
    }
@@ -56,7 +59,8 @@ namespace BoundShoot.Tests {
    extraCover=new GameObject("Collider-only boundary regression");extraCover.layer=8;extraCover.transform.position=new Vector2(-5.5f,-6);extraCover.AddComponent<BoxCollider2D>().size=new Vector2(.2f,2);
    Teleport(first,new Vector2(-7,-6));first.NextShot=0;Physics2D.SyncTransforms();
    Assert.IsTrue(world.TryAttack(first));Assert.AreEqual(0,world.VisibleProjectileCount,"Collider-only cover must also stop a long muzzle");Object.DestroyImmediate(extraCover);extraCover=null;
-   var target=world.Players.First(p=>p.TrainingRole==2);target.ProtectionUntil=0;target.Health.Value=3;
+   var target=world.Players.First(p=>p.TrainingRole==2);target.ProtectionUntil=0;
+   target.Health.Value=GameConfig.Current.Weapon(WeaponKind.AK).damage+1;
    Teleport(first,new Vector2(-7,-6));Teleport(target,new Vector2(-6.1f,-6));Physics2D.SyncTransforms();first.NextShot=0;
    Assert.IsTrue(world.TryAttack(first));Assert.AreEqual(1,target.Health.Value,"A close enemy under the long barrel must still be hit");Assert.AreEqual(0,world.VisibleProjectileCount);
    first.Equip(WeaponKind.Dagger);first.NextShot=0;target.Health.Value=3;int kicks=firstView.KickCount;
@@ -86,13 +90,14 @@ namespace BoundShoot.Tests {
    var remoteWorld=peer.SpawnManager.SpawnedObjects.Values.Single(n=>n.GetComponent<BattleWorld>()!=null).GetComponent<BattleWorld>();
    Assert.IsTrue(authority.TryAttack(second));yield return WaitFor(()=>remoteSecond.KickCount==1);
    Assert.AreEqual(0,remoteFirst.KickCount);Assert.AreEqual((int)WeaponKind.AK,remoteSecond.LastShotWeapon);Assert.Greater(remoteWorld.VisibleProjectileCount,0);
-   foreach(var player in authority.Players.Where(p=>p.Team.Value==1)){player.ProtectionUntil=0;player.Hurt(999,null);}
+   for(int zone=0;zone<authority.ZoneHeat.Count;zone++)authority.ZoneHeat[zone]=100;
    yield return WaitFor(()=>remoteWorld.Phase.Value==3);Assert.AreEqual(0,remoteWorld.VisibleProjectileCount);
    local.Restart();yield return WaitFor(()=>remoteWorld.RoundId.Value==authority.RoundId.Value);Assert.AreEqual(0,remoteWorld.VisibleProjectileCount);
   }
   static IEnumerator WaitFor(System.Func<bool> ready){float until=Time.realtimeSinceStartup+15;while(!ready()&&Time.realtimeSinceStartup<until)yield return null;Assert.IsTrue(ready(),"Combat network presentation timed out");}
   static void Teleport(NetPlayer player,Vector2 position){player.Body.position=position;player.transform.position=position;player.Body.velocity=Vector2.zero;}
   [UnityTearDown] public IEnumerator Cleanup(){
+   GameConfig.Current.friendlyFire=originalFriendlyFire;
    if(extraCover!=null)Object.DestroyImmediate(extraCover);
    if(peer!=null){if(Bootstrap.Network.IsServer&&peer.IsConnectedClient){Bootstrap.Network.DisconnectClient(peer.LocalClientId);yield return WaitFor(()=>!peer.IsConnectedClient);}peer.Shutdown();yield return WaitFor(()=>!peer.IsListening&&!peer.ShutdownInProgress);Object.Destroy(peer.gameObject);}
    if(local!=null)yield return local.Stop();if(runtime!=null)yield return runtime.Stop();Draw2D.RenderInBatch=previousRender;var fx=Object.FindObjectOfType<GardenFx>();if(fx!=null)Object.Destroy(fx.gameObject);

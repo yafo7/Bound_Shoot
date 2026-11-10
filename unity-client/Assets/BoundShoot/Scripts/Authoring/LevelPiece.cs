@@ -7,6 +7,7 @@ namespace BoundShoot.Authoring {
   public LevelPieceKind kind;
   public int team,seat;public WeaponKind weapon;public ItemKind item;
   [Range(0,4)] public int visual;
+  public SupplyTier supplyTier;public bool overrideRespawn;
   public float respawnSeconds=10;public bool randomizeOnRespawn;
   public Color color=new Color(.24f,.3f,.34f,1);
   public bool Rectangular=>kind==LevelPieceKind.Floor||kind==LevelPieceKind.Obstacle||kind==LevelPieceKind.Revival;

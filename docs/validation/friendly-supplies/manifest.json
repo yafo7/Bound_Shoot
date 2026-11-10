@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "scope": "Local isolated Unity tests and rendering only; original maps unchanged; no build or deployment",
+  "edit": {
+    "passed": 67,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "play": {
+    "passed": 19,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "visual": {
+    "exitCode": 0,
+    "fixture": "SupplyVisualReview.cs.txt",
+    "image": "tier-colors.png",
+    "note": "Temporary fixture in test copy only; inserts 3 tier points into runtime training map for screenshot; not shipped as training layout"
+  },
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "94a9d906322b5951813b896d24cb175876671c4d5d075ff3871e486fce0b4bc2"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "2925fe548e65bdea5c6e264a9eea25427d98400544ff80f2c88ba325eae7f418"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "753a31937bf2f973135250e58e31a38316fe886c4af658b559a1a386ad3cf853"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "c499b951643e74ed9c52c89fb3f63a059aa0579c02e9d3be341c975f26e6b15c"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/MapContent.cs",
+      "sha256": "8c3e307008aeb8e8af098c5c667ebc32b4ce70bb07f9ec13cdead226460c330a"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/SupplyPools.cs",
+      "sha256": "fc864b4995673e31c454def6b43d62ab19aeecc7db4c25be3f1f188ad2478026"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Authoring/LevelPiece.cs",
+      "sha256": "6126454b0d1c2cd2c9a81cd390123ee11d4f493e77eb0123d82732e4e030294f"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/BalanceEditorWindow.cs",
+      "sha256": "ee125b2bd47a5a6488da4496b9fdbe21222e67e0df7486d4ff76076d382c3f72"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/SupplyPoolEditor.cs",
+      "sha256": "9b795ab62aee2b4eabda2fde22948317f91029a6cfeb87226ef86588c5ec214c"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/LevelEditorWindow.cs",
+      "sha256": "c768813c110e1f6d6ba89f988e00eb31a508e3d5c7b375203b2e0bcebd7d46e4"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/LevelLayoutIO.cs",
+      "sha256": "520329ad3f204047460af14dfbee03b59d7d6121340fc63be26b957f3e387aa5"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/LevelLayoutInspectors.cs",
+      "sha256": "84e34dd9f48bcd98e8cf6dfa1f9248fb998868299d7316b515763b399ef83b07"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/BalanceEditorTests.cs",
+      "sha256": "2512ee039016b82af50d161955d86b5c3ee8bf6d979c030a695112df0ce8fb02"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/SupplyPoolTests.cs",
+      "sha256": "8e2a49622124b7542720e1be684b91901426d36adfa08ff03fb97bcb48e9ab5e"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/KnockbackPlayTests.cs",
+      "sha256": "4efb570ef9ad6fd9e1210925455bac13a91ad2d89a05b894e7e7c3d77b908f3f"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/SupplyPlayTests.cs",
+      "sha256": "638808d0f29aebf883e1b94df222333b066259d466792cca0aa15e2bf0e1a431"
+    },
+    {
+      "path": "unity-client/Packages/manifest.json",
+      "sha256": "b35cd0f10a0f7cd3de5dc31493581d163834bddc9889ca2061b68d6e3040f6ac"
+    },
+    {
+      "path": "unity-client/Packages/packages-lock.json",
+      "sha256": "42e0816ae811d51b29e55bf96b1137fbbd00f0ee7bd6c2d2e921a646dd3289f7"
+    },
+    {
+      "path": "unity-client/ProjectSettings/ProjectVersion.txt",
+      "sha256": "b51164d22c4d2716ba8aee7f0b59d6b7dd0efa8552fd1db2a8c3b123fae3a1ec"
+    }
+  ]
+}

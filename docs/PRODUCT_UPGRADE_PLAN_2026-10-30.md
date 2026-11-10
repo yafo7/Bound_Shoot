@@ -1,4 +1,4 @@
-# 派对射击 / Bound Shoot：产品级Demo提升策划
+# 绳紧兵大作战 / Bound Shoot：产品级Demo提升策划
 
 版本：v2.0评审稿。日期：2026-10-30（Asia/Shanghai）。配套：[全面检查报告](PROJECT_AUDIT_2026-10-30.md)、[执行任务表](PRODUCT_UPGRADE_BACKLOG_2026-10-30.csv)。
 

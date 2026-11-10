@@ -1,0 +1,13 @@
+{
+  "version": "0.3.0",
+  "publicBackendUrl": "http://123.207.238.56:3000",
+  "unity": "2022.3.62f3",
+  "configSha256": "bc1cb862d3a694c7277c8b520c78dca459d270fd936f3f3bb4d70b673a01da71",
+  "clientExeSha256": "f5f73d8616a2500e0fb0223d83774e2d7f6a74c1bbdad772f4fefc9bf5812036",
+  "clientAssemblySha256": "f0db8e9f26393b43c31767b5a91a8c9c8387433e6d1e44aeba5fe8c01e882656",
+  "clientResourcesSha256": "3946fbe1aa3c61a24c4b4b819453c6481aa9c3c68462b81fe4e791e93ad035ef",
+  "linuxExeSha256": "2f4534b3534d61c843a7f20cbd5df7c2deef9fb0211d60ea362cda7bdecdeabc",
+  "uploadFiles": 160,
+  "uploadMiB": 160,
+  "qaDriverInRelease": false
+}

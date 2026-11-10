@@ -16,8 +16,22 @@ namespace BoundShoot.Tests {
   [TearDown] public void Cleanup(){if(root!=null)Object.DestroyImmediate(root.gameObject);if(Directory.Exists(folder))Directory.Delete(folder,true);}
   GameConfig Config()=>LevelLayoutIO.Read(file);
   void Load(){root=new GameObject("Level authoring test").AddComponent<LevelLayout>();root.gameObject.tag="EditorOnly";LevelLayoutIO.Populate(root,Config().maps.First(m=>m.id=="Arena_01"));}
+  [TestCase("Orchard_01",1)]
+  [TestCase("TwinGates_01",2)]
+  [TestCase("Depot_01",3)]
+  public void ObjectiveMapsAreValidAndRoundTripThroughTheEditor(string id,int zones){
+   var config=Config();
+   var map=config.Map(id);
+   Assert.IsNotNull(map);
+   Assert.IsEmpty(LevelMapValidation.Validate(map,config));
+   Load();
+   LevelLayoutIO.Populate(root,map);
+   var saved=LevelLayoutIO.Collect(root);
+   Assert.AreEqual(zones,saved.objectives.zones.Length);
+   Assert.AreEqual(JsonUtility.ToJson(map.objectives),JsonUtility.ToJson(saved.objectives));
+  }
   [Test] public void LegacyMapsKeepTheirPickupsAndZonesThroughConfigSerialization(){
-   var original=Config().maps[0];var copy=JsonUtility.FromJson<MapDefinition>(JsonUtility.ToJson(original));
+   var original=Config().maps[0];original.layoutVersion=0;var copy=JsonUtility.FromJson<MapDefinition>(JsonUtility.ToJson(original));
    var pickups=MapContent.Pickups(copy,17);
    Assert.AreEqual(original.supplies.Length,pickups.Length);Assert.AreEqual(WeaponKind.Sniper,pickups[0].weapon);
    Assert.AreEqual(ItemKind.Mystery,pickups[4].item);Assert.IsTrue(pickups.All(p=>p.randomizeOnRespawn&&p.respawnSeconds==17));
@@ -30,7 +44,7 @@ namespace BoundShoot.Tests {
    var zone=root.GetComponentsInChildren<LevelPiece>().First(p=>p.kind==LevelPieceKind.Revival);zone.transform.localScale=new Vector3(3,2,1);
    Assert.IsEmpty(LevelLayoutIO.Validate(root));
    LevelLayoutIO.Save(root,file);var saved=Config().maps[0];
-   Assert.AreEqual(1,saved.layoutVersion);Assert.AreEqual(14,saved.pickups.Length);
+   Assert.AreEqual(1,saved.layoutVersion);Assert.AreEqual(LevelLayoutIO.Read(LevelLayoutIO.ConfigPath).maps[0].pickups.Length+1,saved.pickups.Length);
    var drop=saved.pickups.Single(p=>p.item==ItemKind.Heal);Assert.AreEqual(new Vector2(1,1),drop.position);Assert.AreEqual(3.5f,drop.respawnSeconds);Assert.IsFalse(drop.randomizeOnRespawn);
    Assert.AreEqual(Color.yellow,saved.floors.Single().color);Assert.AreEqual(new Vector2(3,2),saved.revivalZones[0].size);
    Assert.IsTrue(saved.blocks.Any(b=>b.center==new Vector2(-4,-3)&&b.size==new Vector2(1,2)));

@@ -16,23 +16,35 @@ namespace BoundShoot {
    navigation=new RopePath(new MapDefinition{blocks=map.blocks.Select(b=>new BlockDefinition{center=b.center,size=b.size+Vector2.one*.9f}).ToArray()});
   }
   public void Tick(bool playing){
-   player.LastInput=Time.time;player.Use=false;
+   player.RescueHeld=false;player.LastInput=Time.time;player.SelectedSlot.Value=0;
    if(!playing||!player.Alive){player.Move=Vector2.zero;player.Fire=false;return;}
    var pos=player.Body.position;var c=GameConfig.Current;
+   if(player.AuthorityWorld.RescueTarget(player)!=null){
+    player.RescueHeld=true;player.Move=Vector2.zero;player.Fire=false;return;
+   }
+   if(enemy!=null&&!player.AuthorityWorld.CanSee(player,enemy)){enemy=null;destination=pos;path=null;nextDecision=0;}
    if(Time.time>=nextDecision){
     nextDecision=Time.time+.25f;
-    enemy=players.Where(p=>p.Team.Value!=player.Team.Value&&p.Alive).OrderBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
+    enemy=players.Where(p=>p.Team.Value!=player.Team.Value&&p.Alive&&player.AuthorityWorld.CanSee(player,p)).OrderBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
     destination=pos;
     var partner=players.Where(p=>p!=player&&p.Team.Value==player.Team.Value&&Mathf.Abs(p.Seat.Value-player.Seat.Value)==1).OrderBy(p=>p.IsBot.Value?1:0).ThenBy(p=>(p.Body.position-pos).sqrMagnitude).FirstOrDefault();
-    if(player.Weapon.Value==0){
-     var supply=pickups.Where(p=>p.active&&p.weapon>0).OrderBy(p=>Vector2.Distance(p.position,pos)+(p.weapon==(player.Seat.Value==0?2:3)?0:2)).FirstOrDefault();
-     destination=supply!=null?supply.position:partner!=null?partner.Body.position:pos;
+    if(player.Weapon.Value==0||player.Weapon.Value==(int)WeaponKind.Dagger){
+     var supply=pickups.Where(p=>p.active&&p.weapon>0&&p.weapon!=(int)WeaponKind.Dagger).OrderBy(p=>Vector2.Distance(p.position,pos)+(p.weapon==(player.Seat.Value==0?2:3)?0:2)).FirstOrDefault();
+     destination=supply!=null?supply.position:enemy!=null?enemy.Body.position:partner!=null?partner.Body.position:pos;
     }else if(enemy!=null){
      var weapon=c.Weapon((WeaponKind)player.Weapon.Value);
-     float range=weapon.kind==WeaponKind.Dagger ? .8f : Mathf.Clamp(weapon.range*.65f,2,7);
+     float range=BattleRules.IsMelee(weapon.kind)?weapon.range*.72f:Mathf.Clamp(weapon.range*.65f,2,7);
      Vector2 direction=(enemy.Body.position-pos).normalized;
      destination=enemy.Body.position-direction*range;
      if(!visibility.Visible(pos,enemy.Body.position))destination=enemy.Body.position;
+    }
+    var world=player.AuthorityWorld;
+    var zone=(world.Objectives.zones??System.Array.Empty<ControlZone>())
+     .Where((z,i)=>z!=null&&(i>=world.ZoneHeat.Count||world.ZoneHeat[i]*(player.Team.Value==0?1:-1)<100))
+     .OrderBy(z=>(z.center-pos).sqrMagnitude).FirstOrDefault();
+    if(zone!=null&&(player.Weapon.Value!=(int)WeaponKind.Dagger||destination==pos)){
+     if((pos-zone.center).sqrMagnitude<=zone.radius*zone.radius*.8f)destination=pos;
+     else destination=zone.center+Vector2.ClampMagnitude(destination-zone.center,zone.radius*.7f);
     }
     // Stay with a human teammate instead of stretching their rope across the arena.
     if(partner!=null&&partner.Alive&&!partner.IsBot.Value){
@@ -55,10 +67,24 @@ namespace BoundShoot {
     Vector2 lead=enemy.Body.velocity*.08f;float error=Mathf.Sin(Time.time*2.3f+player.Seat.Value+player.Team.Value*2)*.08f;
     player.Aim=(delta+lead+Vector2.Perpendicular(delta.normalized)*error).normalized;
     var weapon=c.Weapon((WeaponKind)player.Weapon.Value);
-    player.Fire=weapon!=null&&delta.magnitude<weapon.range&&visibility.Visible(pos,enemy.Body.position);
-    if(Time.time>=nextUse&&player.Item.Value!=0){
-     bool use=(ItemKind)player.Item.Value==ItemKind.Bomb?delta.magnitude<c.bombRadius*.9f:movement.sqrMagnitude>.5f&&delta.magnitude>4;
-     if(use){player.Use=true;nextUse=Time.time+1;}
+    if(weapon!=null&&weapon.kind==WeaponKind.RocketLauncher){
+     Vector2 target=delta+enemy.Body.velocity*c.rocketFlightSeconds*.5f;
+     player.Aim=target.normalized;
+     player.AimDistance=target.magnitude;
+     Vector2 landing=player.AuthorityWorld.RocketLanding(pos,player.Aim,player.AimDistance);
+     player.Fire=(landing-enemy.Body.position).sqrMagnitude<c.rocketBlastRadius*c.rocketBlastRadius&&visibility.Visible(landing,enemy.Body.position);
+    }else player.Fire=weapon!=null&&delta.magnitude<weapon.range&&visibility.Visible(pos,enemy.Body.position);
+
+   }
+   if(Time.time>=nextUse){
+    float distance=enemy!=null&&enemy.Alive?Vector2.Distance(enemy.Body.position,pos):float.PositiveInfinity;
+    for(int slot=1;slot<=3;slot++){
+     var kind=(ItemKind)player.ItemAt(slot);bool use=kind==ItemKind.Heal?player.Health.Value<player.MaxHealth.Value:
+      kind==ItemKind.Shield?player.Shield.Value<c.shieldCap:kind==ItemKind.Bomb?distance<c.bombRadius*.9f:
+      ThrowableRules.IsThrowable(kind)?enemy!=null&&Vector2.Distance(player.AuthorityWorld.ThrowLanding(pos,player.Aim),enemy.Body.position)<(kind==ItemKind.Smoke?c.smokeRadius:c.fireRadius)*.8f:
+      kind==ItemKind.Dash?movement.sqrMagnitude>.5f&&distance>4&&!float.IsInfinity(distance):
+      (kind==ItemKind.Shorten||kind==ItemKind.Extend||kind==ItemKind.Elastic)&&!float.IsInfinity(distance);
+     if(!use)continue;player.SelectedSlot.Value=slot;player.Fire=false;player.AuthorityWorld.TryUseSelected(player);nextUse=Time.time+1;break;
     }
    }
   }

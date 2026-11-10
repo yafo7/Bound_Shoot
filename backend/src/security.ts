@@ -35,7 +35,7 @@ export class Auth {
  }
  issue(uid:string) {
   const sid=id(), refresh=opaque();
-  this.store.run('INSERT INTO auth_sessions(id,user_id,refresh_hash,expires_at) VALUES(?,?,?,?)',sid,uid,digest(refresh),now()+this.cfg.refreshSeconds);
+  this.store.run('INSERT INTO auth_sessions(id,user_id,refresh_hash,expires_at,last_seen) VALUES(?,?,?,?,?)',sid,uid,digest(refresh),now()+this.cfg.refreshSeconds,now());
   return {accessToken:this.access(uid,sid),refreshToken:refresh,user:this.profile(uid)};
  }
  verify(token:string) {

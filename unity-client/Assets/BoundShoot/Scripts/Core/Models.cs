@@ -7,7 +7,9 @@ namespace BoundShoot {
  [Serializable] public class Empty {}
  [Serializable] public class UserProfile {public string id,username,displayName,roomId;public int skin,games,wins,kills,deaths;}
  [Serializable] public class AuthData {public string accessToken,refreshToken;public UserProfile user;public RoomData room;}
- [Serializable] public class NameBody {public string name;}
+ [Serializable] public class NameBody {public string name;public int skin;}
+ [Serializable] public class LobbyRoom {public string id,code,hostName,mapId,status;public int size,humans;}
+ [Serializable] public class LobbyData {public LobbyRoom[] rooms;public int total,page;}
  [Serializable] public class Credentials {public string username,password;}
  [Serializable] public class RefreshBody {public string refreshToken;}
  [Serializable] public class SkinBody {public int skin;}
@@ -20,19 +22,19 @@ namespace BoundShoot {
  [Serializable] public class MatchData {public string id,roomId,mapId,status,host;public int port;public RoomMember[] players;}
  [Serializable] public class TicketData {public string matchId,ticket,host;public int port;}
  [Serializable] public class LaunchConfig {public string matchId,secret,backendUrl;public int port;}
- [Serializable] public class ServerRoster {public string matchId,mapId;public int port,reconnectSeconds;public RoomMember[] players;}
+ [Serializable] public class ServerRoster {public string matchId,mapId,warmupHostId;public int port,reconnectSeconds;public RoomMember[] players;}
  [Serializable] public class TicketBody {public string ticket;}
  [Serializable] public class HeartbeatBody {public bool playing;}
- [Serializable] public class PlayerResult {public string userId;public int kills,deaths,damage;}
+ [Serializable] public class PlayerResult {public string userId;public int kills,deaths,assists,damage;}
  [Serializable] public class BattleResult {public int winner;public float duration;public PlayerResult[] players;}
  [Serializable] public class ResultData {public string status,mapId;public BattleResult result;}
  [Serializable] public class HistoryData {public HistoryRow[] matches;}
  [Serializable] public class HistoryRow {public string id,mapId,status;public int winner,team,kills,deaths,damage;public float duration;}
  [Serializable] public class RealtimeEvent {public string @event;public RoomData room;}
- public enum WeaponKind {None,Sniper,Pistol,AK,Dagger}
- public enum ItemKind {None,Shorten,Extend,Shield,Dash,Bomb,Elastic,Heal,Mystery}
+ public enum WeaponKind {None,Sniper,Pistol,AK,Dagger,RocketLauncher,Greatsword}
+ public enum ItemKind {None,Shorten,Extend,Shield,Dash,Bomb,Elastic,Heal,Mystery,Smoke,Incendiary}
  [Serializable] public class WeaponDefinition {
-  public string name;public WeaponKind kind;public int maxHealth,damage;public float range,cooldown,bulletSpeed;
+  public string name;public WeaponKind kind;public int damage;public int ammoCapacity=30;public float range,cooldown,bulletSpeed,knockbackImpulse;
  }
  [Serializable] public class ItemDefinition {
   public string name;public ItemKind kind;public bool enabled=true;public float weight=1,duration=10;
@@ -43,9 +45,26 @@ namespace BoundShoot {
  [Serializable] public class PlateauDefinition {public Vector2 center,size;public float[] stairs;public float stairWidth=6;}
  [Serializable] public class PickupDefinition {
   public Vector2 position;public WeaponKind weapon;public ItemKind item;
+  public SupplyTier supplyTier;public bool overrideRespawn;
   public float respawnSeconds=10;public bool randomizeOnRespawn;
  }
+ [Serializable] public class ControlZone {
+  public Vector2 center;
+  [Min(.25f)] public float radius=4;
+  [Min(.01f)] public float pointsPerPlayer=1;
+ }
+ [Serializable] public class ObjectiveRules {
+  [Range(1,100)] public float captureHeat=80,winningHeat=80;
+  [Min(1)] public int roundSeconds=180,winningScore=100;
+  [Min(.1f)] public float rescueSeconds=2,wipeSeconds=5;
+  [Min(.1f), InspectorName("救助距离")] public float rescueDistance=1.7f;
+  [Range(.01f,1)] public float rescueHealth=.5f;
+  public bool customRespawns;
+  public Vector2 blueRespawn,redRespawn;
+  public ControlZone[] zones={new ControlZone()};
+ }
  [Serializable] public class MapDefinition {
+  public ObjectiveRules objectives;
   public string id,name,theme;public bool available;public float halfWidth,halfHeight;public PlateauDefinition plateau;
   public Vector2[] blueSpawns,redSpawns,supplies,revivals;public BlockDefinition[] blocks;
   public int layoutVersion;public Color groundColor;public FloorDefinition[] floors;
@@ -53,20 +72,31 @@ namespace BoundShoot {
   public PickupDefinition[] pickups;public RevivalDefinition[] revivalZones;
  }
  [Serializable] public class GameConfig {
-  public int baseHealth=9,roundSeconds=180,shieldCap=1,bombDamage=2;
+  public float rocketFlightSeconds=.8f,rocketBlastRadius=2.5f;
+  public float throwDistance=8,throwFlightSeconds=.65f,smokeRadius=3,smokeSeconds=8,fireRadius=3,fireSeconds=6;
+  public int fireDamagePerSecond=10,fireFriendlyDamagePerSecond=2;
+  public bool friendlyFire;
+  public bool overrideTeamWipeSeconds;
+  public int baseHealth=30,roundSeconds=180,shieldCap=5,bombDamage=8,healAmount=5,shieldAmount=5;
   public float moveSpeed=5,acceleration=14,ropeLength=5,ropeSpring=90,ropeDamping=12,ropeMaxForce=200,
    shortenScale=.65f,extendScale=1.5f,elasticScale=3,buffSeconds=10,reviveSeconds=5,
-   protectionSeconds=2,bombFuse=3,bombRadius=2.5f,dashSpeed=14,dashSeconds=.18f,
+   protectionSeconds=2,bombFuse=3,bombRadius=2.5f,
+   downedDrag=1f,speedBoostMultiplier=1.4f,speedBoostSeconds=4f,speedBoostPullMultiplier=1.35f,
    pickupRadius=.75f,pickupRespawn=10,inputTimeout=.3f,disconnectGrace=20;
   public int countdownSeconds=3,physicsHz=30,snapshotHz=15;
   public WeaponDefinition[] weapons;public ItemDefinition[] items;public MapDefinition[] maps;
+  public SupplyPoolDefinition[] supplyPools;
   public WeaponDefinition Weapon(WeaponKind k){return Array.Find(weapons,w=>w.kind==k);}
-  public MapDefinition Map(string id){return Array.Find(maps,m=>m.id==id&&m.available);}
+  public MapDefinition Map(string id){return id==TrainingMap.WarmupId?TrainingMap.Warmup:Array.Find(maps,m=>m.id==id&&m.available);}
   public ItemDefinition Item(ItemKind k){return Array.Find(items,i=>i.kind==k);}
   static GameConfig current;
+  [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+  static void ResetCache(){current=null;}
   public static GameConfig Current {get {if(current==null)current=JsonUtility.FromJson<GameConfig>(Resources.Load<TextAsset>("GameConfig").text);return current;}}
  }
  public static class BattleRules {
+  public static bool IsMelee(WeaponKind kind)=>kind==WeaponKind.Dagger||kind==WeaponKind.Greatsword;
+  public static bool CanHit(int sourceTeam,int targetTeam,bool self,bool friendlyFire)=>!self&&(sourceTeam!=targetTeam||friendlyFire);
   public static void Damage(ref int health,ref int shield,int amount){
    int absorbed=Math.Min(shield,Math.Max(0,amount));shield-=absorbed;health=Math.Max(0,health-Math.Max(0,amount-absorbed));
   }

@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "scope": "Isolated local Editor tests and ForestReview rendering; no player/server build, no remote deployment",
+  "play": {
+    "passed": 15,
+    "failed": 0,
+    "exitCode": 0,
+    "report": "docs/validation/balance/play.xml"
+  },
+  "edit": {
+    "passed": 62,
+    "failed": 0,
+    "exitCode": 0,
+    "report": "docs/validation/balance/edit.xml"
+  },
+  "visual": {
+    "exitCode": 0,
+    "image": "docs/validation/balance/numeric-health.png"
+  },
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "f67108b70a9ac7af2cda0d143faba0373902a833684cc644cdfd33c84897996c"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "0f84f8eb84ab7f160729ae2bbddb06ef3d338ded4024772c8cb2914aff90bbcf"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "3ce7febd1b0b73c9489056e23de1248b32fe7fc03a6a1a2010fa047152c181e5"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "a10a253c72de87352d5defb4e627682834afa3883e099b1fa29b5f70c2e0f35b"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/ForestFlow.cs",
+      "sha256": "29a1af2e66a7b4e3f8782d3fdb5912a17a48022e364b73f7d56a08931d106426"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/BalanceEditorWindow.cs",
+      "sha256": "fda7fb2e0180ac196b16905f17fce4183e685eab491f1fb9d83fb7049ec9ed4a"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/BalanceEditorTests.cs",
+      "sha256": "3cd6a910e95585656905eb8e4b7625323aded0eebad4207cf20f49d4c50746d3"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/BattleRulesTests.cs",
+      "sha256": "d33234a3249d4ccaee6f1362ffd70f341e2e4013e09c7505faf7491ad3b91d1d"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/TrainingPlayTests.cs",
+      "sha256": "32087804bf43881ac662779dcbc00382bcb570e95e41b322f8593f05e50e1939"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/LocalMatchTests.cs",
+      "sha256": "588174215deff09a7cab91bd9ef651d511b2cf2fe1012b6dc013f5be75aa2e16"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/KnockbackPlayTests.cs",
+      "sha256": "55838c2242ff2797989379283a44693b4b1df57f5008b039a33ab713164cfbeb"
+    },
+    {
+      "path": "unity-client/Packages/manifest.json",
+      "sha256": "b35cd0f10a0f7cd3de5dc31493581d163834bddc9889ca2061b68d6e3040f6ac"
+    },
+    {
+      "path": "unity-client/Packages/packages-lock.json",
+      "sha256": "42e0816ae811d51b29e55bf96b1137fbbd00f0ee7bd6c2d2e921a646dd3289f7"
+    },
+    {
+      "path": "unity-client/ProjectSettings/ProjectVersion.txt",
+      "sha256": "b51164d22c4d2716ba8aee7f0b59d6b7dd0efa8552fd1db2a8c3b123fae3a1ec"
+    }
+  ]
+}

@@ -13,8 +13,8 @@ import {Matches} from './matches.js';
 import {QuickPlay} from './quickplay.js';
 
 const credentials=z.object({username:z.string().trim().min(3).max(24).regex(/^[a-zA-Z0-9_\u4e00-\u9fff]+$/),password:z.string().min(8).max(72).refine(s=>Buffer.byteLength(s,'utf8')<=72,'密码最多 72 字节')});
-const resultSchema=z.object({winner:z.number().int().min(-1).max(1),duration:z.number().min(0).max(3600),
- players:z.array(z.object({userId:z.string().uuid(),kills:z.number().int().min(0).max(10000),deaths:z.number().int().min(0).max(10000),damage:z.number().int().min(0).max(1000000)})).min(4).max(8)});
+const resultSchema=z.object({winner:z.number().int().min(-1).max(1),duration:z.number().finite().min(0),
+ players:z.array(z.object({userId:z.string().uuid(),kills:z.number().int().min(0).max(10000),deaths:z.number().int().min(0).max(10000),assists:z.number().int().min(0).max(10000).optional(),damage:z.number().int().min(0).max(1000000)})).min(4).max(8)});
 export function createService(overrides:Partial<Config>={}) {
  const cfg=config(overrides),store=new Store(cfg.dbPath),auth=new Auth(store,cfg), app=express(),server=createServer(app);
  const wss=new WebSocketServer({server,path:'/ws',maxPayload:4096});
@@ -26,16 +26,22 @@ export function createService(overrides:Partial<Config>={}) {
  }
  const catalog=JSON.parse(readFileSync(cfg.gameConfigPath,'utf8'));
  const availableMaps=catalog.maps.filter((m:any)=>m.available).map((m:any)=>({id:m.id,name:m.name,available:true}));
- const rooms=new Rooms(store,publish,availableMaps.map((m:any)=>m.id)),matches=new Matches(store,cfg,rooms,publish);
+ const rooms=new Rooms(store,publish,availableMaps.map((m:any)=>m.id),cfg.lobbyMode),matches=new Matches(store,cfg,rooms,publish);
  const quick=new QuickPlay(store,rooms,auth);
  app.disable('x-powered-by');app.use(helmet());app.use(express.json({limit:'16kb'}));
  app.use('/api/auth',rateLimit({windowMs:60000,limit:30,standardHeaders:'draft-8',legacyHeaders:false,
  handler:(_req,res)=>res.status(429).json({ok:false,error:{code:'RATE_LIMIT',message:'尝试过于频繁，请稍后重试'}})}));
  const ok=(res:Response,data:any)=>res.json({ok:true,data});
  const route=(fn:(req:Request,res:Response)=>any)=>(req:Request,res:Response,next:NextFunction)=>Promise.resolve().then(()=>fn(req,res)).catch(next);
- app.get('/health',(_req,res)=>ok(res,{service:'Bound Shoot',version:'0.2.0',entry:cfg.quickPlay?'name-only':'account',mode:cfg.quickPlay?'2v2':'rooms'}));
+ app.get('/health',(_req,res)=>ok(res,{service:'Bound Shoot',version:'0.3.0',entry:cfg.quickPlay?'name-only':'account',mode:cfg.lobbyMode?'lobby':cfg.quickPlay?'2v2':'rooms'}));
+ app.post('/api/auth/guest',route((req,res)=>{
+  check(cfg.lobbyMode,404,'NOT_FOUND','大厅未开放');
+  const {name,skin}=z.object({name:z.string().trim().min(1).max(24).regex(/^[a-zA-Z0-9_\u4e00-\u9fff]+$/),skin:z.number().int().min(0).max(7).default(0)}).parse(req.body);
+  ok(res,quick.loginLobby(name,skin));
+ }));
  app.post('/api/auth/quick',route((req,res)=>{
   check(cfg.quickPlay,404,'NOT_FOUND','入口未开放');
+  check(!cfg.lobbyMode,426,'CLIENT_UPDATE_REQUIRED','请更新客户端后进入联机大厅');
   const {name}=z.object({name:z.string().trim().min(1).max(24).regex(/^[a-zA-Z0-9_\u4e00-\u9fff]+$/)}).parse(req.body);
   ok(res,quick.login(name));
  }));
@@ -51,11 +57,14 @@ export function createService(overrides:Partial<Config>={}) {
  app.use('/api',(req,res,next)=>{try{
   const p=auth.verify(req.headers.authorization?.replace(/^Bearer /,'')||'');
   res.locals.identity=p;
+  store.run('UPDATE auth_sessions SET last_seen=? WHERE id=?',now(),p.sid);
   store.run('UPDATE room_members SET last_seen=? WHERE user_id=?',now(),p.uid);next();
  }catch(e){next(e);}});
  const uid=(res:Response)=>res.locals.identity.uid as string;
  const rid=(req:Request)=>String(req.params.id);
  app.post('/api/auth/logout',route((_req,res)=>{
+  const member=rooms.member(uid(res));
+  if(member&&rooms.view(member.room_id).status==='Waiting')rooms.remove(uid(res),member.room_id);
   store.run('UPDATE auth_sessions SET revoked=1 WHERE id=?',res.locals.identity.sid);ok(res,{});
  }));
  app.get('/api/users/me',route((_req,res)=>{
@@ -69,16 +78,28 @@ export function createService(overrides:Partial<Config>={}) {
   if(member){store.run('UPDATE room_members SET ready=0 WHERE user_id=?',uid(res));publish(member.room_id,'cosmetic.changed');}
   ok(res,auth.profile(uid(res)));
  }));
- app.get('/api/catalog',(_req,res)=>ok(res,{maps:availableMaps,modes:cfg.quickPlay?[2]:[2,3,4]}));
- app.post('/api/rooms',route((_req,res)=>{check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','当前只有一个公共房间');ok(res,rooms.create(uid(res)));}));
- app.post('/api/rooms/join',route((req,res)=>{check(!cfg.quickPlay,410,'QUICK_PLAY_ONLY','请输入名字进入公共房间');ok(res,rooms.join(uid(res),z.object({code:z.string().regex(/^\d{6}$/)}).parse(req.body).code));}));
+ app.get('/api/catalog',(_req,res)=>ok(res,{maps:availableMaps,modes:cfg.quickPlay&&!cfg.lobbyMode?[2]:[2,3,4]}));
+ app.get('/api/rooms',route((req,res)=>{
+  check(cfg.lobbyMode,404,'NOT_FOUND','大厅未开放');
+  const page=z.coerce.number().int().min(0).max(10000).parse(req.query.page??0);ok(res,rooms.list(page));
+ }));
+ app.post('/api/rooms',route((_req,res)=>{check(!cfg.quickPlay||cfg.lobbyMode,410,'QUICK_PLAY_ONLY','当前只有一个公共房间');ok(res,rooms.create(uid(res)));}));
+ app.post('/api/rooms/join',route((req,res)=>{check(!cfg.quickPlay||cfg.lobbyMode,410,'QUICK_PLAY_ONLY','请输入名字进入公共房间');ok(res,rooms.join(uid(res),z.object({code:z.string().regex(/^\d{6}$/)}).parse(req.body).code));}));
  app.get('/api/rooms/:id',route((req,res)=>ok(res,rooms.require(uid(res),rid(req)))));
  app.post('/api/rooms/:id/leave',route((req,res)=>{rooms.leave(uid(res),rid(req));ok(res,{});}));
  app.put('/api/rooms/:id/seat',route((req,res)=>{
   const s=z.object({team:z.number().int().min(0).max(1),seat:z.number().int().min(0).max(3)}).parse(req.body);
   ok(res,rooms.seat(uid(res),rid(req),s.team,s.seat));
  }));
- app.put('/api/rooms/:id/ready',route((req,res)=>ok(res,rooms.ready(uid(res),rid(req),z.object({ready:z.boolean()}).parse(req.body).ready))));
+ app.put('/api/rooms/:id/ready',route((req,res)=>{
+  const {ready}=z.object({ready:z.boolean()}).parse(req.body);
+  const room=rooms.ready(uid(res),rid(req),ready);
+  if(cfg.lobbyMode&&ready&&room.members.every((member:any)=>member.ready)){
+   matches.start(room.hostId,room.id);
+   return ok(res,rooms.view(room.id));
+  }
+  ok(res,room);
+ }));
  app.put('/api/rooms/:id/config',route((req,res)=>{
   const s=z.object({size:z.union([z.literal(2),z.literal(3),z.literal(4)]),mapId:z.string()}).parse(req.body);
   ok(res,rooms.configure(uid(res),rid(req),s.size,s.mapId));
@@ -94,7 +115,8 @@ export function createService(overrides:Partial<Config>={}) {
  app.use('/internal/matches/:id',(req,res,next)=>{try{res.locals.match=matches.internal(rid(req),req.headers['x-match-secret'] as string);next();}catch(e){next(e);}});
  app.post('/internal/matches/:id/register',route((req,res)=>{
   const m=res.locals.match;check(m.status==='Starting',409,'NOT_STARTING','对战并非启动状态');
-  ok(res,{matchId:m.id,mapId:m.map_id,port:m.port,players:matches.roster(m.id),reconnectSeconds:cfg.reconnectSeconds});
+  const warmupHostId=cfg.lobbyMode?rooms.view(m.room_id).hostId:'';
+  ok(res,{matchId:m.id,mapId:m.map_id,port:m.port,players:matches.roster(m.id),reconnectSeconds:cfg.reconnectSeconds,warmupHostId});
  }));
  app.post('/internal/matches/:id/ready',route((req,res)=>ok(res,matches.ready(rid(req)))));
  app.post('/internal/matches/:id/heartbeat',route((req,res)=>{
@@ -118,7 +140,7 @@ export function createService(overrides:Partial<Config>={}) {
     check(data.type==='auth',401,'AUTH_REQUIRED','请登录');const claims=auth.verify(data.accessToken);
     peers.set(ws,{...claims,alive:true});clearTimeout(deadline);
     const m=rooms.member(claims.uid);send(ws,{event:'authenticated',room:m?rooms.view(m.room_id):null});
-   }else if(data.type==='ping'){const p=peers.get(ws)!;p.alive=true;store.run('UPDATE room_members SET last_seen=? WHERE user_id=?',now(),p.uid);send(ws,{event:'pong'});}
+   }else if(data.type==='ping'){const p=peers.get(ws)!;p.alive=true;send(ws,{event:'pong'});}
   }catch{ws.close(4001,'Invalid authentication or message');}});
   ws.on('pong',()=>{const p=peers.get(ws);if(p)p.alive=true;});
   ws.on('close',()=>{clearTimeout(deadline);peers.delete(ws);});
@@ -128,6 +150,7 @@ export function createService(overrides:Partial<Config>={}) {
   for(const [ws,p] of peers){
    const session=store.get('SELECT id FROM auth_sessions WHERE id=? AND revoked=0 AND expires_at>?',p.sid,now());
    if(!session||!p.alive){ws.terminate();continue;}p.alive=false;ws.ping();
+   store.run('UPDATE auth_sessions SET last_seen=? WHERE id=?',now(),p.sid);
    store.run('UPDATE room_members SET last_seen=? WHERE user_id=?',now(),p.uid);
   }
   for(const m of store.all("SELECT m.* FROM room_members m JOIN rooms r ON r.id=m.room_id WHERE r.status='Waiting' AND m.last_seen<?",now()-cfg.reconnectSeconds))rooms.remove(m.user_id,m.room_id);

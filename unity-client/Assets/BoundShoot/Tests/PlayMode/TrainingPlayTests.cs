@@ -15,7 +15,7 @@ namespace BoundShoot.Tests {
    client.StartTraining();yield return WaitFor(()=>client.Screen=="Training");
    var runtime=TrainingRuntime.Instance;var world=runtime.World;
    Assert.IsTrue(Bootstrap.Network.IsHost);Assert.AreEqual(2,world.Phase.Value);Assert.AreEqual(0,world.Clock.Value);
-   Assert.AreEqual(12,world.Supplies.Count);Assert.AreEqual(3,world.Players.Count);
+   Assert.AreEqual(15,world.Supplies.Count);Assert.AreEqual(3,world.Players.Count);
    for(int i=0;i<4;i++)runtime.AddTeammate();
    Assert.AreEqual(3,runtime.Teammates);Assert.AreEqual(6,world.Players.Count);
    Assert.IsTrue(world.Players.All(p=>p.Connected.Value&&!p.IsBot.Value));
@@ -24,16 +24,27 @@ namespace BoundShoot.Tests {
    for(int i=0;i<10;i++)yield return new WaitForFixedUpdate();
    for(int i=0;i<3;i++){Assert.Less(Vector2.Distance(initial[i],passive[i].Body.position),.1f);Assert.AreEqual(Vector2.zero,passive[i].Move);Assert.IsFalse(passive[i].Fire);}
    var human=world.Players.Single(p=>p.TrainingRole==0);
-   Assert.IsTrue(world.Players.All(p=>p.Health.Value==9&&p.MaxHealth.Value==9),"Both teams and passive partners start with tripled HP");
-   human.ProtectionUntil=0;human.Hurt(2,null);Assert.AreEqual(7,human.Health.Value);world.ApplyItem(human,ItemKind.Heal);Assert.AreEqual(8,human.Health.Value);
-   human.Equip(WeaponKind.Dagger);Assert.AreEqual(15,human.MaxHealth.Value);Assert.AreEqual(8,human.Health.Value,"Switching to a bigger HP pool never heals");
+   int maxHealth=GameConfig.Current.baseHealth;
+   Assert.IsTrue(world.Players.All(p=>p.Health.Value==maxHealth&&p.MaxHealth.Value==maxHealth),"All players use the configured character health cap");
+   foreach(var actor in world.Players){
+    foreach(int hp in new[]{maxHealth,maxHealth-10}){
+     actor.Health.Value=hp;actor.Shield.Value=1;
+     foreach(var weapon in new[]{WeaponKind.Sniper,WeaponKind.Pistol,WeaponKind.AK,WeaponKind.Dagger}){
+      Assert.IsTrue(actor.Equip(weapon));Assert.AreEqual(hp,actor.Health.Value,"Equipping "+weapon+" must not heal or truncate health");Assert.AreEqual(maxHealth,actor.MaxHealth.Value);Assert.AreEqual(1,actor.Shield.Value);
+     }
+    }actor.Resurrect();
+   }
+   human.ProtectionUntil=0;human.Hurt(10,null);Assert.AreEqual(maxHealth-10,human.Health.Value);world.ApplyItem(human,ItemKind.Heal);Assert.AreEqual(maxHealth-5,human.Health.Value);world.ApplyItem(human,ItemKind.Shield);Assert.AreEqual(5,human.Shield.Value);world.ApplyItem(human,ItemKind.Shield);Assert.AreEqual(5,human.Shield.Value);
+   human.Equip(WeaponKind.Dagger);Assert.AreEqual(maxHealth,human.MaxHealth.Value);Assert.AreEqual(maxHealth-5,human.Health.Value,"Weapon switches preserve current health");
    yield return null;yield return null;
-   var popup=Object.FindObjectsOfType<RectTransform>().Single(t=>t.name=="Weapon pickup notice");Assert.IsTrue(popup.gameObject.activeSelf);Assert.IsTrue(popup.GetComponentsInChildren<UnityEngine.UI.Text>().Any(t=>t.text.Contains("生命上限 15")));
+   var popup=Object.FindObjectsOfType<RectTransform>().Single(t=>t.name=="Weapon pickup notice");Assert.IsTrue(popup.gameObject.activeSelf);Assert.IsFalse(popup.GetComponentsInChildren<UnityEngine.UI.Text>().Any(t=>t.text.Contains("生命上限")),"Weapon card must not advertise a weapon health cap");
    var hearts=Object.FindObjectsOfType<UnityEngine.UI.Image>().Where(i=>i.isActiveAndEnabled&&i.sprite!=null&&(i.sprite.name=="forest_heart"||i.sprite.name=="forest_heartEmpty")).ToArray();
-   Assert.AreEqual(15,hearts.Length,"HUD must show all fifteen individual hearts");Assert.AreEqual(8,hearts.Count(i=>i.sprite.name=="forest_heart"));
+   Assert.AreEqual(1,hearts.Length,"HUD uses one icon regardless of maximum HP");
+   var health=Object.FindObjectsOfType<UnityEngine.UI.Text>().Single(t=>t.name=="Health value");Assert.AreEqual((maxHealth-5)+"/"+maxHealth,health.text);
+   Assert.IsTrue(Object.FindObjectsOfType<UnityEngine.UI.Text>().Single(t=>t.name=="Shield value").text.Contains("5"));
    foreach(var heart in hearts){var r=heart.rectTransform;Assert.LessOrEqual(r.anchoredPosition.x+r.rect.width,1600);Assert.LessOrEqual(-r.anchoredPosition.y+r.rect.height,900);}
    yield return new WaitForSecondsRealtime(3.1f);Assert.IsFalse(popup.gameObject.activeSelf,"Weapon card must disappear after three seconds");
-   human.Health.Value=15;world.ApplyItem(human,ItemKind.Heal);Assert.AreEqual(15,human.Health.Value);human.Resurrect();Assert.AreEqual(9,human.Health.Value);Assert.AreEqual(9,human.MaxHealth.Value);
+   human.Health.Value=maxHealth;world.ApplyItem(human,ItemKind.Heal);Assert.AreEqual(maxHealth,human.Health.Value);human.Resurrect();Assert.AreEqual(maxHealth,human.Health.Value);Assert.AreEqual(maxHealth,human.MaxHealth.Value);yield return null;yield return null;Assert.AreEqual(maxHealth+"/"+maxHealth,health.text);
    Assert.AreEqual(RigidbodyInterpolation2D.Interpolate,human.Body.interpolation,"Host movement must interpolate between physics steps");
    human.Body.position=world.MapOverride.pickups.Single(p=>p.weapon==WeaponKind.Pistol).position;
    yield return new WaitForFixedUpdate();yield return new WaitForFixedUpdate();
@@ -43,13 +54,13 @@ namespace BoundShoot.Tests {
    Assert.AreEqual((int)WeaponKind.AK,human.Weapon.Value);
    human.Body.position=world.MapOverride.pickups.Single(p=>p.item==ItemKind.Dash).position;
    yield return new WaitForFixedUpdate();yield return new WaitForFixedUpdate();
-   Assert.AreEqual((int)ItemKind.Dash,human.Item.Value);
-   human.Use=true;human.LastInput=Time.time;
+   Assert.AreEqual((int)ItemKind.Dash,human.ItemAt(1));
+   human.SubmitInput(Vector2.zero,Vector2.right,false,true);human.SubmitInput(Vector2.zero,Vector2.right,true,false,true);human.SubmitInput(Vector2.zero,Vector2.right,false,false);
    yield return new WaitForFixedUpdate();yield return new WaitForFixedUpdate();
-   Assert.AreEqual(0,human.Item.Value);Assert.Greater(human.DashUntil,Time.time);
+   Assert.AreEqual(0,human.ItemAt(1));Assert.Greater(human.SpeedBoostUntil,Time.time);
    var target=world.Players.First(p=>p.TrainingRole==2);target.Hurt(999,human);Assert.IsFalse(target.Alive);
    yield return new WaitForSeconds(2.2f);Assert.IsTrue(target.Alive);Assert.AreEqual(2,world.Phase.Value);
-   runtime.ResetRoom();Assert.AreEqual(0,human.Weapon.Value);Assert.AreEqual(0,human.Item.Value);Assert.AreEqual(0,human.Kills.Value);
+   runtime.ResetRoom();Assert.AreEqual((int)WeaponKind.Dagger,human.Weapon.Value);Assert.AreEqual(0,human.ItemAt(1));Assert.AreEqual(0,human.Kills.Value);
    Assert.IsTrue(world.Supplies.All(p=>p.active));
    for(int i=0;i<4;i++)runtime.RemoveTeammate();Assert.AreEqual(0,runtime.Teammates);
    client.LeaveTraining();yield return WaitFor(()=>TrainingRuntime.Instance==null&&!Bootstrap.Network.IsListening);

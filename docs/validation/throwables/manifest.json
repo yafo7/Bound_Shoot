@@ -1,0 +1,117 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "files": [
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "10359dc83d9207f3db6a7f7ab9c69bb14d8bfe44408e2874a60c62b0f5c2fa07",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "e6403c67ca344606fcf5b48db58810c1409d96659941e4bfb9361dbf01110120",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.Throwables.cs",
+      "sha256": "850a46449f77df1cb17a3d84a54feb937acd24e2872c73220d7a2f78efac19db",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ThrowableRules.cs",
+      "sha256": "535eeb7ee96f25a15353d22c1dea482dcc8954e347a191d2bec64c681782b60e",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/ThrowableVisuals.cs",
+      "sha256": "44500f6b4cb304eeaa6d99bbd5aed449d500b53f9c1fea6c06a0494ebfe5bcc2",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "cd6e5d3064507865bad1e298e8aeab29a2e1b5b6d989797af3fffab460b11d6b",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BotController.cs",
+      "sha256": "08556546515fc70f2aa497d2d1633e15d60a5fdc34dc5c62d71b728ad19ac080",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/CyberPlayerView.cs",
+      "sha256": "81eadf9a040fcd0b8df6df82ed14ae3ec260c4dc5ce24fac29e1bfed97574b63",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/CyberArt.cs",
+      "sha256": "8a242a9e37f7ad1efdb5a8f8da652070eb1bef4f7e70ca0c6992af96ded26aaa",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Gameplay/SupplyPools.cs",
+      "sha256": "9b023d3d7203718e418ea59f9d3d1be3ac69b283e3d341ed2eab77774d360b0f",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Scripts/Training/TrainingMap.cs",
+      "sha256": "be8eb5a413ca5d28c38aebf01219d7361f82521936fb1872f21ec317b6ecd15c",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "aa452fd699d4514360b57fbf4df5cb8e1882258280c76706c312e6b627540f77",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Editor/BalanceEditorWindow.cs",
+      "sha256": "5221ce003aebea5d0c1021f9af174fe31357fb2e99847339b5bc51c4ac1f4715",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Editor/LevelEditorWindow.cs",
+      "sha256": "f1187b0dfba33fa9b1da12ad91719ca10f2288f1b37f4473c0d4b2de33b842b6",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Editor/LevelLayoutIO.cs",
+      "sha256": "a9410fd61fa7c6498b0d83bd426b1ad863640acb486b27bc149bbcfec9808b81",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Tests/Editor/ThrowableTests.cs",
+      "sha256": "420c32cec77e9622b80dcbe5ed3238629435074df49512942a9f322723fda8ab",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Tests/PlayMode/ThrowablePlayTests.cs",
+      "sha256": "f5c656f3282c4a51ea9c7f73e571a4596cb2365adcaeacada3236650f4c9e322",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Tests/PlayMode/LocalMatchTests.cs",
+      "sha256": "76d894b68a2fae0015fb66e3efa9fd2f41a0e1b5bcedcad3803d41271b5f6afd",
+      "isolatedMatch": true
+    },
+    {
+      "file": "unity-client/Assets/BoundShoot/Tests/PlayMode/TrainingPlayTests.cs",
+      "sha256": "4526e33389c50d4e0d9b5a9576c125d3c08507b7ff36b7a54371a08447ddc7f9",
+      "isolatedMatch": true
+    }
+  ],
+  "validation": {
+    "editMode": {
+      "passed": 73,
+      "failed": 0
+    },
+    "playModeFull": {
+      "passed": 35,
+      "failed": 0
+    },
+    "playModeFinalThrowables": {
+      "passed": 5,
+      "failed": 0
+    },
+    "visualReviewExit": 0,
+    "notes": "Full regression preceded flame-art polish; final independent throwable tests and visual compilation cover the polished source."
+  }
+}

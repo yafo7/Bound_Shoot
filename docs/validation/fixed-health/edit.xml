@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="67" result="Passed" total="67" passed="67" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="1.5558398">
+  <test-suite type="TestSuite" id="1090" name="派对射击 - Bound Shoot" fullname="派对射击 - Bound Shoot" runstate="Runnable" testcasecount="67" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="1.555840" total="67" passed="67" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1174" name="BoundShoot.Tests.dll" fullname="D:/GitHubHome/Bound_Shoot/logs/knockback/project/Library/ScriptAssemblies/BoundShoot.Tests.dll" runstate="Runnable" testcasecount="67" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="1.547960" total="67" passed="67" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="28668" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1175" name="BoundShoot" fullname="BoundShoot" runstate="Runnable" testcasecount="67" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="1.547650" total="67" passed="67" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1176" name="Tests" fullname="BoundShoot.Tests" runstate="Runnable" testcasecount="67" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="1.547280" total="67" passed="67" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1091" name="BalanceEditorTests" fullname="BoundShoot.Tests.BalanceEditorTests" classname="BoundShoot.Tests.BalanceEditorTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.078584" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1093" name="ConflictingBalanceEditsNeverOverwriteTheFile" fullname="BoundShoot.Tests.BalanceEditorTests.ConflictingBalanceEditsNeverOverwriteTheFile" methodname="ConflictingBalanceEditsNeverOverwriteTheFile" classname="BoundShoot.Tests.BalanceEditorTests" runstate="Runnable" seed="2109036483" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.036823" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1094" name="InvalidNumbersAndWeaponDuplicatesCannotBeSaved" fullname="BoundShoot.Tests.BalanceEditorTests.InvalidNumbersAndWeaponDuplicatesCannotBeSaved" methodname="InvalidNumbersAndWeaponDuplicatesCannotBeSaved" classname="BoundShoot.Tests.BalanceEditorTests" runstate="Runnable" seed="1141203408" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.011493" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1092" name="SavePreservesConcurrentMapRopeAndItemPoolChanges" fullname="BoundShoot.Tests.BalanceEditorTests.SavePreservesConcurrentMapRopeAndItemPoolChanges" methodname="SavePreservesConcurrentMapRopeAndItemPoolChanges" classname="BoundShoot.Tests.BalanceEditorTests" runstate="Runnable" seed="518684418" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.020985" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1095" name="BattleRulesTests" fullname="BoundShoot.Tests.BattleRulesTests" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.011239" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1102" name="LegacyWeaponHealthDoesNotSurviveSerialization" fullname="BoundShoot.Tests.BattleRulesTests.LegacyWeaponHealthDoesNotSurviveSerialization" methodname="LegacyWeaponHealthDoesNotSurviveSerialization" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="563250003" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000818" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1097" name="LivingPlayersCanSwitchWeaponsWithoutDying" fullname="BoundShoot.Tests.BattleRulesTests.LivingPlayersCanSwitchWeaponsWithoutDying" methodname="LivingPlayersCanSwitchWeaponsWithoutDying" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1259784668" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.003511" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1099" name="ReviveRequiresContinuousFiveSeconds" fullname="BoundShoot.Tests.BattleRulesTests.ReviveRequiresContinuousFiveSeconds" methodname="ReviveRequiresContinuousFiveSeconds" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="572317912" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000159" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1101" name="RopeBendsAroundCoverAndUnwrapsInClearSpace" fullname="BoundShoot.Tests.BattleRulesTests.RopeBendsAroundCoverAndUnwrapsInClearSpace" methodname="RopeBendsAroundCoverAndUnwrapsInClearSpace" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1060146519" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.002576" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1100" name="RopeModifiersRestoreBaseAndDoNotAccumulate" fullname="BoundShoot.Tests.BattleRulesTests.RopeModifiersRestoreBaseAndDoNotAccumulate" methodname="RopeModifiersRestoreBaseAndDoNotAccumulate" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="2056632229" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000515" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1096" name="ShieldAbsorbsBeforeIntegerHealth" fullname="BoundShoot.Tests.BattleRulesTests.ShieldAbsorbsBeforeIntegerHealth" methodname="ShieldAbsorbsBeforeIntegerHealth" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1418650976" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000122" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1103" name="TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" fullname="BoundShoot.Tests.BattleRulesTests.TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" methodname="TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1991859553" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.002051" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1098" name="WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" fullname="BoundShoot.Tests.BattleRulesTests.WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" methodname="WinnerHonorsWipeThenSurvivorsThenHealthThenDraw" classname="BoundShoot.Tests.BattleRulesTests" runstate="Runnable" seed="1203555276" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000153" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1104" name="CombatPresentationTests" fullname="BoundShoot.Tests.CombatPresentationTests" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.034278" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1107" name="DeletedArrayEntryCannotStealAnotherProjectileViewOrResurrect" fullname="BoundShoot.Tests.CombatPresentationTests.DeletedArrayEntryCannotStealAnotherProjectileViewOrResurrect" methodname="DeletedArrayEntryCannotStealAnotherProjectileViewOrResurrect" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="694256178" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.013224" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1106" name="ExtrapolationStopsAtBudgetOrProjectileRange" fullname="BoundShoot.Tests.CombatPresentationTests.ExtrapolationStopsAtBudgetOrProjectileRange" methodname="ExtrapolationStopsAtBudgetOrProjectileRange" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="969236483" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000404" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1105" name="FifteenHzSamplesProduceContinuousSixtyHzTrajectory" fullname="BoundShoot.Tests.CombatPresentationTests.FifteenHzSamplesProduceContinuousSixtyHzTrajectory" methodname="FifteenHzSamplesProduceContinuousSixtyHzTrajectory" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="229538337" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000282" asserts="0">
+              <properties />
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1113" name="MuzzleMatchesRenderedSpriteAtEveryAimAngle" fullname="BoundShoot.Tests.CombatPresentationTests.MuzzleMatchesRenderedSpriteAtEveryAimAngle" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.009472" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1109" name="MuzzleMatchesRenderedSpriteAtEveryAimAngle(1)" fullname="BoundShoot.Tests.CombatPresentationTests.MuzzleMatchesRenderedSpriteAtEveryAimAngle(1)" methodname="MuzzleMatchesRenderedSpriteAtEveryAimAngle" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="151189169" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.002460" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1110" name="MuzzleMatchesRenderedSpriteAtEveryAimAngle(2)" fullname="BoundShoot.Tests.CombatPresentationTests.MuzzleMatchesRenderedSpriteAtEveryAimAngle(2)" methodname="MuzzleMatchesRenderedSpriteAtEveryAimAngle" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="1640688072" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000631" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1111" name="MuzzleMatchesRenderedSpriteAtEveryAimAngle(3)" fullname="BoundShoot.Tests.CombatPresentationTests.MuzzleMatchesRenderedSpriteAtEveryAimAngle(3)" methodname="MuzzleMatchesRenderedSpriteAtEveryAimAngle" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="731354335" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000888" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1112" name="MuzzleMatchesRenderedSpriteAtEveryAimAngle(4)" fullname="BoundShoot.Tests.CombatPresentationTests.MuzzleMatchesRenderedSpriteAtEveryAimAngle(4)" methodname="MuzzleMatchesRenderedSpriteAtEveryAimAngle" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="864675332" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000520" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-case id="1108" name="ProjectileVisualCannotExtrapolateThroughCover" fullname="BoundShoot.Tests.CombatPresentationTests.ProjectileVisualCannotExtrapolateThroughCover" methodname="ProjectileVisualCannotExtrapolateThroughCover" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="358995262" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.000992" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1114" name="RopeTensionFeedbackDoesNotChangeTheRoute" fullname="BoundShoot.Tests.CombatPresentationTests.RopeTensionFeedbackDoesNotChangeTheRoute" methodname="RopeTensionFeedbackDoesNotChangeTheRoute" classname="BoundShoot.Tests.CombatPresentationTests" runstate="Runnable" seed="356876822" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.008865" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1115" name="CyberArtTests" fullname="BoundShoot.Tests.CyberArtTests" classname="BoundShoot.Tests.CyberArtTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.494973" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1116" name="ImportedArtHasTwentyNamedSpritesAndTransparentAtlases" fullname="BoundShoot.Tests.CyberArtTests.ImportedArtHasTwentyNamedSpritesAndTransparentAtlases" methodname="ImportedArtHasTwentyNamedSpritesAndTransparentAtlases" classname="BoundShoot.Tests.CyberArtTests" runstate="Runnable" seed="486705936" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.491357" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1117" name="ForestV3Tests" fullname="BoundShoot.Tests.ForestV3Tests" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="0.033553" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1119" name="ForestEditorRoundTripPreservesPlateau" fullname="BoundShoot.Tests.ForestV3Tests.ForestEditorRoundTripPreservesPlateau" methodname="ForestEditorRoundTripPreservesPlateau" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" seed="2067675847" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:04Z" duration="0.013514" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1118" name="ForestHasTraversablePlateauAndNoRevivalPoint" fullname="BoundShoot.Tests.ForestV3Tests.ForestHasTraversablePlateauAndNoRevivalPoint" methodname="ForestHasTraversablePlateauAndNoRevivalPoint" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" seed="504455330" result="Passed" start-time="2026-11-01 17:04:04Z" end-time="2026-11-01 17:04:05Z" duration="0.011961" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1120" name="ForestSourceSpritesAreAvailable" fullname="BoundShoot.Tests.ForestV3Tests.ForestSourceSpritesAreAvailable" methodname="ForestSourceSpritesAreAvailable" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" seed="1415264830" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.001814" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1121" name="InvalidPlateauCannotBeSaved" fullname="BoundShoot.Tests.ForestV3Tests.InvalidPlateauCannotBeSaved" methodname="InvalidPlateauCannotBeSaved" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" seed="1472900599" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000383" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1122" name="RopeCanAcceleratePassivePartner" fullname="BoundShoot.Tests.ForestV3Tests.RopeCanAcceleratePassivePartner" methodname="RopeCanAcceleratePassivePartner" classname="BoundShoot.Tests.ForestV3Tests" runstate="Runnable" seed="1650099035" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000803" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1123" name="LevelEditorTests" fullname="BoundShoot.Tests.LevelEditorTests" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.155270" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1127" name="ConcurrentSameMapEditIsRejectedWithoutChangingTheFile" fullname="BoundShoot.Tests.LevelEditorTests.ConcurrentSameMapEditIsRejectedWithoutChangingTheFile" methodname="ConcurrentSameMapEditIsRejectedWithoutChangingTheFile" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1948074864" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.020172" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1125" name="EditedSceneRoundTripsTypedDropsGroundObstaclesAndZoneSizes" fullname="BoundShoot.Tests.LevelEditorTests.EditedSceneRoundTripsTypedDropsGroundObstaclesAndZoneSizes" methodname="EditedSceneRoundTripsTypedDropsGroundObstaclesAndZoneSizes" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1116338293" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.053186" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1131" name="FixedPickupsRespawnAsPlacedAndZeroSecondsMeansSingleUse" fullname="BoundShoot.Tests.LevelEditorTests.FixedPickupsRespawnAsPlacedAndZeroSecondsMeansSingleUse" methodname="FixedPickupsRespawnAsPlacedAndZeroSecondsMeansSingleUse" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="346996305" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.001461" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1129" name="InvalidPlacementsAndSeatDuplicatesBlockExport" fullname="BoundShoot.Tests.LevelEditorTests.InvalidPlacementsAndSeatDuplicatesBlockExport" methodname="InvalidPlacementsAndSeatDuplicatesBlockExport" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1421539906" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.008948" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1124" name="LegacyMapsKeepTheirPickupsAndZonesThroughConfigSerialization" fullname="BoundShoot.Tests.LevelEditorTests.LegacyMapsKeepTheirPickupsAndZonesThroughConfigSerialization" methodname="LegacyMapsKeepTheirPickupsAndZonesThroughConfigSerialization" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1883781167" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.005000" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1130" name="NativeUndoRestoresMovementAndGridSnapChangesOnlySelectedPiece" fullname="BoundShoot.Tests.LevelEditorTests.NativeUndoRestoresMovementAndGridSnapChangesOnlySelectedPiece" methodname="NativeUndoRestoresMovementAndGridSnapChangesOnlySelectedPiece" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="2123741106" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.009945" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1128" name="NewMapCannotOverwriteExistingAndDefaultMapCannotBeDisabled" fullname="BoundShoot.Tests.LevelEditorTests.NewMapCannotOverwriteExistingAndDefaultMapCannotBeDisabled" methodname="NewMapCannotOverwriteExistingAndDefaultMapCannotBeDisabled" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1085453048" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.018999" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1132" name="RuntimeUsesEditedRevivalSizesAndFloorNeverCreatesWallCollision" fullname="BoundShoot.Tests.LevelEditorTests.RuntimeUsesEditedRevivalSizesAndFloorNeverCreatesWallCollision" methodname="RuntimeUsesEditedRevivalSizesAndFloorNeverCreatesWallCollision" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="1894867724" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.009599" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1126" name="SavingUsesLatestWeaponTuningAndKeepsOtherMaps" fullname="BoundShoot.Tests.LevelEditorTests.SavingUsesLatestWeaponTuningAndKeepsOtherMaps" methodname="SavingUsesLatestWeaponTuningAndKeepsOtherMaps" classname="BoundShoot.Tests.LevelEditorTests" runstate="Runnable" seed="993449630" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.024427" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1133" name="RopeRouteTests" fullname="BoundShoot.Tests.RopeRouteTests" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.005824" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1135" name="DirectVisibilityDoesNotUnwrapAcrossEntireObstacle" fullname="BoundShoot.Tests.RopeRouteTests.DirectVisibilityDoesNotUnwrapAcrossEntireObstacle" methodname="DirectVisibilityDoesNotUnwrapAcrossEntireObstacle" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="610441741" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.002002" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1141" name="ForceStillPullsTowardOriginalBendAfterCrossingSymmetryLine" fullname="BoundShoot.Tests.RopeRouteTests.ForceStillPullsTowardOriginalBendAfterCrossingSymmetryLine" methodname="ForceStillPullsTowardOriginalBendAfterCrossingSymmetryLine" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="1851530488" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000354" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1139" name="ImpossiblePathNeverFallsBackToStraightLineThroughCover" fullname="BoundShoot.Tests.RopeRouteTests.ImpossiblePathNeverFallsBackToStraightLineThroughCover" methodname="ImpossiblePathNeverFallsBackToStraightLineThroughCover" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="1699528160" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000148" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1138" name="IndependentRopesKeepDifferentSidesAndResetIsExplicit" fullname="BoundShoot.Tests.RopeRouteTests.IndependentRopesKeepDifferentSidesAndResetIsExplicit" methodname="IndependentRopesKeepDifferentSidesAndResetIsExplicit" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="471494415" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000402" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1136" name="ReturningAroundOriginalSideReleasesBends" fullname="BoundShoot.Tests.RopeRouteTests.ReturningAroundOriginalSideReleasesBends" methodname="ReturningAroundOriginalSideReleasesBends" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="537597724" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000865" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1137" name="ShortcutCannotSweepOverObstacleWithAllThreeEdgesClear" fullname="BoundShoot.Tests.RopeRouteTests.ShortcutCannotSweepOverObstacleWithAllThreeEdgesClear" methodname="ShortcutCannotSweepOverObstacleWithAllThreeEdgesClear" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="1148371317" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000176" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1140" name="TemporaryOverlapDoesNotEraseWinding" fullname="BoundShoot.Tests.RopeRouteTests.TemporaryOverlapDoesNotEraseWinding" methodname="TemporaryOverlapDoesNotEraseWinding" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="291490633" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000196" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1134" name="TinyMotionDoesNotFlipToOtherSideOfCover" fullname="BoundShoot.Tests.RopeRouteTests.TinyMotionDoesNotFlipToOtherSideOfCover" methodname="TinyMotionDoesNotFlipToOtherSideOfCover" classname="BoundShoot.Tests.RopeRouteTests" runstate="Runnable" seed="425500860" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000266" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1142" name="SnapshotBuffer2DTests" fullname="BoundShoot.Tests.SnapshotBuffer2DTests" classname="BoundShoot.Tests.SnapshotBuffer2DTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.002227" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1143" name="ArrivalBurstsRenderOnServerTimeline" fullname="BoundShoot.Tests.SnapshotBuffer2DTests.ArrivalBurstsRenderOnServerTimeline" methodname="ArrivalBurstsRenderOnServerTimeline" classname="BoundShoot.Tests.SnapshotBuffer2DTests" runstate="Runnable" seed="468260299" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000895" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1144" name="DuplicateAndOldStatesCannotReplaceNewerAuthority" fullname="BoundShoot.Tests.SnapshotBuffer2DTests.DuplicateAndOldStatesCannotReplaceNewerAuthority" methodname="DuplicateAndOldStatesCannotReplaceNewerAuthority" classname="BoundShoot.Tests.SnapshotBuffer2DTests" runstate="Runnable" seed="1469024436" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000180" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1145" name="MissingPacketsHaveBoundedExtrapolation" fullname="BoundShoot.Tests.SnapshotBuffer2DTests.MissingPacketsHaveBoundedExtrapolation" methodname="MissingPacketsHaveBoundedExtrapolation" classname="BoundShoot.Tests.SnapshotBuffer2DTests" runstate="Runnable" seed="512248466" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000189" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1146" name="ReconnectionClearsPriorTimeline" fullname="BoundShoot.Tests.SnapshotBuffer2DTests.ReconnectionClearsPriorTimeline" methodname="ReconnectionClearsPriorTimeline" classname="BoundShoot.Tests.SnapshotBuffer2DTests" runstate="Runnable" seed="115132649" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000169" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1147" name="SupplyPoolTests" fullname="BoundShoot.Tests.SupplyPoolTests" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.031534" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1148" name="ApprovedProbabilitiesHaveExactWeightedIntervals" fullname="BoundShoot.Tests.SupplyPoolTests.ApprovedProbabilitiesHaveExactWeightedIntervals" methodname="ApprovedProbabilitiesHaveExactWeightedIntervals" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" seed="1842342573" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.006056" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1151" name="EditorLayoutRoundTripsTiersColorsAndPerPointTiming" fullname="BoundShoot.Tests.SupplyPoolTests.EditorLayoutRoundTripsTiersColorsAndPerPointTiming" methodname="EditorLayoutRoundTripsTiersColorsAndPerPointTiming" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" seed="896114948" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.007218" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1150" name="InvalidPoolWeightsKindsAndEmptyPoolsAreRejected" fullname="BoundShoot.Tests.SupplyPoolTests.InvalidPoolWeightsKindsAndEmptyPoolsAreRejected" methodname="InvalidPoolWeightsKindsAndEmptyPoolsAreRejected" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" seed="1712469830" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.001154" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1152" name="PoolSavePreservesLatestMapBalanceAndRejectsConflictsOrInvalidData" fullname="BoundShoot.Tests.SupplyPoolTests.PoolSavePreservesLatestMapBalanceAndRejectsConflictsOrInvalidData" methodname="PoolSavePreservesLatestMapBalanceAndRejectsConflictsOrInvalidData" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" seed="1180316741" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.015839" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1149" name="SpawnAndRespawnUseTierPoolAndDoNotReplaceUncollectedItems" fullname="BoundShoot.Tests.SupplyPoolTests.SpawnAndRespawnUseTierPoolAndDoNotReplaceUncollectedItems" methodname="SpawnAndRespawnUseTierPoolAndDoNotReplaceUncollectedItems" classname="BoundShoot.Tests.SupplyPoolTests" runstate="Runnable" seed="1338961958" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000644" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1153" name="TrainingTests" fullname="BoundShoot.Tests.TrainingTests" classname="BoundShoot.Tests.TrainingTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.002043" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1154" name="TrainingContainsEveryGunAndItem" fullname="BoundShoot.Tests.TrainingTests.TrainingContainsEveryGunAndItem" methodname="TrainingContainsEveryGunAndItem" classname="BoundShoot.Tests.TrainingTests" runstate="Runnable" seed="1534094136" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.001384" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1155" name="VegetableDemoTests" fullname="BoundShoot.Tests.VegetableDemoTests" classname="BoundShoot.Tests.VegetableDemoTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.026621" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1158" name="EditorRoundTripPreservesFieldThemeAndObstacleTypes" fullname="BoundShoot.Tests.VegetableDemoTests.EditorRoundTripPreservesFieldThemeAndObstacleTypes" methodname="EditorRoundTripPreservesFieldThemeAndObstacleTypes" classname="BoundShoot.Tests.VegetableDemoTests" runstate="Runnable" seed="149174430" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.006375" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1156" name="EightCharactersHaveEveryMotionAndPortrait" fullname="BoundShoot.Tests.VegetableDemoTests.EightCharactersHaveEveryMotionAndPortrait" methodname="EightCharactersHaveEveryMotionAndPortrait" classname="BoundShoot.Tests.VegetableDemoTests" runstate="Runnable" seed="165420693" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.002268" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1157" name="FieldMapHasFourSeatsAndNoInvalidPlacements" fullname="BoundShoot.Tests.VegetableDemoTests.FieldMapHasFourSeatsAndNoInvalidPlacements" methodname="FieldMapHasFourSeatsAndNoInvalidPlacements" classname="BoundShoot.Tests.VegetableDemoTests" runstate="Runnable" seed="1999850450" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000327" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1159" name="MotionSheetsHaveRealAlphaAndPointSampling" fullname="BoundShoot.Tests.VegetableDemoTests.MotionSheetsHaveRealAlphaAndPointSampling" methodname="MotionSheetsHaveRealAlphaAndPointSampling" classname="BoundShoot.Tests.VegetableDemoTests" runstate="Runnable" seed="1522969319" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.017146" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1160" name="VegetableWalkTests" fullname="BoundShoot.Tests.VegetableWalkTests" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.665006" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1170" name="StandingFramesHaveRegisteredFeetAndConstantCanvas" fullname="BoundShoot.Tests.VegetableWalkTests.StandingFramesHaveRegisteredFeetAndConstantCanvas" methodname="StandingFramesHaveRegisteredFeetAndConstantCanvas" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="1337787650" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.660422" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1165" name="StopReturnsToIdleAndTeleportDoesNotStartWalking" fullname="BoundShoot.Tests.VegetableWalkTests.StopReturnsToIdleAndTeleportDoesNotStartWalking" methodname="StopReturnsToIdleAndTeleportDoesNotStartWalking" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="1416781133" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000646" asserts="0">
+              <properties />
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1164" name="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames" fullname="BoundShoot.Tests.VegetableWalkTests.ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.002377" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1161" name="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(60)" fullname="BoundShoot.Tests.VegetableWalkTests.ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(60)" methodname="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="1551403717" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.001141" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1162" name="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(120)" fullname="BoundShoot.Tests.VegetableWalkTests.ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(120)" methodname="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="1915957312" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000209" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1163" name="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(144)" fullname="BoundShoot.Tests.VegetableWalkTests.ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames(144)" methodname="ThirtyHzMovementNeverFlashesIdleBetweenRenderFrames" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="502652476" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000262" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1169" name="WalkCadenceDoesNotDependOnRenderingRate" fullname="BoundShoot.Tests.VegetableWalkTests.WalkCadenceDoesNotDependOnRenderingRate" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000822" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1166" name="WalkCadenceDoesNotDependOnRenderingRate(30)" fullname="BoundShoot.Tests.VegetableWalkTests.WalkCadenceDoesNotDependOnRenderingRate(30)" methodname="WalkCadenceDoesNotDependOnRenderingRate" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="512124221" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000449" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1167" name="WalkCadenceDoesNotDependOnRenderingRate(60)" fullname="BoundShoot.Tests.VegetableWalkTests.WalkCadenceDoesNotDependOnRenderingRate(60)" methodname="WalkCadenceDoesNotDependOnRenderingRate" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="1341552004" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000043" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1168" name="WalkCadenceDoesNotDependOnRenderingRate(144)" fullname="BoundShoot.Tests.VegetableWalkTests.WalkCadenceDoesNotDependOnRenderingRate(144)" methodname="WalkCadenceDoesNotDependOnRenderingRate" classname="BoundShoot.Tests.VegetableWalkTests" runstate="Runnable" seed="563038901" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000027" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestFixture" id="1171" name="WeaponPickupNoticeTests" fullname="BoundShoot.Tests.WeaponPickupNoticeTests" classname="BoundShoot.Tests.WeaponPickupNoticeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000609" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1172" name="NoticeOnlyAppearsOnNewWeaponAndExpiresThreeSecondsLater" fullname="BoundShoot.Tests.WeaponPickupNoticeTests.NoticeOnlyAppearsOnNewWeaponAndExpiresThreeSecondsLater" methodname="NoticeOnlyAppearsOnNewWeaponAndExpiresThreeSecondsLater" classname="BoundShoot.Tests.WeaponPickupNoticeTests" runstate="Runnable" seed="1581190431" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000181" asserts="0">
+              <properties />
+            </test-case>
+            <test-case id="1173" name="RapidSwitchRestartsTimerWhileDeathAndNewRoomClearIt" fullname="BoundShoot.Tests.WeaponPickupNoticeTests.RapidSwitchRestartsTimerWhileDeathAndNewRoomClearIt" methodname="RapidSwitchRestartsTimerWhileDeathAndNewRoomClearIt" classname="BoundShoot.Tests.WeaponPickupNoticeTests" runstate="Runnable" seed="153944969" result="Passed" start-time="2026-11-01 17:04:05Z" end-time="2026-11-01 17:04:05Z" duration="0.000114" asserts="0">
+              <properties />
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

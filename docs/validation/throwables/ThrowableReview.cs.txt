@@ -1,0 +1,41 @@
+using System;
+using Object=UnityEngine.Object;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+namespace BoundShoot.Editor {
+ [InitializeOnLoad] public static class ThrowableReview {
+  static int stage;static double at,deadline;const string Key="BoundShoot.ThrowableReview";
+  static ThrowableReview(){bool active=Environment.GetCommandLineArgs().Any(a=>a=="BoundShoot.Editor.ThrowableReview.Start");EditorPrefs.SetBool(Key,active);if(active)Draw2D.RenderInBatch=true;EditorApplication.update+=Tick;}
+  public static void Start(){EditorPrefs.SetBool(Key,true);EditorSceneManager.OpenScene("Assets/BoundShoot/Scenes/Boot.unity");EditorApplication.isPlaying=true;}
+  static void Tick(){try{Step();}catch(Exception e){Debug.LogException(e);Finish(2);}}
+  static void Step(){
+   if(!EditorPrefs.GetBool(Key,false)||!EditorApplication.isPlaying||GameClient.Instance==null)return;
+   if(deadline==0)deadline=EditorApplication.timeSinceStartup+90;
+   if(EditorApplication.timeSinceStartup>deadline){Debug.LogError("Throwable review timed out");Finish(2);return;}
+   if(EditorApplication.timeSinceStartup<at)return;var c=GameClient.Instance;
+   if(stage==0){c.EnterName("投掷练习");c.StartTraining();stage++;}
+   else if(stage==1&&c.Screen=="Training"){
+    var runtime=TrainingRuntime.Instance;var w=runtime.World;var p=w.Players.Single(n=>n.TrainingRole==0);var ally=w.AddTrainingTeammate();
+    runtime.enabled=false;w.enabled=false;foreach(var n in w.Players){n.enabled=false;n.Body.simulated=false;n.Health.Value=100;n.Shield.Value=0;}
+    Move(p,new Vector2(-3,-4));Move(ally,new Vector2(.6f,-1));var enemies=w.Players.Where(n=>n.Team.Value==1).ToArray();Move(enemies[0],new Vector2(1.7f,-1));Move(enemies[1],new Vector2(-5.2f,2));
+    p.Equip(WeaponKind.AK);p.NextShot=0;p.Aim=Vector2.up;
+    foreach(var kind in new[]{ItemKind.Smoke,ItemKind.Incendiary}){w.TryCollectItem(p,kind);p.SelectNextSlot();w.TryUseSelected(p);var a=w.Throwables.Last();a.landing=kind==ItemKind.Smoke?new Vector2(1,-1):new Vector2(-5,2);a.landAt=w.AreaTime-1;a.endAt=w.AreaTime+30;}
+    w.TryCollectItem(p,ItemKind.Smoke);w.TryCollectItem(p,ItemKind.Incendiary);w.TryCollectItem(p,ItemKind.Heal);
+    foreach(var n in w.Players)typeof(NetPlayer).GetMethod("LateUpdate",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(n,null);
+    typeof(BattleWorld).GetMethod("LateUpdate",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(w,null);stage++;at=EditorApplication.timeSinceStartup+.5;
+   }else if(stage==2){Capture("01-smoke-fire");var w=TrainingRuntime.Instance.World;var p=w.Players.Single(n=>n.TrainingRole==0);p.SelectedSlot.Value=2;typeof(BattleWorld).GetMethod("LateUpdate",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(w,null);stage++;at=EditorApplication.timeSinceStartup+.2;}
+   else if(stage==3){Capture("02-throw-preview");Finish(0);}
+  }
+  static void Move(NetPlayer p,Vector2 point){p.Body.position=point;p.transform.position=point;p.Position.Value=point;}
+  static void Capture(string name){
+   var camera=Camera.main;var canvas=Object.FindObjectOfType<Canvas>();var mode=canvas.renderMode;var rt=new RenderTexture(1600,900,24);camera.targetTexture=rt;
+   canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=camera;canvas.planeDistance=5;Canvas.ForceUpdateCanvases();camera.Render();var previous=RenderTexture.active;RenderTexture.active=rt;
+   var png=new Texture2D(1600,900,TextureFormat.RGB24,false);png.ReadPixels(new Rect(0,0,1600,900),0,0);png.Apply();string folder=Path.GetFullPath(Path.Combine(Application.dataPath,"../Logs/ThrowableDemo"));Directory.CreateDirectory(folder);File.WriteAllBytes(Path.Combine(folder,name+".png"),png.EncodeToPNG());
+   camera.targetTexture=null;canvas.renderMode=mode;RenderTexture.active=previous;Object.Destroy(rt);Object.Destroy(png);Debug.Log("Throwable review captured "+name);
+  }
+  static void Finish(int code){EditorPrefs.SetBool(Key,false);EditorApplication.isPlaying=false;EditorApplication.delayCall+=()=>EditorApplication.Exit(code);}
+ }
+}

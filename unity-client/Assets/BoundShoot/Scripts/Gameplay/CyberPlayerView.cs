@@ -13,17 +13,17 @@ namespace BoundShoot {
    gun=CyberArt.Place(aimPivot,"weapon3",new Vector2(.72f,0),new Vector2(1.65f,.65f),10);
    teamMarker=Draw2D.Shape(transform,"Team marker",new Vector2(0,-.5f),new Vector2(.75f,.09f),Draw2D.Blue,false,7);
    shadow=Draw2D.Shape(transform,"Foot shadow",new Vector2(0,-.42f),new Vector2(1,.3f),new Color(.08f,.13f,.07f,.3f),true,6);
-   Draw2D.Shape(transform,"Health background",new Vector2(0,.95f),new Vector2(.85f,.10f),new Color(.12f,.15f,.1f),false,13);
-   healthBar=Draw2D.Shape(transform,"Health",new Vector2(0,.95f),new Vector2(.8f,.055f),new Color(.65f,.9f,.3f),false,14);
+   Draw2D.Shape(transform,"Health background",new Vector2(0,1.03f),new Vector2(1.17f,.15f),new Color(.12f,.15f,.1f),false,13);
+   healthBar=Draw2D.Shape(transform,"Health",new Vector2(0,1.03f),new Vector2(1.09f,.095f),new Color(.65f,.9f,.3f),false,14);
    shield=Draw2D.Line(transform,new Color(.5f,.8f,1,.8f),.035f,12);
    slash=Draw2D.Line(transform,Color.white,.07f,14);
    walkCycle.Reset(transform.position);
   }
   public void Kick(int weapon,float angle){LastShotWeapon=weapon;KickCount++;recoil=WeaponPresentation.Get(weapon)?.recoil??.1f;shotAngle=angle;shotPoseUntil=Time.time+.08f;}
   public Vector2 Muzzle(int weapon,float angle)=>WeaponPresentation.Muzzle(weapon,transform.position,angle);
-  public void Slash(float angle){
+  public void Slash(float angle,float radius=1.1f){
    slashUntil=Time.time+.14f;shotPoseUntil=slashUntil;shotAngle=angle;slash.positionCount=13;
-   for(int i=0;i<13;i++){float a=angle-55+i*110/12f;slash.SetPosition(i,transform.position+(Vector3)WeaponPresentation.Rotate(Vector2.right*1.1f,a));}
+   for(int i=0;i<13;i++){float a=angle-55+i*110/12f;slash.SetPosition(i,transform.position+(Vector3)WeaponPresentation.Rotate(Vector2.right*radius,a));}
   }
   public void Show(int team,int weapon,float angle,bool alive,bool hasShield){
    var player=GetComponent<NetPlayer>();ShowCharacter(player==null?0:player.Skin.Value,team,weapon,angle,alive,hasShield,player==null?-1:player.Health.Value);
@@ -38,9 +38,9 @@ namespace BoundShoot {
    int direction=Mathf.Abs(facing.y)>Mathf.Abs(facing.x)?(facing.y>0?2:0):1;
    bool aimLeft=Mathf.Cos(angle*Mathf.Deg2Rad)<0;
    if(alive!=wasAlive){wasAlive=alive;phaseAt=Time.time;}
-   if(lastHealth>=0&&health>=0&&health<lastHealth){hitUntil=Time.time+.1f;GardenFx.Emit(transform.position,9,3,.3f,Vector2.one*.85f);if(player!=null&&player.IsOwner&&!player.IsBot.Value)MeadowCamera.Instance?.Impulse(.13f);}
+   if(lastHealth>=0&&health>=0&&health<lastHealth){hitUntil=Time.time+.1f;if(player==null||!player.FogHidden)GardenFx.Emit(transform.position,9,3,.3f,Vector2.one*.85f);if(player!=null&&player.IsOwner&&!player.IsBot.Value)MeadowCamera.Instance?.Impulse(.13f);}
    lastHealth=health;
-   healthBar.enabled=health>=0;healthBar.transform.localScale=new Vector3(.8f*(player==null?1:Mathf.Clamp01(health/(float)Mathf.Max(1,player.MaxHealth.Value))),.055f,1);
+   healthBar.enabled=health>=0;healthBar.transform.localScale=new Vector3(1.09f*(player==null?1:Mathf.Clamp01(health/(float)Mathf.Max(1,player.MaxHealth.Value))),.095f,1);
    int frame=moving?direction*6+walkCycle.Frame:18+direction*2+(Mathf.FloorToInt(Time.time*2)%2);
    float elapsed=Time.time-phaseAt;
    if(!alive)frame=26+Mathf.Min(3,Mathf.FloorToInt(elapsed*12));
@@ -57,7 +57,7 @@ namespace BoundShoot {
    if(Time.time>=slashUntil||!alive)slash.positionCount=0;else slash.startColor=slash.endColor=new Color(1,.98f,.8f,Mathf.Clamp01((slashUntil-Time.time)/.14f));
    shield.positionCount=hasShield&&alive?33:0;
    for(int i=0;i<shield.positionCount;i++){float a=i/32f*Mathf.PI*2;shield.SetPosition(i,transform.position+new Vector3(Mathf.Cos(a)*.72f,Mathf.Sin(a)*.82f,0));}
-   if(moving&&alive&&Time.time>=nextStep){nextStep=Time.time+.24f;GardenFx.Emit(transform.position+Vector3.down*.4f,21,1,.25f,Vector2.one*.35f);}
+   if(moving&&alive&&(player==null||!player.FogHidden)&&Time.time>=nextStep){nextStep=Time.time+.24f;GardenFx.Emit(transform.position+Vector3.down*.4f,21,1,.25f,Vector2.one*.35f);}
   }
   float nextStep;
  }

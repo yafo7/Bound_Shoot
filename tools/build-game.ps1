@@ -1,14 +1,19 @@
 param(
- [ValidateSet("Windows","LinuxServer","QA")][string]$Target="Windows",
- [string]$Unity="D:\workshop\developer_learn\Unity_Hub\2022.3.62f3c1\Editor\Unity.exe"
+ [ValidateSet("Windows","MacOS","LinuxServer","QA")][string]$Target="Windows",
+ [string]$Unity="D:\UnityEditor\2022.3.62f3\Editor\Unity.exe",
+ [string]$ProjectPath=""
 )
 $ErrorActionPreference="Stop"
 $repo=Split-Path -Parent $PSScriptRoot
 $project=Join-Path $repo "unity-client"
+if($ProjectPath){$project=(Resolve-Path -LiteralPath $ProjectPath).Path}
+if(!(Test-Path -LiteralPath $Unity)){throw "Unity Editor missing: $Unity"}
+if($Target -eq "MacOS" -and !(Test-Path -LiteralPath (Join-Path (Split-Path $Unity) "Data/PlaybackEngines/MacStandaloneSupport"))){throw "Install Mac Build Support (Mono) for Unity 2022.3.62f3 first."}
+if($Target -eq "LinuxServer" -and !(Test-Path -LiteralPath (Join-Path (Split-Path $Unity) "Data/PlaybackEngines/LinuxStandaloneSupport"))){throw "Install Linux Dedicated Server Build Support for Unity 2022.3.62f3 first."}
 $output=Join-Path $repo "builds"
 New-Item -ItemType Directory -Path (Join-Path $repo "logs") -Force | Out-Null
-$method=@{Windows="BuildClient";LinuxServer="BuildLinuxServer";QA="BuildQaClient"}[$Target]
-$platform=if($Target -eq "LinuxServer"){"Linux64"}else{"Win64"}
+$method=@{Windows="BuildClient";MacOS="BuildMacClient";LinuxServer="BuildLinuxServer";QA="BuildQaClient"}[$Target]
+$platform=@{Windows="Win64";MacOS="OSXUniversal";LinuxServer="Linux64";QA="Win64"}[$Target]
 $log=Join-Path $repo "logs\build-$Target.log"
 $arguments='-batchmode -nographics -quit -projectPath "{0}" -buildTarget {1} -executeMethod BoundShoot.Editor.BuildTools.{2} -outputRoot "{3}" -logFile "{4}"' -f $project,$platform,$method,$output,$log
 $p=Start-Process -FilePath $Unity -ArgumentList $arguments -WindowStyle Hidden -PassThru
@@ -29,7 +34,7 @@ if($Target -eq "LinuxServer"){
   Copy-Item -LiteralPath $_.FullName -Destination $server -Recurse -Force
  }
  Copy-Item -LiteralPath (Join-Path $project "Assets\BoundShoot\Resources\GameConfig.json") -Destination $content -Force
- Copy-Item -LiteralPath (Join-Path $repo "deployment\activate-game-server.sh") -Destination $deployment -Force
+ Get-ChildItem -LiteralPath (Join-Path $repo "deployment") -File | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination $deployment -Force}
  foreach($name in @("src","migrations","package.json","package-lock.json","tsconfig.json")){
   Copy-Item -LiteralPath (Join-Path (Join-Path $repo "backend") $name) -Destination $backend -Recurse -Force
  }

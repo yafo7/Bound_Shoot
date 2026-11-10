@@ -33,7 +33,7 @@ namespace BoundShoot.Editor {
     foreach(var p in w.Players){p.IsBot.Value=false;Vector2 pos=new Vector2(p.Team.Value==0?-20:-11,-2+p.Seat.Value*2);p.Body.position=pos;p.transform.position=pos;p.ResetInput();p.Equip(WeaponKind.AK);w.ResetRopesForTeleport(p);}
     stage++;at=EditorApplication.timeSinceStartup+.5;
    }
-   else if(stage==11){Capture("08-stairs-battle");var w=LocalMatchRuntime.Instance.World;foreach(var p in w.Players.Where(n=>n.Team.Value==1)){p.ProtectionUntil=0;p.Hurt(999,null);}stage++;at=EditorApplication.timeSinceStartup+.5;}
+   else if(stage==11){Capture("08-stairs-battle");var w=LocalMatchRuntime.Instance.World;for(int zone=0;zone<w.ZoneHeat.Count;zone++)w.ZoneHeat[zone]=100;stage++;at=EditorApplication.timeSinceStartup+.5;}
    else if(stage==12&&c.Screen=="LocalResult"){Capture("09-result");CaptureMap();Catalog();Finish(0);}
   }
   static void Catalog(){

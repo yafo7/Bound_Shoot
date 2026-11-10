@@ -24,6 +24,7 @@ namespace BoundShoot.Editor {
    foreach(Transform child in root.transform.Cast<Transform>().ToArray())Undo.DestroyObjectImmediate(child.gameObject);
    root.transform.position=Vector3.zero;root.transform.rotation=Quaternion.identity;root.transform.localScale=Vector3.one;
    root.mapId=map.id;root.mapName=map.name;root.available=map.available;root.theme=map.theme;
+   root.objectives=map.objectives==null?new ObjectiveRules():JsonUtility.FromJson<ObjectiveRules>(JsonUtility.ToJson(map.objectives));
    root.plateau=map.plateau==null?null:JsonUtility.FromJson<PlateauDefinition>(JsonUtility.ToJson(map.plateau));
    root.dimensions=new Vector2(map.halfWidth*2,map.halfHeight*2);root.groundColor=MapContent.Ground(map);
    root.sourceMapId=map.id;root.sourceMapJson=JsonUtility.ToJson(map);root.newMap=false;
@@ -35,7 +36,7 @@ namespace BoundShoot.Editor {
    }
    foreach(var p in MapContent.Pickups(map,Read().pickupRespawn)){
     var piece=Add(root,LevelPieceKind.Pickup,p.position,Vector2.one);piece.weapon=p.weapon;piece.item=p.item;
-    piece.respawnSeconds=p.respawnSeconds;piece.randomizeOnRespawn=p.randomizeOnRespawn;Rename(piece);
+    piece.supplyTier=p.supplyTier;piece.overrideRespawn=p.overrideRespawn;piece.respawnSeconds=p.respawnSeconds;piece.randomizeOnRespawn=p.randomizeOnRespawn;Rename(piece);
    }
    foreach(var p in MapContent.Revivals(map))Add(root,LevelPieceKind.Revival,p.center,p.size);
    EditorUtility.SetDirty(root);EditorSceneManager.MarkSceneDirty(root.gameObject.scene);
@@ -51,19 +52,19 @@ namespace BoundShoot.Editor {
     case LevelPieceKind.Obstacle:return "障碍";
     case LevelPieceKind.Spawn:return (piece.team==0?"蓝 A":"红 B")+(piece.seat+1)+" 出生点";
     case LevelPieceKind.Revival:return "复活区";
-    default:return piece.weapon!=WeaponKind.None?WeaponName(piece.weapon):ItemName(piece.item);
+    default:return piece.supplyTier!=SupplyTier.None?SupplyPools.Label(piece.supplyTier)+"物资点":piece.weapon!=WeaponKind.None?WeaponName(piece.weapon):ItemName(piece.item);
    }
   }
-  public static string WeaponName(WeaponKind k)=>new[]{"无","狙击枪","手枪","AK","匕首"}[Mathf.Clamp((int)k,0,4)];
-  public static string ItemName(ItemKind k)=>new[]{"无","绳索收缩","绳索延长","护盾","冲刺装置","炸弹","弹性强化","血包","问号盒"}[Mathf.Clamp((int)k,0,8)];
+  public static string WeaponName(WeaponKind k)=>new[]{"无","狙击枪","手枪","AK","匕首","火箭炮"}[Mathf.Clamp((int)k,0,5)];
+  public static string ItemName(ItemKind k)=>new[]{"无","绳索收缩","绳索延长","护盾","提速道具","炸弹","弹性强化","血包","问号盒","烟雾弹","燃烧弹"}[Mathf.Clamp((int)k,0,10)];
   public static void Rename(LevelPiece p)=>p.gameObject.name=Label(p);
   public static MapDefinition Collect(LevelLayout root){
    var parts=root.GetComponentsInChildren<LevelPiece>(false);
    var pickups=parts.Where(p=>p.kind==LevelPieceKind.Pickup).Select(p=>new PickupDefinition{position=p.transform.localPosition,
-    weapon=p.weapon,item=p.item,respawnSeconds=p.respawnSeconds,randomizeOnRespawn=p.randomizeOnRespawn}).ToArray();
+    weapon=p.weapon,item=p.item,supplyTier=p.supplyTier,overrideRespawn=p.overrideRespawn,respawnSeconds=p.respawnSeconds,randomizeOnRespawn=p.randomizeOnRespawn}).ToArray();
    var zones=parts.Where(p=>p.kind==LevelPieceKind.Revival).Select(p=>new RevivalDefinition{center=p.transform.localPosition,size=p.transform.localScale}).ToArray();
    Vector2[] Spawns(int team)=>parts.Where(p=>p.kind==LevelPieceKind.Spawn&&p.team==team).OrderBy(p=>p.seat).Select(p=>(Vector2)p.transform.localPosition).ToArray();
-   return new MapDefinition{layoutVersion=1,id=root.mapId,name=root.mapName,available=root.available,halfWidth=root.dimensions.x*.5f,halfHeight=root.dimensions.y*.5f,
+   return new MapDefinition{objectives=root.objectives,layoutVersion=1,id=root.mapId,name=root.mapName,available=root.available,halfWidth=root.dimensions.x*.5f,halfHeight=root.dimensions.y*.5f,
      groundColor=root.groundColor,theme=root.theme,plateau=root.theme=="forest"&&root.plateau!=null&&root.plateau.size.sqrMagnitude>0?root.plateau:null,blueSpawns=Spawns(0),redSpawns=Spawns(1),pickups=pickups,supplies=pickups.Select(p=>p.position).ToArray(),
     revivalZones=zones,revivals=zones.Select(p=>p.center).ToArray(),
     blocks=parts.Where(p=>p.kind==LevelPieceKind.Obstacle).Select(p=>new BlockDefinition{center=p.transform.localPosition,size=p.transform.localScale,visual=p.visual}).ToArray(),
@@ -120,20 +121,47 @@ namespace BoundShoot.Editor {
    void Rect(Vector2 center,Vector2 size,string title){if(!Point(size)||size.x<=0||size.y<=0||!Inside(center,size*.5f))errors.Add(title+"尺寸无效或超出边界。");}
    foreach(var b in map.blocks??Array.Empty<BlockDefinition>())Rect(b.center,b.size,"障碍");
    foreach(var f in map.floors??Array.Empty<FloorDefinition>())Rect(f.center,f.size,"地面");
-   if(map.plateau!=null){var h=map.plateau;Rect(h.center,h.size,"高台");if(!Finite(h.stairWidth)||h.stairWidth<=.9f||h.stairs==null||h.stairs.Length==0||h.stairs.Any(y=>!Finite(y)||Mathf.Abs(y-h.center.y)+h.stairWidth*.5f>h.size.y*.5f))errors.Add("台阶宽度或位置无效。");}
+   if(map.plateau!=null&&!map.plateau.size.Equals(Vector2.zero)){var h=map.plateau;Rect(h.center,h.size,"高台");if(!Finite(h.stairWidth)||h.stairWidth<=.9f||h.stairs==null||h.stairs.Length==0||h.stairs.Any(y=>!Finite(y)||Mathf.Abs(y-h.center.y)+h.stairWidth*.5f>h.size.y*.5f))errors.Add("台阶宽度或位置无效。");}
    var spawns=(map.blueSpawns??Array.Empty<Vector2>()).Concat(map.redSpawns??Array.Empty<Vector2>()).ToArray();
    if(map.blueSpawns?.Length!=4||map.redSpawns?.Length!=4)errors.Add("红蓝队各需要4个有序出生点，当前2v2使用前两个。");
+   if(map.objectives!=null){
+    var rules=map.objectives;
+    bool Positive(float value)=>Finite(value)&&value>0;
+    if(!Positive(rules.captureHeat)||rules.captureHeat>100||!Positive(rules.winningHeat)||rules.winningHeat>100||!Positive(rules.rescueSeconds)||!Positive(rules.rescueDistance)||
+       !Positive(rules.wipeSeconds)||!Positive(rules.rescueHealth)||rules.rescueHealth>1)
+     errors.Add("对局、救援与重生数值无效。");
+    if(rules.zones==null||rules.zones.Length==0)errors.Add("至少需要一个热力区。");
+    else foreach(var zone in rules.zones){
+     if(zone==null||!Positive(zone.radius)||!Positive(zone.pointsPerPlayer)||!Inside(zone.center,Vector2.one*zone.radius))
+      errors.Add("热力区参数无效或超出地图边界。");
+    }
+    if(rules.customRespawns){
+     for(int team=0;team<2;team++){
+      var seats=team==0?map.blueSpawns:map.redSpawns;
+      if(seats==null||seats.Length==0)continue;
+      var anchor=team==0?rules.blueRespawn:rules.redRespawn;
+      foreach(var seat in seats){
+       var point=anchor+seat-seats[0];
+       if(!Inside(point,Vector2.one*.45f)||Covered(point,.45f))errors.Add("重生点的队伍站位超出边界或与障碍重叠。");
+      }
+     }
+    }
+   }
    foreach(var p in spawns)if(!Inside(p,Vector2.one*.45f)||Covered(p,.45f))errors.Add("出生点在边界外或与障碍重叠。");
    for(int i=0;i<spawns.Length;i++)for(int j=i+1;j<spawns.Length;j++)if(Vector2.Distance(spawns[i],spawns[j])<.9f)errors.Add("出生点之间距离不足0.9。");
    var pickups=MapContent.Pickups(map,config.pickupRespawn);
    foreach(var p in pickups){
     if(!Inside(p.position,Vector2.one*.45f)||Covered(p.position,.45f))errors.Add("拾取物在边界外或与障碍重叠。");
-    if((p.weapon==WeaponKind.None)==(p.item==ItemKind.None)||!Enum.IsDefined(typeof(WeaponKind),p.weapon)||!Enum.IsDefined(typeof(ItemKind),p.item))errors.Add("拾取物必须指定一种武器或一种道具。");
+    if(p.supplyTier!=SupplyTier.None){
+     if(!Enum.IsDefined(typeof(SupplyTier),p.supplyTier)||SupplyPools.Find(config,p.supplyTier)==null)errors.Add("物资点类型无效或缺少概率池。");
+     if(p.weapon!=WeaponKind.None||p.item!=ItemKind.None)errors.Add("随机物资点不能同时指定固定内容。");
+    }else if((p.weapon==WeaponKind.None)==(p.item==ItemKind.None)||!Enum.IsDefined(typeof(WeaponKind),p.weapon)||!Enum.IsDefined(typeof(ItemKind),p.item))errors.Add("拾取物必须指定一种武器或一种道具。");
     if(!Finite(p.respawnSeconds)||p.respawnSeconds<0)errors.Add("拾取物刷新秒数不能小于0；0表示不刷新。");
     if(p.weapon!=WeaponKind.None&&config.Weapon(p.weapon)==null)errors.Add("武器没有对应数值配置。");
     if(p.item!=ItemKind.None&&p.item!=ItemKind.Mystery&&(config.Item(p.item)==null||!config.Item(p.item).enabled))errors.Add("放置的道具未在配置中启用。");
    }
-   if(!pickups.Any(p=>p.weapon!=WeaponKind.None))errors.Add("关卡至少需要一个武器拾取点。");
+   if(pickups.Any(p=>p.supplyTier!=SupplyTier.None))errors.AddRange(SupplyPools.Validate(config.supplyPools,config));
+   if(!pickups.Any(p=>p.weapon!=WeaponKind.None||p.supplyTier!=SupplyTier.None&&(SupplyPools.Find(config,p.supplyTier)?.entries?.Any(e=>e!=null&&e.weapon!=WeaponKind.None&&e.weight>0)??false)))errors.Add("关卡至少需要一个武器拾取点。");
    var zones=MapContent.Revivals(map);
    foreach(var r in zones){Rect(r.center,r.size,"复活区");if(Covered(r.center,.45f))errors.Add("复活区中心与障碍重叠。");}
    return errors.Distinct().ToList();

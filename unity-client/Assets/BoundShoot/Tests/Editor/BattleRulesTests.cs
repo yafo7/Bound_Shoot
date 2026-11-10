@@ -14,7 +14,7 @@ namespace BoundShoot.Tests {
    for(int i=1;i<path.Length;i++)Assert.IsTrue(paths.Visible(path[i-1],path[i]));
    Assert.AreEqual(2,paths.Solve(new Vector2(-3,3),new Vector2(3,3)).Length);
   }
-  [Test] public void TripledHealthPreservesWeaponDamage(){var c=GameConfig.Current;Assert.AreEqual(9,c.baseHealth);Assert.AreEqual(3,c.Weapon(WeaponKind.Sniper).maxHealth);Assert.AreEqual(9,c.Weapon(WeaponKind.Pistol).maxHealth);Assert.AreEqual(9,c.Weapon(WeaponKind.AK).maxHealth);Assert.AreEqual(15,c.Weapon(WeaponKind.Dagger).maxHealth);Assert.AreEqual(4,c.Weapon(WeaponKind.Sniper).damage);Assert.AreEqual(2,c.Weapon(WeaponKind.AK).damage);}
+  [Test] public void LegacyWeaponHealthDoesNotSurviveSerialization(){var w=JsonUtility.FromJson<WeaponDefinition>("{\"kind\":1,\"damage\":8,\"maxHealth\":18}");Assert.AreEqual(8,w.damage);StringAssert.DoesNotContain("maxHealth",JsonUtility.ToJson(w));}
   [Test] public void TautRopeAppliesRealForceToLivingBodyAndHeavierCorpse(){
    var one=new GameObject("Alive");var two=new GameObject("Corpse");var old=Physics2D.simulationMode;
    try{

@@ -3,14 +3,22 @@ import {check,id,now} from './security.js';
 import {randomInt} from 'node:crypto';
 export const QUICK_ROOM_ID='bound-shoot-quick-2v2';
 export class Rooms {
- constructor(readonly store:Store,readonly publish:(roomId:string,event?:string)=>void,readonly maps:string[]=['Arena_01']){}
+ constructor(readonly store:Store,readonly publish:(roomId:string,event?:string)=>void,readonly maps:string[]=['Arena_01'],readonly aiFill=false){}
+ list(page=0){
+  const total=this.store.get('SELECT count(*) n FROM rooms r WHERE r.id<>? AND EXISTS(SELECT 1 FROM room_members m WHERE m.room_id=r.id)',QUICK_ROOM_ID).n;
+  const rooms=this.store.all(`SELECT r.id,r.code,r.size,r.map_id as mapId,r.status,u.display_name as hostName,
+   (SELECT count(*) FROM room_members m WHERE m.room_id=r.id) as humans
+   FROM rooms r JOIN users u ON u.id=r.host_id WHERE r.id<>? AND EXISTS(SELECT 1 FROM room_members m WHERE m.room_id=r.id)
+   ORDER BY CASE r.status WHEN 'Waiting' THEN 0 ELSE 1 END,r.rowid DESC LIMIT 6 OFFSET ?`,QUICK_ROOM_ID,page*6);
+  return {rooms,total,page};
+ }
  member(uid:string){return this.store.get('SELECT * FROM room_members WHERE user_id=?',uid);}
  view(roomId:string) {
   const room=this.store.get('SELECT id,code,host_id as hostId,size,map_id as mapId,status,match_id as matchId FROM rooms WHERE id=?',roomId);
   check(room,404,'ROOM_MISSING','房间不存在');
   room.members=this.store.all('SELECT m.user_id as userId,u.display_name as username,c.skin,m.team,m.seat,m.ready,0 as isBot FROM room_members m JOIN users u ON u.id=m.user_id JOIN user_cosmetics c ON c.user_id=m.user_id WHERE m.room_id=? ORDER BY m.team,m.seat',roomId);
-  if(roomId===QUICK_ROOM_ID){
-   for(const m of room.members)m.ready=1;
+  if(roomId===QUICK_ROOM_ID||this.aiFill){
+   if(roomId===QUICK_ROOM_ID)for(const m of room.members)m.ready=1;
    for(let team=0;team<2;team++)for(let seat=0;seat<room.size;seat++)if(!room.members.some((m:any)=>m.team===team&&m.seat===seat)){
     const bot=this.store.get('SELECT q.user_id as userId,u.display_name as username,c.skin FROM quick_identities q JOIN users u ON u.id=q.user_id JOIN user_cosmetics c ON c.user_id=q.user_id WHERE q.is_bot=1 AND q.name=?','AI_'+(team===0?'A':'B')+(seat+1));
     room.members.push({...bot,team,seat,ready:1,isBot:1});
@@ -49,7 +57,7 @@ export class Rooms {
   check(!this.member(uid),409,'ALREADY_IN_ROOM','请先离开当前房间');
   return this.store.transaction(()=>{
    const rid=id();let code:string;do{code=String(randomInt(100000,1000000));}while(this.store.get('SELECT id FROM rooms WHERE code=?',code));
-   this.store.run('INSERT INTO rooms(id,code,host_id) VALUES(?,?,?)',rid,code,uid);
+   this.store.run('INSERT INTO rooms(id,code,host_id,map_id) VALUES(?,?,?,?)',rid,code,uid,this.maps.includes('Orchard_01')?'Orchard_01':this.maps[0]);
    this.store.run('INSERT INTO room_members(user_id,room_id,team,seat,last_seen) VALUES(?,?,?,?,?)',uid,rid,0,0,now());
    return this.view(rid);
   });
@@ -61,7 +69,8 @@ export class Rooms {
   check(!current,409,'ALREADY_IN_ROOM','请先离开当前房间');
   check(r.status==='Waiting',409,'ROOM_BUSY','房间正在战斗');
   const view=this.view(r.id);
-  let free:any;for(let t=0;t<2;t++)for(let s=0;s<r.size;s++)if(!free&&!view.members.some((m:any)=>m.team===t&&m.seat===s))free={t,s};
+  const seats=Array.from({length:r.size*2},(_,i)=>this.aiFill?{t:i%2,s:Math.floor(i/2)}:{t:Math.floor(i/r.size),s:i%r.size});
+  const free=seats.find(p=>!view.members.some((m:any)=>!m.isBot&&m.team===p.t&&m.seat===p.s));
   check(free,409,'ROOM_FULL','房间已满');
   this.store.run('INSERT INTO room_members(user_id,room_id,team,seat,last_seen) VALUES(?,?,?,?,?)',uid,r.id,free.t,free.s,now());
   this.publish(r.id,'member.joined');return this.view(r.id);

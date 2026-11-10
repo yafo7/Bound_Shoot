@@ -11,7 +11,7 @@ import bcrypt from 'bcryptjs';
 
 test('name only → one 2v2 room → AI fill → authoritative result → reenter same ID',async()=>{
  const dir=mkdtempSync(path.join(os.tmpdir(),'bound-quick-'));
- const service=createService({dbPath:path.join(dir,'test.sqlite'),port:0,runtimeDir:dir});
+ const service=createService({lobbyMode:false,dbPath:path.join(dir,'test.sqlite'),port:0,runtimeDir:dir});
  await new Promise<void>(r=>service.server.listen(0,'127.0.0.1',r));
  const base='http://127.0.0.1:'+(service.server.address() as any).port;
  const call=async(method:string,url:string,body:any={},token='')=>{
@@ -75,10 +75,10 @@ test('schema upgrade keeps previous password accounts separate from name-only ID
  old.exec(readFileSync(new URL('../migrations/001_initial.sql',import.meta.url),'utf8'));
  old.prepare('INSERT INTO users(id,username,display_name,password_hash,created_at) VALUES(?,?,?,?,?)').run(legacyId,'yafo777','yafo777',await bcrypt.hash('legacy-password',12),0);
  old.prepare('INSERT INTO user_cosmetics(user_id) VALUES(?)').run(legacyId);old.close();
- const service=createService({dbPath:db,runtimeDir:dir});
+ const service=createService({lobbyMode:false,dbPath:db,runtimeDir:dir});
  try{
   assert.equal(service.auth.profile(legacyId).username,'yafo777');
-  assert.equal(service.store.get('SELECT count(*) n FROM schema_migrations').n,3);
+  assert.equal(service.store.get('SELECT count(*) n FROM schema_migrations').n,4);
   const {QuickPlay}=await import('../src/quickplay.js');const quick=new QuickPlay(service.store,service.rooms,service.auth);
   const fresh=quick.login('yafo777');assert.notEqual(fresh.user.id,legacyId);
   assert.equal(fresh.user.username,'yafo777');assert.equal((await service.auth.login('yafo777','legacy-password')).user.id,legacyId);

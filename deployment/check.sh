@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 project_dir="$(cd -- "$(dirname -- "$0")/.." && pwd -P)"
+if [ -x "$project_dir/tools/node/bin/node" ]; then export PATH="$project_dir/tools/node/bin:$PATH"; fi
 cd "$project_dir/backend"
 echo "Machine:"
 uname -m
@@ -16,6 +17,7 @@ const c=dotenv.parse(fs.readFileSync('.env'));
 const playable=Boolean(c.GAME_SERVER_PATH&&fs.existsSync(c.GAME_SERVER_PATH));
 console.log(JSON.stringify({
   apiListenHost:c.HOST,
+  lobbyMode:c.LOBBY_MODE!=='false',
   gameHost:c.PUBLIC_GAME_HOST,
   udpPorts:[Number(c.GAME_PORT_START),Number(c.GAME_PORT_START)+Number(c.MAX_MATCHES)-1],
   contentPresent:Boolean(c.GAME_CONFIG_PATH&&fs.existsSync(c.GAME_CONFIG_PATH)),

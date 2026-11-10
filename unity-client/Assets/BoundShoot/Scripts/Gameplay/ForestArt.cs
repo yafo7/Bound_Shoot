@@ -33,7 +33,7 @@ namespace BoundShoot {
     Draw2D.Shape(transform,"Forest approach",new Vector2(side*24,y),new Vector2(13,3.5f),new Color(.62f,.64f,.36f),false,-27);
     for(int i=0;i<8;i++)Draw2D.Shape(transform,"Path uneven edge",new Vector2(side*(18.5f+i*1.5f),y+(i%2==0?1.75f:-1.75f)),new Vector2(1.2f,.35f),new Color(.62f,.64f,.36f),false,-27);
    }
-   var h=map.plateau;if(h!=null){
+   var h=map.plateau;if(h!=null&&h.size.x>0&&h.size.y>0){
     Draw2D.Shape(transform,"Plateau contact shadow",h.center+Vector2.down*.55f,h.size+Vector2.one*1.4f,new Color(.18f,.28f,.1f,.55f),false,-26);
     Draw2D.Shape(transform,"Upper lawn",h.center,h.size,new Color(.52f,.65f,.31f),false,-25);
     foreach(var size in new[]{new Vector2(16,11),new Vector2(13,15),new Vector2(9,17)})Draw2D.Shape(transform,"Upper clearing",h.center,size,new Color(.66f,.67f,.40f),false,-24);

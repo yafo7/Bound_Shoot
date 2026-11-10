@@ -8,7 +8,7 @@ import {createService} from '../src/service.js';
 
 test('real HTTP account → room → single-use tickets → authoritative result → rematch',async()=>{
  const runtime=mkdtempSync(path.join(os.tmpdir(),'bound-shoot-'));
- const s=createService({dbPath:':memory:',port:0,runtimeDir:runtime,maxMatches:1,quickPlay:false});
+ const s=createService({lobbyMode:false,dbPath:':memory:',port:0,runtimeDir:runtime,maxMatches:1,quickPlay:false});
  await new Promise<void>(r=>s.server.listen(0,'127.0.0.1',r));
  const port=(s.server.address() as any).port,base='http://127.0.0.1:'+port;
  const call=async(method:string,url:string,body:any={},token='',secret='')=>{
@@ -101,7 +101,7 @@ test('real HTTP account → room → single-use tickets → authoritative result
 
 test('restart safely aborts matches without crediting scores; port exhaustion is explicit',async()=>{
  const temp=mkdtempSync(path.join(os.tmpdir(),'bound-shoot-restart-'));
- const db=path.join(temp,'test.sqlite');let s=createService({dbPath:db,runtimeDir:temp,maxMatches:1,quickPlay:false});
+ const db=path.join(temp,'test.sqlite');let s=createService({lobbyMode:false,dbPath:db,runtimeDir:temp,maxMatches:1,quickPlay:false});
  try{
   const users=[];for(let i=0;i<8;i++)users.push((await s.auth.register('user'+i,'valid-password')).user);
   for(let g=0;g<2;g++){
@@ -111,7 +111,7 @@ test('restart safely aborts matches without crediting scores; port exhaustion is
    if(g===0)s.matches.start(users[0].id,r.id);
    else assert.throws(()=>s.matches.start(users[4].id,r.id),/服务器繁忙/);
   }
-  await s.close();s=createService({dbPath:db,runtimeDir:temp});
+  await s.close();s=createService({lobbyMode:false,dbPath:db,runtimeDir:temp});
   assert.equal(s.store.get("SELECT count(*) n FROM matches WHERE status='Aborted'").n,1);
   assert.equal(s.store.get('SELECT sum(games) n FROM users').n,0);
   assert.ok(s.store.all('SELECT status FROM rooms').every(r=>r.status==='Waiting'));

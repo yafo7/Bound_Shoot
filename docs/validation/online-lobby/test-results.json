@@ -1,0 +1,20 @@
+{
+  "logs/online-lobby/edit.xml": {
+    "result": "Passed",
+    "total": "76",
+    "passed": "76",
+    "failed": "0"
+  },
+  "logs/online-lobby/play-final.xml": {
+    "result": "Failed(Child)",
+    "total": "37",
+    "passed": "36",
+    "failed": "1"
+  },
+  "logs/online-lobby/eight-peers.xml": {
+    "result": "Passed",
+    "total": "1",
+    "passed": "1",
+    "failed": "0"
+  }
+}

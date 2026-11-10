@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BoundShoot {
  [CreateAssetMenu(menuName="Bound Shoot/Network Settings")]
  public sealed class NetworkSettings:ScriptableObject {
-  public const string PublicBackendUrl="http://134.175.153.218:3000";
+  public const string PublicBackendUrl="http://123.207.238.56:3000";
   [SerializeField] string backendUrl=PublicBackendUrl;
   [SerializeField,Min(5)] int connectTimeoutSeconds=20;
   [SerializeField,Range(1000,30000)] int transportDisconnectMs=5000;

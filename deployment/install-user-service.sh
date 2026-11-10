@@ -2,6 +2,7 @@
 set -euo pipefail
 umask 077
 project_dir="$(cd -- "$(dirname -- "$0")/.." && pwd -P)"
+if [ -x "$project_dir/tools/node/bin/node" ]; then export PATH="$project_dir/tools/node/bin:$PATH"; fi
 if [ "$(id -u)" -eq 0 ]; then
   echo "Run this as ubuntu, without sudo." >&2
   exit 1
@@ -28,9 +29,10 @@ RUNTIME_DIR=$project_dir/runtime
 SERVER_MODE=managed
 GAME_SERVER_PATH=$project_dir/server/BoundShootServer.x86_64
 GAME_CONFIG_PATH=$project_dir/content/GameConfig.json
-PUBLIC_GAME_HOST=134.175.153.218
+PUBLIC_GAME_HOST=123.207.238.56
 GAME_PORT_START=7777
 MAX_MATCHES=2
+LOBBY_MODE=true
 EOF
 fi
 chmod 600 "$project_dir/backend/.env"

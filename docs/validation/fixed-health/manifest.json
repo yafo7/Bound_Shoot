@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "baseHealth": 100,
+  "scope": "Local isolated Editor tests; no build or deployment",
+  "edit": {
+    "passed": 67,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "play": {
+    "passed": 19,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "1328820f36c20ccd678a2f04d0a810aa6fee034f9a23de2c56535cc9aee9605f"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "8cb6210b1f84b020aa7ad090c29385519611a493d5124f936511ceebd91aa325"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/ForestFlow.cs",
+      "sha256": "a10cec53d1ede28c79d0ce603e72037397ced93c901d1ecbb8dec92e08a14b41"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/BalanceEditorWindow.cs",
+      "sha256": "c2341fcf5c62d7fc2ab0392c47e46d714daab11ce0167ced221fe7c58c2deab3"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "69c64e934e51fbcea84eed09a92975bea4c2415da407005c421dccd5cdb785f8"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/BattleRulesTests.cs",
+      "sha256": "ea0967614ae5e38bab81bf9f4a649f64f55dd75eb773c4e2ff8f7d22f101560b"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/TrainingPlayTests.cs",
+      "sha256": "157756c6dd2cd6537d6037ffcaf226c6574a89807e1041ff407c76ac5f50ad61"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/LocalMatchTests.cs",
+      "sha256": "7aa35d5b37b4207caa02f4a33e4fc42408bec528a688009e2207ffd184f0aeb3"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/KnockbackPlayTests.cs",
+      "sha256": "05e3aaf3ff5cf08ac8a34786b88e7c4682e54046abb157133e3daf9de39bad3c"
+    }
+  ]
+}

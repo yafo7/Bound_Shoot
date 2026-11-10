@@ -16,6 +16,7 @@ namespace BoundShoot.Editor {
    EditorGUILayout.PropertyField(serializedObject.FindProperty("groundColor"),new GUIContent("基础地面颜色"));
    EditorGUILayout.PropertyField(serializedObject.FindProperty("theme"),new GUIContent("主题（forest森林/meadow草地）"));
    if(serializedObject.FindProperty("theme").stringValue=="forest")EditorGUILayout.PropertyField(serializedObject.FindProperty("plateau"),new GUIContent("高台外观与台阶"),true);
+   EditorGUILayout.PropertyField(serializedObject.FindProperty("objectives"),new GUIContent("占点、救援与重生规则"),true);
    EditorGUILayout.PropertyField(serializedObject.FindProperty("snap"),new GUIContent("网格吸附"));
    EditorGUILayout.PropertyField(serializedObject.FindProperty("grid"),new GUIContent("网格大小"));
    serializedObject.ApplyModifiedProperties();
@@ -41,10 +42,18 @@ namespace BoundShoot.Editor {
     case LevelPieceKind.Spawn:
      Popup("team","队伍",new[]{"蓝队","红队"});Popup("seat","队内位置",new[]{"1","2","3（3v3/4v4）","4（4v4）"});break;
     case LevelPieceKind.Pickup:
+     var tier=serializedObject.FindProperty("supplyTier");tier.intValue=EditorGUILayout.Popup("物资点类型",tier.intValue,new[]{"固定武器／道具","普通（白）","中等（蓝）","高级（红）"});
+     if(tier.intValue>0){
+      serializedObject.FindProperty("weapon").intValue=0;serializedObject.FindProperty("item").intValue=0;serializedObject.FindProperty("randomizeOnRespawn").boolValue=false;
+      var custom=serializedObject.FindProperty("overrideRespawn");EditorGUILayout.PropertyField(custom,new GUIContent("单独设置刷新间隔"));
+      if(custom.boolValue)EditorGUILayout.PropertyField(serializedObject.FindProperty("respawnSeconds"),new GUIContent("刷新秒数（0不刷新）"));
+      else EditorGUILayout.LabelField("默认刷新秒数",(SupplyPools.Find(LevelLayoutIO.Read(),(SupplyTier)tier.intValue)?.respawnSeconds??0).ToString());
+      EditorGUILayout.HelpBox("概率在关卡编辑器的三级随机物资面板调整。",MessageType.None);break;
+     }
      bool weapon=piece.weapon!=WeaponKind.None;
      int category=EditorGUILayout.Popup("拾取物分类",weapon?0:1,new[]{"武器","道具"});
      if(category==0){serializedObject.FindProperty("item").intValue=0;var p=serializedObject.FindProperty("weapon");p.intValue=EditorGUILayout.Popup("武器",Mathf.Clamp(p.intValue-1,0,3),new[]{"狙击枪","手枪","AK","匕首"})+1;}
-     else{serializedObject.FindProperty("weapon").intValue=0;var p=serializedObject.FindProperty("item");p.intValue=EditorGUILayout.Popup("道具",Mathf.Clamp(p.intValue-1,0,7),new[]{"绳索收缩","绳索延长","护盾","冲刺装置","炸弹","弹性强化","血包","问号盒"})+1;}
+     else{serializedObject.FindProperty("weapon").intValue=0;var p=serializedObject.FindProperty("item");p.intValue=EditorGUILayout.Popup("道具",Mathf.Clamp(p.intValue-1,0,7),new[]{"绳索收缩","绳索延长","护盾","提速道具","炸弹","弹性强化","血包","问号盒"})+1;}
      EditorGUILayout.PropertyField(serializedObject.FindProperty("respawnSeconds"),new GUIContent("刷新秒数（0不刷新）"));
      EditorGUILayout.PropertyField(serializedObject.FindProperty("randomizeOnRespawn"),new GUIContent("刷新时随机替换内容"));break;
    }
@@ -79,7 +88,7 @@ namespace BoundShoot.Editor {
     case LevelPieceKind.Obstacle:return new Color(.48f,.55f,.6f);
     case LevelPieceKind.Spawn:return p.team==0?Draw2D.Blue:Draw2D.Red;
     case LevelPieceKind.Revival:return new Color(.2f,.8f,.55f,.6f);
-    default:return p.weapon!=WeaponKind.None?Draw2D.Gold:new Color(.75f,.5f,1);
+    default:return p.supplyTier!=SupplyTier.None?SupplyPools.ColorOf(p.supplyTier):p.weapon!=WeaponKind.None?Draw2D.Gold:new Color(.75f,.5f,1);
    }
   }
   public static Vector3[] Corners(Vector2 p,Vector2 size){Vector2 h=size*.5f;return new[]{(Vector3)(p+new Vector2(-h.x,-h.y)),(Vector3)(p+new Vector2(h.x,-h.y)),(Vector3)(p+h),(Vector3)(p+new Vector2(-h.x,h.y))};}
@@ -92,6 +101,18 @@ namespace BoundShoot.Editor {
    using(new Handles.DrawingScope(root.transform.localToWorldMatrix)){
     Handles.zTest=UnityEngine.Rendering.CompareFunction.Always;
     Handles.DrawSolidRectangleWithOutline(Corners(Vector2.zero,root.dimensions),root.groundColor,Color.white);
+    if(root.objectives!=null){
+     Handles.color=Draw2D.Gold;
+     foreach(var zone in root.objectives.zones??System.Array.Empty<ControlZone>()){
+      if(zone==null)continue;
+      Handles.DrawWireDisc(zone.center,Vector3.forward,zone.radius);
+      Handles.Label(zone.center,"热力区");
+     }
+     if(root.objectives.customRespawns){
+      Handles.color=Draw2D.Blue;Handles.DrawWireDisc(root.objectives.blueRespawn,Vector3.forward,.65f);Handles.Label(root.objectives.blueRespawn,"蓝队重生");
+      Handles.color=Draw2D.Red;Handles.DrawWireDisc(root.objectives.redRespawn,Vector3.forward,.65f);Handles.Label(root.objectives.redRespawn,"红队重生");
+     }
+    }
     float grid=Mathf.Max(.25f,root.grid);Handles.color=new Color(1,1,1,.08f);
     for(float x=-root.dimensions.x*.5f;x<=root.dimensions.x*.5f;x+=grid)Handles.DrawLine(new Vector3(x,-root.dimensions.y*.5f),new Vector3(x,root.dimensions.y*.5f));
     for(float y=-root.dimensions.y*.5f;y<=root.dimensions.y*.5f;y+=grid)Handles.DrawLine(new Vector3(-root.dimensions.x*.5f,y),new Vector3(root.dimensions.x*.5f,y));

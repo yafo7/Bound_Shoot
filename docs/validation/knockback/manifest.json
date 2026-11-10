@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-01",
+  "unity": "2022.3.62f3",
+  "scope": "Isolated project copy; local Unity EditMode and PlayMode; no build or remote deployment",
+  "playReport": "docs/validation/knockback/play.xml",
+  "editReport": "docs/validation/knockback/edit.xml",
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "CDCFF20AFAFF946E15E7EE5AAB0E872504BE05E0D644D508D9BB4315C2CB6FED"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "DA800A01E62DC6B0E1258E34D749D99495DD551E60DAFED7B812C9E8988563A8"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "9DD5184F351448986880CD5A1191903589A6B47CAB52DB7BD7E0DC93E73D962C"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "07041C29F67941A05D89FD2EFC94675A7D1B510120981986163E3E97498A4DAF"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/KnockbackPlayTests.cs",
+      "sha256": "D97480D472C2E13EB2B523F20DF57D380275B84327D09FDA5AE882EADB922FB7"
+    }
+  ]
+}

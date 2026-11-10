@@ -17,6 +17,9 @@ namespace BoundShoot {
     if(!string.IsNullOrEmpty(AccessToken))req.SetRequestHeader("Authorization","Bearer "+AccessToken);
     if(!string.IsNullOrEmpty(Secret))req.SetRequestHeader("X-Match-Secret",Secret);
     req.timeout=12;yield return req.SendWebRequest();
+#if BOUND_SHOOT_QA
+    if(req.result!=UnityWebRequest.Result.Success)Debug.Log("QA HTTP "+method+" "+path+" status="+req.responseCode+" error="+req.error);
+#endif
     if(req.responseCode==401&&retry&&!string.IsNullOrEmpty(RefreshToken)&&!path.StartsWith("/api/auth/")){
      while(refreshing)yield return null;
      if(AccessToken==tokenUsed&&!string.IsNullOrEmpty(RefreshToken)){
@@ -35,7 +38,7 @@ namespace BoundShoot {
     if(req.responseCode==401&&!string.IsNullOrEmpty(tokenUsed)&&!path.StartsWith("/api/auth/")){Forget();SessionExpired?.Invoke();}
     try{envelope=JsonUtility.FromJson<Envelope<T>>(req.downloadHandler.text);}catch{}
     if(req.result==UnityWebRequest.Result.Success&&envelope!=null&&envelope.ok)success?.Invoke(envelope.data);
-    else failure?.Invoke(envelope?.error?.message??"连接失败，请重试");
+    else failure?.Invoke(req.responseCode==404&&path=="/api/auth/guest"?"服务器尚未更新到大厅版本":envelope?.error?.message??"连接失败，请重试");
    }
   }
   public void SetTokens(AuthData data){

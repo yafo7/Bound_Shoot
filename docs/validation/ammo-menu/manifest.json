@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-02",
+  "unity": "2022.3.62f3",
+  "scope": "Local isolated Editor tests and screenshots only; no builds or cloud operations",
+  "edit": {
+    "passed": 68,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "play": {
+    "passed": 25,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "visual": {
+    "exitCode": 0,
+    "fixture": "AmmoMenuReview.cs.txt",
+    "images": [
+      "ammo-hud.png",
+      "settings.png"
+    ]
+  },
+  "sourceFiles": [
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Core/Models.cs",
+      "sha256": "67021b941ab356aa9de4ad318ceaf5380f298e97f3dbca2191d98707d774aad7"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Resources/GameConfig.json",
+      "sha256": "2efdcaf60869d6a90ff8c47109e895a277bf804a389695a22dd6102ac27c4bda"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/NetPlayer.cs",
+      "sha256": "d2ca80380d01ca3d9b7122c37c30a23e622ec6f158dc226101e33aaafd6b0050"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BattleWorld.cs",
+      "sha256": "283ab63ab533ca957fb7a4345d652bef05ea5ac5695eb90479a2f2b4ecb5d42f"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/Gameplay/BotController.cs",
+      "sha256": "a1acde8d076e5e9ba6ecc6fb8cb558faac35a282b156d578f3057d6b45a66c0b"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/GameClient.cs",
+      "sha256": "eb8c6dbc43591ddeea40e67fa0de00b0950741e48a6be391de96e12de1baa903"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/ForestFlow.cs",
+      "sha256": "f69dfaaaf22229630bc608877ae2996e040d6d6f19df94ea4b868739f026dac0"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Scripts/UI/WeaponPickupNotice.cs",
+      "sha256": "dee88db54ed03c8efe4b76345ed76239962828911761ee3d1b064ba79215a7c6"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Editor/BalanceEditorWindow.cs",
+      "sha256": "3a40d002aaa9d0ebb1391da6675163eff55cfb6a6b738208ef9e3f42d6bd3561"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/BalanceEditorTests.cs",
+      "sha256": "489498359dbfa6560f0ace9921eaeca3a657072b59b8e4bb24247b51ad50111f"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/Editor/WeaponPickupNoticeTests.cs",
+      "sha256": "7ffea326e4ded92ca747e8a6d232c360811b350de69b7c031f5545a0d5531ec5"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/TrainingPlayTests.cs",
+      "sha256": "6b6fb8bafa29e272297f441a22115a20d799a6ca7e68b8de551a5b81c988b68d"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/LocalMatchTests.cs",
+      "sha256": "264a4ceb2bbbffd4ab3d25bcb7e6747f3e532cc179b0f02232269e4c3aeaa102"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/CombatPresentationPlayTests.cs",
+      "sha256": "450643d7c12a34ef75d5ac68449aa8e4b1a5a5e9139eeeca8cd2d6a234b91d36"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/AmmoPlayTests.cs",
+      "sha256": "626a96c10f5e4bd721084d53009d1b91ac76d96d3d84a79c023566135ca10c8b"
+    },
+    {
+      "path": "unity-client/Assets/BoundShoot/Tests/PlayMode/MenuExitPlayTests.cs",
+      "sha256": "b738f65857af9246b8587f6311077f7cfb07ef41956d24b352284923cc6bced5"
+    }
+  ]
+}

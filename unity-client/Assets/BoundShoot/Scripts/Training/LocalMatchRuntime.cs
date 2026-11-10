@@ -66,6 +66,7 @@ namespace BoundShoot {
     clients.Remove(client);
    }else if(!network.IsServer&&client==network.LocalClientId)Error=string.IsNullOrEmpty(network.DisconnectReason)?"房主已离开":network.DisconnectReason;
   }
+  public bool SelectMap(string id)=>IsHost&&Ready&&!HasPendingSeats&&World.SelectLocalMap(id);
   public void StartRound(){if(CanStart)World.BeginLocalRound();}
   public bool SetTeamSize(int size)=>IsHost&&Ready&&!HasPendingSeats&&World.ConfigureTeamSize(size,fillAI);
   public void FillWithAI(){if(IsHost&&Ready){fillAI=true;World.SetBotFill(true);}}

@@ -8,6 +8,8 @@ import {fileURLToPath} from 'node:url';
 import {networkInterfaces} from 'node:os';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const humans=Number(process.argv.find(a=>a.startsWith('--humans='))?.split('=')[1]??1);
+const size=Number(process.argv.find(a=>a.startsWith('--size='))?.split('=')[1]??4);
+if(![2,3,4].includes(size)||humans>size*2)throw new Error('Invalid team size');
 if(![1,2,4].includes(humans))throw new Error('Use --humans=1, 2 or 4');
 const exe=path.join(root,'builds/QA/BoundShootQA.exe');
 if(!existsSync(exe))throw new Error('Run tools/build-game.ps1 -Target QA first.');
@@ -24,9 +26,9 @@ if(!Number.isInteger(port)||port<1024||port>45000)throw new Error('Invalid isola
 const base='http://127.0.0.1:'+port,clientBase='http://'+gameHost+':'+port,children=[],plans=[];
 let backendOutput='';
 const backend=spawn(process.execPath,['dist/index.js'],{cwd:path.join(root,'backend'),windowsHide:true,stdio:'pipe',env:{...process.env,
- HOST:linux?'0.0.0.0':'127.0.0.1',PORT:String(port),NODE_ENV:'test',ACCESS_SECRET:randomBytes(48).toString('hex'),DATABASE_PATH:path.join(work,'test.sqlite'),
+ HOST:linux?'0.0.0.0':'127.0.0.1',PORT:String(port),NODE_ENV:'test',ACCESS_SECRET:randomBytes(48).toString('hex'),DATABASE_PATH:path.join(work,'test.sqlite'),UNITY_PROXYSERVER:'',UNITY_NOPROXY:'*',
  RUNTIME_DIR:runtime,SERVER_MODE:'managed',GAME_SERVER_PATH:gameServer,PUBLIC_GAME_HOST:gameHost,GAME_PORT_START:String(17877+(port-3129)*2),MAX_MATCHES:'2',
- GAME_CONFIG_PATH:process.env.QA_GAME_CONFIG_PATH||path.join(root,'unity-client/Assets/BoundShoot/Resources/GameConfig.json')}});
+ LOBBY_MODE:'true',GAME_CONFIG_PATH:process.env.QA_GAME_CONFIG_PATH||path.join(root,'unity-client/Assets/BoundShoot/Resources/GameConfig.json')}});
 children.push(backend);backend.stdout.on('data',v=>backendOutput+=v);backend.stderr.on('data',v=>backendOutput+=v);
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const reports=()=>Array.from({length:humans},(_,i)=>{try{return JSON.parse(readFileSync(path.join(work,'client-'+i+'.report.json'),'utf8'));}catch{return null;}});
@@ -41,11 +43,11 @@ try{
  const suffix=randomBytes(4).toString('hex');
  for(let i=0;i<humans;i++){
   const plan=path.join(work,'plan-'+i+'.json');plans.push(plan);
-  writeFileSync(plan,JSON.stringify({username:'qa_'+suffix+'_'+i,work:windowsPath(work),index:i,humans}));
-  const child=spawn(exe,['-qaPlan',windowsPath(plan),'-backend',clientBase,'-screen-width','960','-screen-height','600','-logFile',windowsPath(path.join(work,'client-'+i+'.log'))],{stdio:'ignore',windowsHide:true});
+  writeFileSync(plan,JSON.stringify({username:'qa_'+suffix+'_'+i,work:windowsPath(work),index:i,humans,size,mapId:'Depot_01'}));
+  const child=spawn(exe,['-qaPlan',windowsPath(plan),'-backend',clientBase,'-screen-width','960','-screen-height','600','-logFile',windowsPath(path.join(work,'client-'+i+'.log'))],{stdio:'ignore',windowsHide:true,env:{...process.env,UNITY_PROXYSERVER:'',UNITY_NOPROXY:'*',NO_PROXY:'127.0.0.1,localhost',no_proxy:'127.0.0.1,localhost'}});
   children.push(child);child.once('error',e=>{throw e;});
  }
- console.log(humans+' human client(s) + '+(4-humans)+' server bots. Reports: '+work);
+ console.log(humans+' human client(s) + '+(size*2-humans)+' server bots. Reports: '+work);
  let previous='';
  const deadline=Date.now()+500000;
  while(Date.now()<deadline){
@@ -54,8 +56,8 @@ try{
   if(rows.some(r=>r?.error))throw new Error(JSON.stringify(rows));
   if(children.slice(1).some((c,i)=>c.exitCode!==null&&!rows[i]?.passed))throw new Error('Client exited before acceptance passed');
   if(rows.every(r=>r?.passed)){
-   const summary={passed:true,humans,bots:4-humans,scope:linux?'Local WSL/Linux dedicated server + Windows NGO/UDP clients; cloud not exercised':'Local Windows NGO/UDP + managed authoritative server; cloud not exercised',reports:rows,work};
-   writeFileSync(path.join(work,'summary.json'),JSON.stringify(summary,null,2));console.log('PASS: name-only entry, shared room, AI fill, combat results, rematch, persisted games=2');
+   const summary={passed:true,humans,size,bots:size*2-humans,scope:linux?'Local WSL/Linux dedicated server + Windows NGO/UDP clients; cloud not exercised':'Local Windows NGO/UDP + managed authoritative server; cloud not exercised',reports:rows,work};
+   writeFileSync(path.join(work,'summary.json'),JSON.stringify(summary,null,2));console.log('PASS: lobby, create/join, map/size sync, AI fill, results, rematch, persisted games=2, return to lobby/menu');
    break;
   }
   await delay(1000);
